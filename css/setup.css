@@ -1,0 +1,55 @@
+#newPlayer {
+    background-color: rgb(85, 85, 85);
+    color: rgb(227, 227, 227);
+    overflow: auto;
+    padding: 1em;
+    transition-property: height padding;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+#newPlayer.collapsed {
+    height: 0;
+    overflow: hidden;
+    padding: 2em 1em 0;
+}
+
+#newPlayer input {
+    float: left;
+    font-size: 1.2em;
+    margin-right: 1em;
+    width: 33%;
+}
+
+#newPlayer .swatch {
+    border: 1px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    height: 2em;
+    margin-right: 0.5em;
+    opacity: 0.2;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    width: 2em;
+}
+
+#newPlayer .swatch:hover {
+    box-shadow: 0 0 6px rgb(255, 255, 255);
+    opacity: 0.5;
+}
+
+#newPlayer .swatch.selected {
+    box-shadow: 0 0 12px rgb(255, 255, 255);
+    opacity: 1;
+}
+
+#newPlayer.collapsed .swatch {
+    box-shadow: 0 0 0;
+}
+
+#newPlayer .add {
+    margin: 0.4em 0 0 1em;
+}

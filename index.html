@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset=utf-8>
+  <title>The Game of Life Companion</title>
+  <link rel="stylesheet" href="css/main.css"/> 
+  <link rel="stylesheet" href="css/buttons.css"/> 
+  <link rel="stylesheet" href="css/setup.css"/> 
+  <link rel="stylesheet" href="css/player.css"/> 
+  <!--[if lt IE 9]>
+  <script src="${staticUri}ui/js/lib/html5.js"></script>
+  <script src="${staticUri}ui/js/lib/shims.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<div id="version">v0.1</div>
+
+<section id="newPlayer">
+	<input type="text" placeholder="Enter player name" />
+	<p class="swatch" data-color="C90000"></p> <!-- red -->
+	<p class="swatch" data-color="FFC0CB"></p> <!-- pink -->
+	<p class="swatch" data-color="EE8833"></p> <!-- orange -->
+	<p class="swatch" data-color="009900"></p> <!-- green -->
+	<p class="swatch" data-color="1A65A0"></p> <!-- blue -->
+	<p class="swatch" data-color="BCD2EE"></p> <!-- cyan -->
+	<p class="swatch" data-color="FFFFFF"></p> <!-- white -->
+	<button class="grey add">Add player to game</button>
+</section>
+
+<section id="game"><!-- players are added via Javascript --></section>
+
+<script src="js/lib/prefixfree.min.js"></script>
+<script>var require = { baseUrl : "js" };</script>
+<script data-main="main" src="js/lib/require-jquery-min.js"></script>
+</body>
+
+</html>

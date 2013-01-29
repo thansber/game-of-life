@@ -1,0 +1,63 @@
+button {
+    border-radius: 12px;
+    box-shadow: 2px 2px 1px rgb(102, 102, 102);
+    color: rgb(240, 240, 240);
+    cursor: pointer;
+    padding: 2px 8px 3px;
+    position: relative;
+    text-shadow: 2px 2px 3px rgb(17, 17, 17);
+}
+
+button:active {
+    box-shadow: 1px 1px 1px rgb(102, 102, 102);
+    top: 1px;
+}
+
+button.red {
+    background: linear-gradient(rgb(223, 51, 54), rgb(191, 50, 53));
+    border: 2px solid rgb(149, 43, 44);
+}
+
+button.red:hover {
+    background: linear-gradient(rgb(191, 50, 53), rgb(223, 51, 54));
+}
+
+button.green {
+    background: linear-gradient(rgb(93, 156, 70), rgb(61, 104, 50));
+    border: 2px solid rgb(34, 87, 38);
+}
+
+button.green:hover {
+    background: linear-gradient(rgb(61, 104, 50), rgb(93, 156, 70));
+}
+
+button.grey {
+    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102));
+    border: 2px solid rgb(26, 26, 26);
+}
+
+button.grey:hover {
+    background: linear-gradient(rgb(102, 102, 102), rgb(51, 51, 51));
+}
+
+button.lightblue {
+    background: linear-gradient(rgb(188, 210, 238), rgb(142, 184, 237));
+    border: 2px solid rgb(110, 169, 245);
+    color: rgb(51, 51, 51);
+    text-shadow: 2px 2px 3px rgb(232, 232, 232);
+}
+
+button.lightblue:hover {
+    background: linear-gradient(rgb(142, 184, 237), rgb(188, 210, 238));
+}
+
+button.pink {
+    background: linear-gradient(rgb(250, 212, 219), rgb(255, 192, 203));
+    border: 2px solid rgb(217, 145, 158);
+    color: rgb(51, 51, 51);
+    text-shadow: 2px 2px 3px rgb(232, 232, 232);
+}
+
+button.pink:hover {
+    background: linear-gradient(rgb(255, 192, 203), rgb(250, 212, 219));
+}

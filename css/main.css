@@ -1,0 +1,49 @@
+body,h1,h2,h3,h4,h5,h6,p {
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: rgb(102, 102, 102);
+    font-family: Verdana;
+    overflow-x: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+.close {
+    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102) );
+    border: 2px solid rgb(51, 51, 51);
+    border-radius: 6px;
+    box-shadow: 2px 2px 2px rgb(34, 34, 34);
+    color: rgb(221, 221, 221);
+    cursor: pointer;
+    float: right;
+    font-size: 0.8em;
+    margin-top: -4px;
+    padding: 4px 7px 3px;
+    position: relative;
+    text-shadow: 2px 2px 2px rgb(17, 17, 17);
+    user-select: none;
+}
+
+.close:hover {
+    background: linear-gradient(rgb(102, 102, 102), rgb(51, 51, 51) );
+}
+
+.close:active {
+    top: 1px;
+}
+
+#version {
+    color: rgba(255, 255, 255, 1);
+    font-size: 0.6em;
+    position: absolute;
+    right: 1em;
+    top: 0.9em;
+    z-index: 2;
+}

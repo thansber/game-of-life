@@ -1,0 +1,264 @@
+#game {
+    
+}
+
+#game .player {
+    border-radius: 16px 16px 0 0;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: 4px 4px 6px rgb(102, 102, 102);
+    margin: 2em 1em;
+    position: relative;
+    width: 30em;    
+}
+
+#game .player.light {
+    color: rgb(238, 238, 238);
+}
+
+#game .player.dark {
+    color: rgb(17, 17, 17);
+}
+
+#game .player .name {
+    float: left;
+    font-size: 1.5em;
+    margin-bottom: 0.5em;
+    padding: 0.5em 0 0 1em;
+}
+
+#game .player .cash {
+    float: right;
+    font-size: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+    padding: 0.5em 1em 0 0;
+    position: relative;
+    width: 5em;
+}
+
+#game .player .cash .current {
+    position: absolute;
+    text-align: right;
+    transition-property: top;
+    transition-duration: 0.8s;
+    transition-timing-function: ease;
+    visibility: visible;
+    width: 95%;
+}
+
+#game .player .cash .change {
+    position: absolute;
+    text-align: right;
+    transition-property: top;
+    transition-duration: 0.8s;
+    transition-timing-function: ease;
+    visibility: hidden;
+    width: 95%;
+}
+
+#game .player .cash.adding .change {
+    top: -3em;
+    visibility: visible;
+}
+
+#game .player .cash.subtracting .change {
+    top: 3em;
+    visibility: visible;
+}
+
+#game .player .cash.adding.changing .current {
+    top: 3em;
+}
+
+#game .player .cash.adding.changing.resetting .current {
+    top: -3em;
+    transition-duration: 0;
+    visibility: hidden;
+}
+
+#game .player .cash.subtracting.changing .current {
+    top: -3em;
+}
+
+#game .player .cash.subtracting.changing.resetting .current {
+    top: 3em;
+    transition-duration: 0;
+    visibility: hidden;
+}
+
+#game .player .cash.adding.reset .change {
+    top: 3em;
+    visibility: visible;
+}
+
+#game .player .cash.subtracting.reset .change {
+    top: -3em;
+    visibility: visible;
+}
+
+#game .player .cash.adding.changing .change,
+#game .player .cash.subtracting.changing .change {
+    top: 0.5em;
+}
+
+#game .player .cash.adding .current, 
+#game .player .cash.subtracting .current {
+    top: 0.5em;
+}
+
+#game .player .insurance {
+    background-color: white;
+    clear: both;
+    overflow: auto;
+    padding: 1em 17%;
+    width: 66%;
+}
+
+#game .player .insurance .choice {
+    border-left: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    float: left;
+    opacity: 0.1;
+    padding: 0.1em 0.4em 0.2em;
+    text-align: center;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    width: 4em;
+}
+
+#game .player .insurance .choice.added {
+    opacity: 1;
+}
+
+#game .player .insurance .choice:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+#game .player .insurance .choice:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+#game .player .insurance .auto {
+    background-color: orange;
+}
+
+#game .player .insurance .life {
+    background-color: blue;
+}
+
+#game .player .insurance .fire {
+    background-color: red;    
+}
+
+#game .player .insurance .stock {
+    background-color: green;
+}
+
+#game .player .jobs {
+    background-color: white;
+    clear: both;
+    font-size: 0.8em;
+    overflow: auto;
+    padding: 1em 2%;
+    width: 96%;
+}
+
+#game .player .jobs .job {
+    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102));
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    float: left;
+    opacity: 0.2;
+    padding: 0.1em 0.4em 0.2em;
+    text-align: center;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+#game .player .jobs .job.selected {
+    opacity: 1;
+}
+
+#game .player .jobs .job:first-child {
+    border-left-width: 2px;
+    border-radius: 12px 0 0 12px;
+}
+
+#game .player .jobs .job:last-child {
+    border-right-width: 2px;
+    border-radius: 0 12px 12px 0;
+}
+
+#game .player .children {
+    background-color: white;
+    overflow: auto;
+    padding: 0.5em 1em 1em;
+}
+
+#game .player .children .boy {
+    float: left;
+}
+
+#game .player .children .girl {
+    float: right;
+}
+
+#game .player .children .summary {
+    color: rgb(51, 51, 51);
+    margin-top: 0.1em;
+    text-align: center;
+}
+
+#game .player .payday {
+    border-radius: 30px;
+    font-size: 1.1em;
+    height: 3em;
+    position: absolute;
+    right: -9em;
+    text-align: center;
+    top: 45%;
+    width: 7em;
+}
+
+#game .player .adjust-cash {
+    font-size: 1.5em;
+    position: absolute;
+    right: -7em;
+    top: 0.4em;
+}
+
+#game .player .adjust-cash .adjuster {
+    box-shadow: 0 0 0;
+    font-size: 1em;
+    padding: 0 0.2em;
+}
+
+#game .player .adjust-cash .add {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#game .player .adjust-cash .minus {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#game .player .adjust-cash input {
+    border-color: rgb(204, 204, 204);
+    border-style: solid;
+    border-width: 2px 0;
+    font-size: 1em;
+    text-align: center;
+    width: 3em;
+}
+
+#game .player .adjust-cash label {
+    color: rgb(132, 132, 132);
+    display: block;
+    font-size: 0.5em;
+    text-align: center;
+}
