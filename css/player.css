@@ -163,16 +163,18 @@
     font-size: 0.8em;
     overflow: auto;
     padding: 1em 2%;
+    text-align: center;
     width: 96%;
 }
 
 #game .player .jobs .job {
+    background-color: rgb(136, 136, 136);
     background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102));
     color: rgb(255, 255, 255);
     cursor: pointer;
-    float: left;
+    display: inline-block;
     opacity: 0.2;
-    padding: 0.1em 0.4em 0.2em;
+    padding: 0.1em 0.35em 0.2em;
     text-align: center;
     transition-property: opacity;
     transition-duration: 0.3s;
