@@ -18,7 +18,13 @@
     float: left;
     font-size: 1.2em;
     margin-right: 1em;
-    width: 33%;
+    width: 20%;
+}
+
+#newPlayer .swatches {
+    clear: left;
+    float: left;
+    margin-top: 1em;
 }
 
 #newPlayer .swatch {
@@ -51,5 +57,33 @@
 }
 
 #newPlayer .add {
+    font-size: 1.5em;
     margin: 0.4em 0 0 1em;
+    padding: 0.5em;
+}
+
+#newPlayer .toggler {
+    background-repeat: no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    float: right;
+    height: 3em;
+    position: relative;
+    top: 1em;
+    transition-property: height width;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    width: 3em;
+}
+
+#newPlayer .toggler.hide {
+    background-image: url("../images/arrow-090.png");
+}
+
+#newPlayer .toggler.show {
+    background-image: url("../images/arrow-270.png");
+    height: 1.75em;
+    right: 2.5em;
+    top: -2em;
+    width: 1.75em;
 }

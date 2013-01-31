@@ -21,8 +21,9 @@ function($, Player) {
           $this.find("input").focus().select();
         } else if ($target.is("input")) {
           return true;
-        } else {
+        } else if ($target.hasClass("toggler")) {
           $this.toggleClass("collapsed");
+          $target.toggleClass("show hide");
         }
         return true;
       });

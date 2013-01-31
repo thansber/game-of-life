@@ -28,22 +28,21 @@ function($, Util) {
     var $cash = $player.find(".cash");
     player.cash += amount;
     
-    $cash.toggleClass("adding", amount > 0).toggleClass("subtracting", amount < 0);
+    $cash.toggleClass("adding", amount > 0).toggleClass("subtracting", amount < 0).addClass("init");
     updateCash($player, amount, "change");
     
     setTimeout(function() { 
-      showCash($player, "changing"); 
+      changeCashState($player, {add:"moving"}); 
     }, 20);
     setTimeout(function() { 
-      showCash($player, "resetting");
+      changeCashState($player, {add:"reset", remove:"init moving"});
     }, 900);
     setTimeout(function() { 
       updateCash($player, player.cash, "current");
-      $cash.removeClass("changing resetting");
-      showCash($player, "reset");
+      changeCashState($player, {add:"moving"});
     }, 2000);
     setTimeout(function() { 
-      $cash.removeClass("reset adding subtracting");
+      changeCashState($player, {remove:"adding subtracting reset moving"});
     }, 3000);
   };
   
@@ -54,8 +53,8 @@ function($, Util) {
     markup[m++] = ' data-name="' + player.name + '" data-color="' + player.color + '">';
     markup[m++] = '<p class="name">' + player.name + "</p>";
     markup[m++] = '<div class="cash">';
-    markup[m++] = '<p class="current">$<span class="value"></span></p>';
-    markup[m++] = '<p class="change">$<span class="value"></span></p>';
+    markup[m++] = '<p class="current amount">$<span class="value"></span></p>';
+    markup[m++] = '<p class="change amount">$<span class="value"></span></p>';
     markup[m++] = '</div>';
     
     markup[m++] = appendJobs();
@@ -121,6 +120,16 @@ function($, Util) {
     return markup.join("");
   };
   
+  var changeCashState = function($player, changes) {
+    var $cash = $player.find(".cash");
+    if (changes.add) {
+      $cash.addClass(changes.add);
+    }
+    if (changes.remove) {
+      $cash.removeClass(changes.remove);
+    }
+  };
+  
   var everyonePays = function($player) {
     var $otherPlayers = $game.find(".player").not($player);
     $otherPlayers.each(function() {
@@ -131,10 +140,6 @@ function($, Util) {
   
   var getPlayerIndex = function($player) {
     return $game.find(".player").index($player);
-  };
-  
-  var showCash = function($player, state) {
-    $player.find(".cash").addClass(state);
   };
   
   var updateCash = function($player, value, cashType) {

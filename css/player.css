@@ -25,6 +25,7 @@
     font-size: 1.5em;
     margin-bottom: 0.5em;
     padding: 0.5em 0 0 1em;
+    top: 0.6em;
 }
 
 #game .player .cash {
@@ -37,74 +38,77 @@
     width: 5em;
 }
 
-#game .player .cash .current {
+#game .player .cash .amount {
     position: absolute;
     text-align: right;
+    top: 0.6em;
     transition-property: top;
-    transition-duration: 0.8s;
+    transition-duration: 0;
     transition-timing-function: ease;
-    visibility: visible;
     width: 95%;
 }
 
 #game .player .cash .change {
-    position: absolute;
-    text-align: right;
-    transition-property: top;
+    visibility: hidden;
+}
+
+#game .player .cash.adding.init .change {
+    top: -3em;
+}
+
+#game .player .cash.subtracting.init .change {
+    top: 3em;
+}
+
+#game .player .cash.init.moving .current {
     transition-duration: 0.8s;
-    transition-timing-function: ease;
-    visibility: hidden;
-    width: 95%;
 }
 
-#game .player .cash.adding .change {
-    top: -3em;
-    visibility: visible;
-}
-
-#game .player .cash.subtracting .change {
-    top: 3em;
-    visibility: visible;
-}
-
-#game .player .cash.adding.changing .current {
+#game .player .cash.adding.init.moving .current {
     top: 3em;
 }
 
-#game .player .cash.adding.changing.resetting .current {
+#game .player .cash.subtracting.init.moving .current {
     top: -3em;
+}
+
+#game .player .cash.init.moving .change,
+#game .player .cash.reset .change {
+    top: 0.6em;
+    transition-duration: 0.8s;
+    visibility: visible;
+}
+
+#game .player .cash.reset .current {
     transition-duration: 0;
     visibility: hidden;
 }
 
-#game .player .cash.subtracting.changing .current {
+#game .player .cash.adding.reset .current {
     top: -3em;
 }
 
-#game .player .cash.subtracting.changing.resetting .current {
+#game .player .cash.subtracting.reset .current {
     top: 3em;
-    transition-duration: 0;
-    visibility: hidden;
 }
 
-#game .player .cash.adding.reset .change {
-    top: 3em;
+#game .player .cash.reset.moving .current {
+    top: 0.6em;
+    transition-duration: 0.8s;
     visibility: visible;
 }
 
-#game .player .cash.subtracting.reset .change {
+#game .player .cash.reset.moving .change {
+    transition-duration: 0.8s;
+    visibility: visible;
+}
+
+#game .player .cash.adding.reset.moving .change {
+    top: 3em;
+}
+
+#game .player .cash.subtracting.reset.moving .change {
     top: -3em;
-    visibility: visible;
-}
-
-#game .player .cash.adding.changing .change,
-#game .player .cash.subtracting.changing .change {
-    top: 0.5em;
-}
-
-#game .player .cash.adding .current, 
-#game .player .cash.subtracting .current {
-    top: 0.5em;
 }
 
 #game .player .insurance {

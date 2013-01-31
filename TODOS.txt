@@ -5,6 +5,5 @@
 Chrome issues
 =============
 - cash adjuster has blank space between input and add/remove
-- cash scrolling wonky
 - bigger job buttons
 - bigger add/remove cash adjuster buttons
