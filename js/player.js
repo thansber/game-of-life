@@ -61,8 +61,8 @@ function($, Util) {
     markup[m++] = appendInsurance();
     markup[m++] = appendChildren();
     markup[m++] = appendCashAdjuster();
+    markup[m++] = appendPayday();
     
-    markup[m++] = '<button class="red payday">Pay Day!</button>';
     markup[m++] = '</div>';
     
     var $player = $(markup.join(""));
@@ -116,6 +116,15 @@ function($, Util) {
       markup[m++] = job.desc;
       markup[m++] = '</p>';
     });
+    markup[m++] = '</div>';
+    return markup.join("");
+  };
+  
+  var appendPayday = function() {
+    var markup = [], m = 0;
+    markup[m++] = '<div class="pay">';
+    markup[m++] = '<button class="red payday">Pay Day!</button>';
+    markup[m++] = '<button class="red interest">with interest</button>';
     markup[m++] = '</div>';
     return markup.join("");
   };
@@ -206,10 +215,14 @@ function($, Util) {
         $this.css("backgroundColor", "#" + $this.data("color"));
       });
   	 },
-  	 payday: function($player) {
+  	 payday: function($player, opt) {
+  	   opt = opt || {};
   	   var player = players[getPlayerIndex($player)];
   	   if (player.job) {
   	     adjustCash($player, player.salary);
+  	   }
+  	   if (opt.interest && player.cash < 0) {
+  	     // TODO: what to do here?  I forget
   	   }
   	 },
   	 removeInsurance: function($insurance) {

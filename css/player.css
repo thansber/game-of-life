@@ -219,27 +219,49 @@
     text-align: center;
 }
 
+#game .player .pay {
+    height: 6em;
+    position: absolute;
+    right: -22.5em;
+    top: 36%;
+}
+
 #game .player .payday {
     border-radius: 30px;
-    font-size: 1.1em;
+    font-size: 1.4em;
     height: 3em;
-    position: absolute;
-    right: -9em;
     text-align: center;
-    top: 45%;
     width: 7em;
+    z-index: 2;
+}
+
+#game .player .interest {
+    border-radius: 30px;
+    padding-top: 4em;
+    position: relative;
+    right: 14.3em;
+    top: 16%;
+    transition-property: top;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    width: 14.2em;
+    z-index: 1;
+}
+
+#game .player .interest.displayed {
+    top: 40%;
 }
 
 #game .player .adjust-cash {
     font-size: 1.5em;
     position: absolute;
-    right: -7em;
+    right: -9em;
     top: 0.4em;
 }
 
 #game .player .adjust-cash .adjuster {
     box-shadow: 0 0 0;
-    font-size: 1em;
+    font-size: 1.33em;
     padding: 0 0.2em;
 }
 
@@ -257,7 +279,7 @@
     border-color: rgb(204, 204, 204);
     border-style: solid;
     border-width: 2px 0;
-    font-size: 1em;
+    font-size: 1.33em;
     text-align: center;
     width: 3em;
 }

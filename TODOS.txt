@@ -1,4 +1,4 @@
-- pay days with interest
+- pay days with interest, add rules
 - allow for children values to be directly manipulated (mistake adding kid)
 - millionaire space
 
@@ -6,4 +6,3 @@ Chrome issues
 =============
 - cash adjuster has blank space between input and add/remove
 - bigger job buttons
-- bigger add/remove cash adjuster buttons

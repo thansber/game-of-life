@@ -52,9 +52,26 @@ function($, Player) {
           Player.adjustCash($player, cashValue);
         } else if ($target.hasClass("payday")) { // pay day
           Player.payday($player);
+        } else if ($target.hasClass("interest")) { // pay day with interest
+          Player.payday($player, {interest:true});
         }
       });
       
+      $("#game").on("mouseover mouseout", function(e) {
+        var $target = $(e.target);
+        var $pay = null;
+        
+        if ($target.hasClass("pay")) {
+          $pay = $target;
+        } else if ($target.hasClass("payday") || $target.hasClass("interest")) {
+          $pay = $target.parent();
+        }
+        
+        if ($pay && $pay.length > 0) {
+          $pay.find(".interest").toggleClass("displayed");
+        }
+      });
+
     }
   };
 });

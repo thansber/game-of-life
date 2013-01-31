@@ -16,9 +16,9 @@
 
 #newPlayer input {
     float: left;
-    font-size: 1.2em;
+    font-size: 1.4em;
     margin-right: 1em;
-    width: 20%;
+    width: 19.5em;
 }
 
 #newPlayer .swatches {
@@ -33,13 +33,13 @@
     cursor: pointer;
     display: inline-block;
     float: left;
-    height: 2em;
-    margin-right: 0.5em;
+    height: 3em;
+    margin-right: 1em;
     opacity: 0.2;
     transition-property: opacity;
     transition-duration: 0.3s;
     transition-timing-function: ease;
-    width: 2em;
+    width: 3em;
 }
 
 #newPlayer .swatch:hover {
