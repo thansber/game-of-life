@@ -1,8 +1,21 @@
-- pay days with interest, add rules
+- new UI
+-- make player area wider
+-- summary below name/cash 
+--- "is a Doctor, has 2 sons and 1 daughter, owns auto, life, fire, and stock insurance..."
+--- crossed toll bridge first
+-- drawers
+--- jobs
+--- insurance
+--- taxes (regular/property)
+--- children
+--- toll bridge
+--- marriage
+
+- millionaire toggle, should include children/life insurance red square
+- sue for revenge
+- allow toll bridge owner to change?
 - allow for children values to be directly manipulated (mistake adding kid)
-- millionaire space
 
 Chrome issues
 =============
 - cash adjuster has blank space between input and add/remove
-- bigger job buttons

@@ -54,6 +54,16 @@ function($, Player) {
           Player.payday($player);
         } else if ($target.hasClass("interest")) { // pay day with interest
           Player.payday($player, {interest:true});
+        } else if ($target.hasClass("crossed")) {
+          var firstPlayerToCross = Player.crossedTollBridgeFirst($player);
+          if (firstPlayerToCross) {
+            $target.html("Crossed toll bridge first");
+          }
+          $target.addClass("selected");
+        } else if ($target.hasClass("action")) {
+          Player.handleAction($player, $target);
+        } else if ($target.hasClass("presents")) {
+          Player.marriagePresents($player, $target);
         }
       });
       
