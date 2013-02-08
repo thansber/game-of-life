@@ -200,7 +200,45 @@
     width: 12em;
 }
 
+#game .player .revenge .nobody {
+    color: rgb(17, 17, 17);
+    display: none;
+}
+
 #game .player .revenge .sue {
     font-size: 1.25em;
     margin-left: 1.5em;
+}
+
+/* =========== */
+/* TOLL BRIDGE */
+/* =========== */
+#game .player .toll-bridge {
+    padding-left: 1%;
+    padding-right: 1%;
+    text-align: center;
+    width: 98%;
+}
+
+#game .player .toll-bridge .crossed {
+    font-size: 1.25em;
+}
+
+/* ====== */
+/* EVENTS */
+/* ====== */
+#game .player .events {
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: center;
+    width: 96%;    
+}
+
+#game .player .events button {
+    font-size: 0.8em;
+    margin-right: 1.5em;
+}
+
+#game .player .events button:last-child {
+    margin-right: 0;
 }

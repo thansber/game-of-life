@@ -1,5 +1,3 @@
-- payday w/interest, if payday results in positive cash, do not take out interest
-
 - new UI
 -- summary below name/cash 
 --- jobs
@@ -9,10 +7,7 @@
 --- toll bridge
 --- millionaire
 -- drawers
---- revenge - color button, add functionality
---- toll bridge
 --- millionaire
---- red square events
 
 - millionaire toggle, should include children/life insurance red square
 - allow toll bridge owner to change?

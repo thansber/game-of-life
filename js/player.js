@@ -30,12 +30,11 @@ function($, Util) {
     {name:"u", desc:"University", salary:16000},
     {name:"b", desc:"Business", salary:12000}
   ];
-  var actions = [
-    {type:"tuition", change:function() { return -2000; }},
-    {type:"house", change:function() { return -40000; }},
-    {type:"taxes", change:function(player) { return player.salary / -2; }},
-    {type:"orphanage", change:function() { return -120000; }},
-    {type:"property-taxes", change:function() { return -50000; }}
+  var events = [
+    {type:"tuition", desc:"Pay tuition", amount:-2000, color:"red" },
+    {type:"house", desc:"Buy a house", amount:-40000, color:"red" },
+    {type:"orphanage", desc:"Help an orphanage", amount:-120000, color:"red" },
+    {type:"millionaire", desc:"Become a millionaire", amount:null, color:"green" }
   ];
   var priceFormatter = /(\d+)(\d{3})/;
   
@@ -85,17 +84,16 @@ function($, Util) {
     });
     markup[m++] = '</div>';
 
+    // drawer content
     markup[m++] = appendJobs();
     markup[m++] = appendInsurance();
     markup[m++] = appendMarriagePresents();
     markup[m++] = appendChildren();
     markup[m++] = appendTaxes();
     markup[m++] = appendRevenge();
-    
-    /*
-    markup[m++] = appendAssets();
-    markup[m++] = appendActions();
-    */
+    markup[m++] = appendTollBridge();
+    markup[m++] = appendEvents();
+
     markup[m++] = appendCashAdjuster();
     markup[m++] = appendPayday();
     
@@ -109,14 +107,6 @@ function($, Util) {
       borderColor: Util.isWhite(player.color) ? "#666" : "#" + player.color,
     });
     updateCash($player, player.cash, "current");
-  };
-  
-  var appendAssets = function() {
-    var markup = [], m = 0;
-    markup[m++] = '<div class="assets">';
-    markup[m++] = '<div class="toll-owner"><p class="crossed">Crossed toll bridge</p></div>'
-    markup[m++] = '</div>';
-    return markup.join("");
   };
   
   var appendCashAdjuster = function() {
@@ -135,6 +125,18 @@ function($, Util) {
     markup[m++] = '<div class="drawer-content children">';
     markup[m++] = '<button class="lightblue child boy">A son is born!</button>';
     markup[m++] = '<button class="pink child girl">A daughter is born!</button>';
+    markup[m++] = '</div>';
+    return markup.join("");
+  };
+  
+  var appendEvents = function() {
+    var markup = [], m = 0;
+    markup[m++] = '<div class="drawer-content events">';
+    events.forEach(function(event) {
+      markup[m++] = '<button class="' + event.color + ' ' + event.type + '" data-amount="' + event.amount + '">';
+      markup[m++] = event.desc;
+      markup[m++] = '</button>'
+    });
     markup[m++] = '</div>';
     return markup.join("");
   };
@@ -186,6 +188,7 @@ function($, Util) {
     var markup = [], m = 0;
     markup[m++] = '<div class="drawer-content revenge">';
     markup[m++] =   '<select class="whom"></select>';
+    markup[m++] =   '<label class="nobody">Nobody can be sued, send someone back 10 spaces instead</label>';
     markup[m++] =   '<button class="gold sue">Revenge! Sue for damages</button>';
     markup[m++] = '</div>';
     return markup.join("");
@@ -196,6 +199,14 @@ function($, Util) {
     markup[m++] = '<div class="drawer-content taxes">';
     markup[m++] =   '<button class="red salary" data-type="salary">Pay Taxes</button>';
     markup[m++] =   '<button class="red property" data-type="property">Property Taxes</button>';
+    markup[m++] = '</div>';
+    return markup.join("");
+  };
+  
+  var appendTollBridge = function() {
+    var markup = [], m = 0;
+    markup[m++] = '<div class="drawer-content toll-bridge">';
+    markup[m++] =   '<button class="grey crossed">Crossed toll bridge</button>';
     markup[m++] = '</div>';
     return markup.join("");
   };
@@ -217,7 +228,7 @@ function($, Util) {
         tollBridgeOwner = p;
       }
     });
-    if (tollBridgeOwner) {
+    if (tollBridgeOwner && tollBridgeOwner.name !== player.name) {
       adjustCash(getPlayerMarkup(tollBridgeOwner), 24000);
       adjustCash(getPlayerMarkup(player), -24000);
     } else {
@@ -283,9 +294,13 @@ function($, Util) {
   
   return {
     add: function() {
+      var $selectedColor = $player.find(".selected.swatch");
+      if ($selectedColor.length === 0) {
+        return;
+      }
       var player = {
         name: $player.find("input").val(),
-        color: $player.find(".selected.swatch").data("color"),
+        color: $selectedColor.data("color"),
         cash: 10000,
         job: "",
         salary: 0,
@@ -343,10 +358,9 @@ function($, Util) {
   	   opt = opt || {};
   	   var player = players[getPlayerIndex($player)];
   	   var interestCallback = null;
-      if (opt.interest && player.cash < 0) {
-        var interestAmount = Math.ceil(player.cash / -20000) * -1000;
+      if (opt.interest && player.cash + player.salary < 0) {
         interestCallback = function() {
-          adjustCash($player, interestAmount);
+          adjustCash($player, Math.ceil(player.cash / -20000) * -1000);
         }
       }
   	   if (player.job) {
@@ -375,6 +389,11 @@ function($, Util) {
   	 sonIsBorn: function($player) {
   	   players[getPlayerIndex($player)].sons++;
   	   everyonePays($player, 1000);
+  	 },
+  	 sue: function($player) {
+  	   var targetIndex = $player.find(".whom").val();
+  	   adjustCash($player, 200000);
+  	   adjustCash($game.find(".player").eq(targetIndex), -200000);
   	 }
   };    
 });	

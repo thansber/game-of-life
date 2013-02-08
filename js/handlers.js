@@ -45,18 +45,6 @@ function($, Drawer, Player, Util) {
         } else if ($target.closest(".drawer-content")) { // drawer stuff
           Drawer.click($player, $target);
         }
-        
-        /*
-        else if ($target.hasClass("crossed")) {
-          var firstPlayerToCross = Player.crossedTollBridgeFirst($player);
-          if (firstPlayerToCross) {
-            $target.html("Crossed toll bridge first");
-          }
-          $target.addClass("selected");
-        } else if ($target.hasClass("action")) {
-          Player.handleAction($player, $target);
-        } 
-        */
       });
       
       $("#game").on("mouseover mouseout", function(e) {

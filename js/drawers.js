@@ -23,18 +23,46 @@ function($, Player, Util) {
     }},
     {type:"taxes", handle:function($player, $taxes) {
       Player.payTaxes($player, $taxes.data("type"));
+    }},
+    {type:"revenge", handle:function($player, $target) {
+      if ($target.hasClass("sue")) {
+        Player.sue($player);
+        return false;
+      }
+      return true;
+    }},
+    {type:"toll-bridge", handle:function($player, $crossed) {
+      var firstPlayerToCross = Player.crossedTollBridgeFirst($player);
+      if (firstPlayerToCross) {
+        $crossed.html("Crossed toll bridge first");
+      }
+      $crossed.addClass("selected");
+    }},
+    {type:"events", handle:function($player, $event) {
+      if ($event.hasClass("millionaire")) {
+        
+      } else {
+        Player.adjustCash($player, $event.data("amount"));
+      }
     }}
   ];
   
   var openHandlers = {
     revenge: function($player) {
       var revengeTargets = Player.getPlayersForRevenge($player);
-      var $whom = $player.find(".revenge.drawer-content .whom");
+      var $revenge = $player.find(".revenge.drawer-content"); 
+      var $whom = $revenge.find(".whom");
       $whom.empty();
+      
       revengeTargets.forEach(function(target, i) {
         var option = '<option value="' + target.index + '">' + target.name + '</option>';
         $whom.append($(option));
       });
+      
+      var anyoneToSue = revengeTargets.length > 0;
+      $revenge.find(".nobody").toggle(!anyoneToSue);
+      $revenge.find(".sue").toggle(anyoneToSue);
+      $whom.toggle(anyoneToSue);
     }
   };
   
