@@ -22,13 +22,13 @@ function($, Util) {
     {name:"stock", price:50000}
   ];
   var jobs = [
-    {name:"d", desc:"Doctor", salary:50000},
-    {name:"j", desc:"Journalist", salary:24000},
-    {name:"l", desc:"Lawyer", salary:50000},
-    {name:"t", desc:"Teacher", salary:20000},
-    {name:"p", desc:"Physicist", salary:30000},
-    {name:"u", desc:"University", salary:16000},
-    {name:"b", desc:"Business", salary:12000}
+    {name:"d", desc:"Doctor", salary:50000, summary:"is a Doctor"},
+    {name:"j", desc:"Journalist", salary:24000, summary:"is a Journalist"},
+    {name:"l", desc:"Lawyer", salary:50000, summary:"is a Lawyer"},
+    {name:"t", desc:"Teacher", salary:20000, summary:"is a Teacher"},
+    {name:"p", desc:"Physicist", salary:30000, summary:"is a Physicist"},
+    {name:"u", desc:"University", salary:16000, summary:"is a University Student"},
+    {name:"b", desc:"Business", salary:12000, summary:"has a Business Degree"}
   ];
   var events = [
     {type:"tuition", desc:"Pay tuition", amount:-2000, color:"red" },
@@ -75,7 +75,7 @@ function($, Util) {
     markup[m++] = '<p class="change amount">$<span class="value"></span></p>';
     markup[m++] = '</div>';
     
-    markup[m++] = '<div class="summary">is a Doctor, has 2 daughters, owns auto and life insurance.</div>'
+    markup[m++] = '<div class="summary"></div>'
     markup[m++] = '<div class="drawers">';
     drawers.forEach(function(drawer) {
       markup[m++] = '<div class="drawer" data-type="'  + drawer.name + '">';
@@ -168,9 +168,9 @@ function($, Util) {
   var appendMarriagePresents = function() {
     var markup = [], m = 0;
     markup[m++] = '<div class="drawer-content marriage">';
-    markup[m++] = '<label>Presents</label>';
     markup[m++] = '<button class="green presents good" data-amount="2000">+2,000</button>';
     markup[m++] = '<button class="green presents ok" data-amount="1000">+1,000</button>';
+    markup[m++] = '<button class="green presents none" data-amount="0">None</button>';
     markup[m++] = '</div>';
     return markup.join("");
   };
@@ -305,6 +305,7 @@ function($, Util) {
         job: "",
         salary: 0,
         insurance: [],
+        married: false,
         sons: 0,
         daughters: 0,
         tollBridgeOwned: false
@@ -352,7 +353,11 @@ function($, Util) {
       });
   	 },
   	 marriagePresents: function($player, $presents) {
-  	   everyonePays($player, $presents.data("amount"));
+  	   var amount = $presents.data("amount");
+  	   if (amount > 0) {
+  	     everyonePays($player, amount);
+  	   }
+  	   players[getPlayerIndex($player)].married = true;
   	 },
   	 payday: function($player, opt) {
   	   opt = opt || {};
@@ -394,6 +399,36 @@ function($, Util) {
   	   var targetIndex = $player.find(".whom").val();
   	   adjustCash($player, 200000);
   	   adjustCash($game.find(".player").eq(targetIndex), -200000);
+  	 },
+  	 updateSummary: function($player) {
+  	   var player = players[getPlayerIndex($player)];
+  	   var summary = [], s = 0;
+  	   
+  	   if (player.job) {
+  	     jobs.forEach(function(job) {
+  	       if (player.job === job.name) {
+  	         summary[s++] = job.summary; 
+  	       }
+  	     })
+  	   }
+  	   
+  	   if (player.sons > 0 || player.daughters > 0) {
+  	     if (summary.length > 0) {
+  	       summary[s++] = ", ";
+  	     }
+        summary[s++] = "has ";
+  	     if (player.sons > 0) {
+  	       summary[s++] = player.sons + " son" + (player.sons > 1 ? "s" : "");
+  	       if (player.daughters > 0) {
+  	         summary[s++] = " and ";
+  	       }
+  	     }
+  	     if (player.daughters > 0) {
+          summary[s++] = player.daughters + " daughter" + (player.daughters > 1 ? "s" : "");
+  	     }
+  	   }
+  	   
+  	   $player.find(".summary").html(summary.join(""));
   	 }
   };    
 });	

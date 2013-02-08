@@ -44,6 +44,7 @@ function($, Drawer, Player, Util) {
           Player.adjustCash($player, cashValue);
         } else if ($target.closest(".drawer-content")) { // drawer stuff
           Drawer.click($player, $target);
+          Player.updateSummary($player);
         }
       });
       

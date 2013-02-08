@@ -130,15 +130,10 @@
 /* MARRIAGE PRESENTS */
 /* ================= */
 #game .player .marriage {
-}
-
-#game .player .marriage label {
-    color: rgb(52, 52, 52);
-    display: inline-block;
-    font-size: 1.25em;
-    margin-top: 0.15em;
+    padding-left: 15%;
+    padding-right: 15%;
     text-align: center;
-    width: 56%;
+    width: 70%;
 }
 
 #game .player .marriage .presents {
@@ -146,12 +141,8 @@
     margin-right: 1em;
 }
 
-#game .player .marriage .presents.good {
-    float: left;
-}
-
-#game .player .marriage .presents.ok {
-    float: right;
+#game .player .marriage .presents:last-child {
+    margin-right: 0;
 }
 
 /* ======== */

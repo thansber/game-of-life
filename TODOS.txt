@@ -1,9 +1,7 @@
 - new UI
 -- summary below name/cash 
---- jobs
---- insurance
---- children
 --- marriage?
+--- insurance
 --- toll bridge
 --- millionaire
 -- drawers
