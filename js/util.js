@@ -20,6 +20,9 @@ function($) {
   };
   
   return {
+    choiceChanged: function($choice) {
+      $choice.siblings().removeClass("selected").end().addClass("selected");
+    },
     isWhite: function(hex) {
       var rgb = hexToRgb(hex);
       return rgb[0] * 255 === 255 && rgb[1] * 255 === 255 && rgb[2] * 255 === 255;

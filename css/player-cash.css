@@ -1,0 +1,82 @@
+#game .player .cash {
+    float: right;
+    font-size: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+    padding: 0.5em 1em 0 0;
+    position: relative;
+    width: 5em;
+}
+
+#game .player .cash .amount {
+    position: absolute;
+    text-align: right;
+    top: 0.6em;
+    transition-property: top;
+    transition-duration: 0;
+    transition-timing-function: ease;
+    width: 95%;
+}
+
+#game .player .cash .change {
+    visibility: hidden;
+}
+
+#game .player .cash.adding.init .change {
+    top: -3em;
+}
+
+#game .player .cash.subtracting.init .change {
+    top: 3em;
+}
+
+#game .player .cash.init.moving .current {
+    transition-duration: 0.5s;
+}
+
+#game .player .cash.adding.init.moving .current {
+    top: 3em;
+}
+
+#game .player .cash.subtracting.init.moving .current {
+    top: -3em;
+}
+
+#game .player .cash.init.moving .change,#game .player .cash.reset .change
+    {
+    top: 0.6em;
+    transition-duration: 0.5s;
+    visibility: visible;
+}
+
+#game .player .cash.reset .current {
+    transition-duration: 0;
+    visibility: hidden;
+}
+
+#game .player .cash.adding.reset .current {
+    top: -3em;
+}
+
+#game .player .cash.subtracting.reset .current {
+    top: 3em;
+}
+
+#game .player .cash.reset.moving .current {
+    top: 0.6em;
+    transition-duration: 0.5s;
+    visibility: visible;
+}
+
+#game .player .cash.reset.moving .change {
+    transition-duration: 0.5s;
+    visibility: visible;
+}
+
+#game .player .cash.adding.reset.moving .change {
+    top: 3em;
+}
+
+#game .player .cash.subtracting.reset.moving .change {
+    top: -3em;
+}

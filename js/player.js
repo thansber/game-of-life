@@ -5,7 +5,16 @@ function($, Util) {
   var $player = null;
   var $game = null;
   var players = [];
-  
+  var drawers = [
+    {name:"jobs", desc:"Jobs"},
+    {name:"insurance", desc:"Insurance"},
+    {name:"marriage", desc:"Marriage"},
+    {name:"children", desc:"Children"},
+    {name:"taxes", desc:"Taxes"},
+    {name:"revenge", desc:"Revenge"},
+    {name:"toll-bridge", desc:"Toll Bridge"},
+    {name:"events", desc:"Events"}
+  ];
   var insurance = [
     {name:"auto", price:1000}, 
     {name:"life", price:10000}, 
@@ -67,11 +76,26 @@ function($, Util) {
     markup[m++] = '<p class="change amount">$<span class="value"></span></p>';
     markup[m++] = '</div>';
     
+    markup[m++] = '<div class="summary">is a Doctor, has 2 daughters, owns auto and life insurance.</div>'
+    markup[m++] = '<div class="drawers">';
+    drawers.forEach(function(drawer) {
+      markup[m++] = '<div class="drawer" data-type="'  + drawer.name + '">';
+      markup[m++] = drawer.desc;
+      markup[m++] = '</div>';
+    });
+    markup[m++] = '</div>';
+
     markup[m++] = appendJobs();
-    markup[m++] = appendAssets();
+    markup[m++] = appendInsurance();
     markup[m++] = appendMarriagePresents();
-    markup[m++] = appendActions();
     markup[m++] = appendChildren();
+    markup[m++] = appendTaxes();
+    markup[m++] = appendRevenge();
+    
+    /*
+    markup[m++] = appendAssets();
+    markup[m++] = appendActions();
+    */
     markup[m++] = appendCashAdjuster();
     markup[m++] = appendPayday();
     
@@ -87,28 +111,9 @@ function($, Util) {
     updateCash($player, player.cash, "current");
   };
   
-  var appendActions = function() {
-    var markup = [], m = 0;
-    markup[m++] = '<div class="actions">';
-    markup[m++] =   '<button class="red action tuition">Tuition</button>';
-    markup[m++] =   '<button class="red action house">Bought a house</button>';
-    markup[m++] =   '<button class="red action taxes">Pay Taxes</button>';
-    markup[m++] =   '<button class="red action orphanage">Orphanage</button>';
-    markup[m++] =   '<button class="red action property-taxes">Property Taxes</button>';
-    markup[m++] = '</div>';
-    return markup.join("");
-  };
-  
   var appendAssets = function() {
     var markup = [], m = 0;
     markup[m++] = '<div class="assets">';
-    markup[m++] = '<div class="insurance">';
-    insurance.forEach(function(ins) {
-      markup[m++] = '<p class="choice ' + ins.name + '" data-name="' + ins.name + '" data-price="' + ins.price + '">';
-      markup[m++] = ins.name.toUpperCase();
-      markup[m++] = '</p>';
-    });
-    markup[m++] = '</div>';
     markup[m++] = '<div class="toll-owner"><p class="crossed">Crossed toll bridge</p></div>'
     markup[m++] = '</div>';
     return markup.join("");
@@ -127,17 +132,28 @@ function($, Util) {
   
   var appendChildren = function() {
     var markup = [], m = 0;
-    markup[m++] = '<div class="children">';
+    markup[m++] = '<div class="drawer-content children">';
     markup[m++] = '<button class="lightblue child boy">A son is born!</button>';
     markup[m++] = '<button class="pink child girl">A daughter is born!</button>';
-    markup[m++] = '<p class="summary"></p>'
+    markup[m++] = '</div>';
+    return markup.join("");
+  };
+  
+  var appendInsurance = function() {
+    var markup = [], m = 0;
+    markup[m++] = '<div class="drawer-content insurance">';
+    insurance.forEach(function(ins) {
+      markup[m++] = '<p class="choice ' + ins.name + '" data-name="' + ins.name + '" data-price="' + ins.price + '">';
+      markup[m++] = ins.name.toUpperCase();
+      markup[m++] = '</p>';
+    });
     markup[m++] = '</div>';
     return markup.join("");
   };
   
   var appendJobs = function() {
     var markup = [], m = 0;
-    markup[m++] = '<div class="jobs">';
+    markup[m++] = '<div class="drawer-content jobs">';
     jobs.forEach(function(job) {
       markup[m++] = '<p class="job ' + job.name + '" data-name="' + job.name + '" data-salary="' + job.salary + '">';
       markup[m++] = job.desc;
@@ -149,8 +165,8 @@ function($, Util) {
   
   var appendMarriagePresents = function() {
     var markup = [], m = 0;
-    markup[m++] = '<div class="marriage-presents">';
-    markup[m++] = '<label>Marriage presents</label>';
+    markup[m++] = '<div class="drawer-content marriage">';
+    markup[m++] = '<label>Presents</label>';
     markup[m++] = '<button class="green presents good" data-amount="2000">+2,000</button>';
     markup[m++] = '<button class="green presents ok" data-amount="1000">+1,000</button>';
     markup[m++] = '</div>';
@@ -162,6 +178,24 @@ function($, Util) {
     markup[m++] = '<div class="pay">';
     markup[m++] = '<button class="red payday">Pay Day!</button>';
     markup[m++] = '<button class="red interest">with interest</button>';
+    markup[m++] = '</div>';
+    return markup.join("");
+  };
+  
+  var appendRevenge = function() {
+    var markup = [], m = 0;
+    markup[m++] = '<div class="drawer-content revenge">';
+    markup[m++] =   '<select class="whom"></select>';
+    markup[m++] =   '<button class="gold sue">Revenge! Sue for damages</button>';
+    markup[m++] = '</div>';
+    return markup.join("");
+  };
+  
+  var appendTaxes = function() {
+    var markup = [], m = 0;
+    markup[m++] = '<div class="drawer-content taxes">';
+    markup[m++] =   '<button class="red salary" data-type="salary">Pay Taxes</button>';
+    markup[m++] =   '<button class="red property" data-type="property">Property Taxes</button>';
     markup[m++] = '</div>';
     return markup.join("");
   };
@@ -231,7 +265,7 @@ function($, Util) {
     $player.find(".cash ." + cashType).find(".value").text(formattedValue);
   };
   
-  var updateChildren = function($player) {
+  var updateChildrenSummary = function($player) {
     var player = players[getPlayerIndex($player)];
     var summary = "";
 
@@ -273,8 +307,17 @@ function($, Util) {
     crossedTollBridgeFirst: function($player) { return crossedTollBridge(players[getPlayerIndex($player)]); },
     daughterIsBorn: function($player) {
       players[getPlayerIndex($player)].daughters++;
-      updateChildren($player);
       everyonePays($player, 1000);
+    },
+    getPlayersForRevenge: function($player) {
+      var otherPlayers = [];
+      var playerName = $player.data("name");
+      players.forEach(function(otherPlayer, i) {
+        if (otherPlayer.name !== playerName && otherPlayer.cash >= 200000) {
+          otherPlayers.push({index:i, name:otherPlayer.name});
+        }
+      });
+      return otherPlayers;
     },
     handleAction: function($player, $action) {
       var player = players[getPlayerIndex($player)];
@@ -294,7 +337,7 @@ function($, Util) {
       });
   	 },
   	 marriagePresents: function($player, $presents) {
-  	   everyonePays($player, parseInt($presents.data("amount"), 10));
+  	   everyonePays($player, $presents.data("amount"));
   	 },
   	 payday: function($player, opt) {
   	   opt = opt || {};
@@ -309,6 +352,11 @@ function($, Util) {
   	   if (player.job) {
   	     adjustCash($player, player.salary, interestCallback);
   	   }
+  	 },
+  	 payTaxes: function($player, type) {
+  	   var player = players[getPlayerIndex($player)];
+  	   var amount = (type === "property" ? 50000 : player.salary / 2) * -1;
+  	   adjustCash($player, amount);
   	 },
   	 removeInsurance: function($insurance) {
   	   var $player = $insurance.closest(".player");
@@ -326,7 +374,6 @@ function($, Util) {
   	 },
   	 sonIsBorn: function($player) {
   	   players[getPlayerIndex($player)].sons++;
-  	   updateChildren($player);
   	   everyonePays($player, 1000);
   	 }
   };    

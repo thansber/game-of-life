@@ -1,18 +1,20 @@
+- payday w/interest, if payday results in positive cash, do not take out interest
+
 - new UI
--- make player area wider
 -- summary below name/cash 
---- "is a Doctor, has 2 sons and 1 daughter, owns auto, life, fire, and stock insurance..."
---- crossed toll bridge first
--- drawers
 --- jobs
 --- insurance
---- taxes (regular/property)
 --- children
+--- marriage?
 --- toll bridge
---- marriage
+--- millionaire
+-- drawers
+--- revenge - color button, add functionality
+--- toll bridge
+--- millionaire
+--- red square events
 
 - millionaire toggle, should include children/life insurance red square
-- sue for revenge
 - allow toll bridge owner to change?
 - allow for children values to be directly manipulated (mistake adding kid)
 

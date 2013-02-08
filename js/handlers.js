@@ -1,11 +1,7 @@
 define(
 /* Handlers */ 
-["jquery", "player"], 
-function($, Player) {
-  
-  var choiceChanged = function($choice) {
-    $choice.siblings().removeClass("selected").end().addClass("selected");
-  };
+["jquery", "drawers", "player", "util"], 
+function($, Drawer, Player, Util) {
   
   return {
     init: function() {
@@ -15,7 +11,7 @@ function($, Player) {
         var $target = $(e.target);
         
         if ($target.hasClass("swatch")) {
-          choiceChanged($target);
+          Util.choiceChanged($target);
         } else if ($target.hasClass("add")) {
           Player.add();
           $this.find("input").focus().select();
@@ -31,18 +27,14 @@ function($, Player) {
       $("#game").on("click", function(e) {
         var $target = $(e.target);
         var $player = $target.closest(".player");
-        if ($target.hasClass("choice")) { // toggle insurance
-          $target.toggleClass("added");
-          if ($target.hasClass("added")) {
-            Player.buyInsurance($target);
-          } else {
-            Player.removeInsurance($target);
-          }
-        } else if ($target.hasClass("child")) { // add a child
-          $target.hasClass("boy") ? Player.sonIsBorn($player) : Player.daughterIsBorn($player);
-        } else if ($target.hasClass("job")) { // set job
-          choiceChanged($target);
-          Player.setJob($target);
+        
+        if ($target.hasClass("drawer")) {
+          Util.choiceChanged($target);
+          Drawer.open($player, $target);
+        } else if ($target.hasClass("payday")) { // pay day
+          Player.payday($player);
+        } else if ($target.hasClass("interest")) { // pay day with interest
+          Player.payday($player, {interest:true});
         } else if ($target.hasClass("adjuster")) { // add/remove cash
           var value = parseInt($target.siblings("input").val(), 10);
           if (isNaN(value)) {
@@ -50,11 +42,12 @@ function($, Player) {
           }
           var cashValue = value * 1000 * ($target.hasClass("minus") ? -1 : 1);
           Player.adjustCash($player, cashValue);
-        } else if ($target.hasClass("payday")) { // pay day
-          Player.payday($player);
-        } else if ($target.hasClass("interest")) { // pay day with interest
-          Player.payday($player, {interest:true});
-        } else if ($target.hasClass("crossed")) {
+        } else if ($target.closest(".drawer-content")) { // drawer stuff
+          Drawer.click($player, $target);
+        }
+        
+        /*
+        else if ($target.hasClass("crossed")) {
           var firstPlayerToCross = Player.crossedTollBridgeFirst($player);
           if (firstPlayerToCross) {
             $target.html("Crossed toll bridge first");
@@ -62,9 +55,8 @@ function($, Player) {
           $target.addClass("selected");
         } else if ($target.hasClass("action")) {
           Player.handleAction($player, $target);
-        } else if ($target.hasClass("presents")) {
-          Player.marriagePresents($player, $target);
-        }
+        } 
+        */
       });
       
       $("#game").on("mouseover mouseout", function(e) {
@@ -81,7 +73,6 @@ function($, Player) {
           $pay.find(".interest").toggleClass("displayed");
         }
       });
-
     }
   };
 });

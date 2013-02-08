@@ -1,0 +1,206 @@
+#game .player .drawers {
+    background: linear-gradient(rgb(151, 151, 151), rgb(236, 236, 236) );
+    color: rgb(51, 51, 51);
+    overflow: auto;
+}
+
+#game .player .drawer {
+    border-color: rgb(255, 255, 255);
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    cursor: pointer;
+    float: left;
+    padding: 0.3em 0.5em;
+    text-shadow: 2px 2px 3px rgb(240, 240, 240);
+}
+
+#game .player .drawer:hover {
+    background: linear-gradient(rgb(236, 236, 236), rgb(151, 151, 151) );
+}
+
+#game .player .drawer.selected {
+    background: linear-gradient(rgb(102, 102, 102), rgb(51, 51, 51) );
+    color: rgb(240, 240, 240);
+    text-shadow: 2px 2px 3px rgb(17, 17, 17);
+}
+
+#game .player .drawer:last-child {
+    border-width: 0;
+}
+
+#game .player .drawer-content {
+    background-color: rgb(255, 255, 255);
+    clear: both;
+    display: none;
+    overflow: auto;
+    padding: 2em;
+}
+
+/* ==== */
+/* JOBS */
+/* ==== */
+#game .player .jobs {
+    font-size: 1.1em;
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: center;
+    width: 96%;
+}
+
+#game .player .jobs .job {
+    background-color: rgb(136, 136, 136);
+    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102) );
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    opacity: 0.2;
+    padding: 0.1em 0.35em 0.2em;
+    text-align: center;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+#game .player .jobs .job.selected {
+    opacity: 1;
+}
+
+#game .player .jobs .job:first-child {
+    border-left-width: 2px;
+    border-radius: 12px 0 0 12px;
+}
+
+#game .player .jobs .job:last-child {
+    border-right-width: 2px;
+    border-radius: 0 12px 12px 0;
+}
+
+/* ========= */
+/* INSURANCE */
+/* ========= */
+#game .player .insurance {
+    padding-left: 20%;
+    padding-right: 20%;
+    width: 60%;
+}
+
+#game .player .insurance .choice {
+    border-left: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    float: left;
+    font-size: 1.25em;
+    opacity: 0.2;
+    padding: 0.1em 0.25em 0.2em;
+    text-align: center;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    width: 4em;
+}
+
+#game .player .insurance .choice.added {
+    opacity: 1;
+}
+
+#game .player .insurance .choice:first-child {
+    border-radius: 12px 0 0 12px;
+}
+
+#game .player .insurance .choice:last-child {
+    border-radius: 0 12px 12px 0;
+}
+
+#game .player .insurance .auto {
+    background-color: orange;
+}
+
+#game .player .insurance .life {
+    background-color: blue;
+}
+
+#game .player .insurance .fire {
+    background-color: red;
+}
+
+#game .player .insurance .stock {
+    background-color: green;
+}
+
+/* MARRIAGE PRESENTS */
+/* ================= */
+#game .player .marriage {
+}
+
+#game .player .marriage label {
+    color: rgb(52, 52, 52);
+    display: inline-block;
+    font-size: 1.25em;
+    margin-top: 0.15em;
+    text-align: center;
+    width: 56%;
+}
+
+#game .player .marriage .presents {
+    font-size: 1.25em;
+    margin-right: 1em;
+}
+
+#game .player .marriage .presents.good {
+    float: left;
+}
+
+#game .player .marriage .presents.ok {
+    float: right;
+}
+
+/* ======== */
+/* CHILDREN */
+/* ======== */
+#game .player .children {
+}
+
+#game .player .children .boy {
+    float: left;
+    font-size: 1.25em;
+}
+
+#game .player .children .girl {
+    float: right;
+    font-size: 1.25em;
+}
+
+/* ===== */
+/* TAXES */
+/* ===== */
+#game .player .taxes {
+}
+
+#game .player .taxes .salary {
+    float: left;
+    font-size: 1.25em;
+}
+
+#game .player .taxes .property {
+    float: right;
+    font-size: 1.25em;
+}
+
+/* ======= */
+/* REVENGE */
+/* ======= */
+#game .player .revenge {
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 90%;
+}
+
+#game .player .revenge .whom {
+    font-size: 1.25em;
+    width: 12em;
+}
+
+#game .player .revenge .sue {
+    font-size: 1.25em;
+    margin-left: 1.5em;
+}

@@ -9,7 +9,7 @@
     box-shadow: 4px 4px 6px rgb(102, 102, 102);
     margin: 2em 1em;
     position: relative;
-    width: 40em;
+    width: 40.2em;
 }
 
 #game .player.light {
@@ -28,143 +28,17 @@
     top: 0.6em;
 }
 
-#game .player .cash {
-    float: right;
-    font-size: 1.5em;
-    height: 1.5em;
-    overflow: hidden;
-    padding: 0.5em 1em 0 0;
-    position: relative;
-    width: 5em;
-}
-
-#game .player .cash .amount {
-    position: absolute;
-    text-align: right;
-    top: 0.6em;
-    transition-property: top;
-    transition-duration: 0;
-    transition-timing-function: ease;
-    width: 95%;
-}
-
-#game .player .cash .change {
-    visibility: hidden;
-}
-
-#game .player .cash.adding.init .change {
-    top: -3em;
-}
-
-#game .player .cash.subtracting.init .change {
-    top: 3em;
-}
-
-#game .player .cash.init.moving .current {
-    transition-duration: 0.5s;
-}
-
-#game .player .cash.adding.init.moving .current {
-    top: 3em;
-}
-
-#game .player .cash.subtracting.init.moving .current {
-    top: -3em;
-}
-
-#game .player .cash.init.moving .change,#game .player .cash.reset .change
-    {
-    top: 0.6em;
-    transition-duration: 0.5s;
-    visibility: visible;
-}
-
-#game .player .cash.reset .current {
-    transition-duration: 0;
-    visibility: hidden;
-}
-
-#game .player .cash.adding.reset .current {
-    top: -3em;
-}
-
-#game .player .cash.subtracting.reset .current {
-    top: 3em;
-}
-
-#game .player .cash.reset.moving .current {
-    top: 0.6em;
-    transition-duration: 0.5s;
-    visibility: visible;
-}
-
-#game .player .cash.reset.moving .change {
-    transition-duration: 0.5s;
-    visibility: visible;
-}
-
-#game .player .cash.adding.reset.moving .change {
-    top: 3em;
-}
-
-#game .player .cash.subtracting.reset.moving .change {
-    top: -3em;
-}
-
-#game .player .assets {
-    background-color: rgb(255, 255, 255);
-    overflow: auto;
-}
-
-#game .player .insurance {
+#game .player .summary {
     background-color: white;
     clear: both;
-    float: left;
-    font-size: 1.1em;
-    overflow: auto;
+    color: rgb(68, 68, 68);
     padding: 1em;
 }
 
-#game .player .insurance .choice {
-    border-left: 1px solid rgb(255, 255, 255);
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    float: left;
-    opacity: 0.2;
-    padding: 0.1em 0.25em 0.2em;
-    text-align: center;
-    transition-property: opacity;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    width: 4em;
-}
-
-#game .player .insurance .choice.added {
-    opacity: 1;
-}
-
-#game .player .insurance .choice:first-child {
-    border-radius: 12px 0 0 12px;
-}
-
-#game .player .insurance .choice:last-child {
-    border-radius: 0 12px 12px 0;
-}
-
-#game .player .insurance .auto {
-    background-color: orange;
-}
-
-#game .player .insurance .life {
-    background-color: blue;
-}
-
-#game .player .insurance .fire {
-    background-color: red;
-}
-
-#game .player .insurance .stock {
-    background-color: green;
+/*
+#game .player .assets {
+    background-color: rgb(255, 255, 255);
+    overflow: auto;
 }
 
 #game .player .toll-owner {
@@ -191,61 +65,6 @@
     opacity: 1;
 }
 
-#game .player .jobs {
-    background-color: white;
-    clear: both;
-    font-size: 1.1em;
-    overflow: auto;
-    padding: 1em 2% 0;
-    text-align: center;
-    width: 96%;
-}
-
-#game .player .jobs .job {
-    background-color: rgb(136, 136, 136);
-    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102) );
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    display: inline-block;
-    opacity: 0.2;
-    padding: 0.1em 0.35em 0.2em;
-    text-align: center;
-    transition-property: opacity;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-}
-
-#game .player .jobs .job.selected {
-    opacity: 1;
-}
-
-#game .player .jobs .job:first-child {
-    border-left-width: 2px;
-    border-radius: 12px 0 0 12px;
-}
-
-#game .player .jobs .job:last-child {
-    border-right-width: 2px;
-    border-radius: 0 12px 12px 0;
-}
-
-#game .player .marriage-presents {
-    background-color: white;
-    padding: 0.5em 1em 1em;
-}
-
-#game .player .marriage-presents label {
-    color: #848484;
-    display: inline-block;
-    font-size: 1em;
-    margin-right: 1em;
-}
-
-#game .player .marriage-presents .presents {
-    font-size: 1em;
-    margin-right: 1em;
-}
-
 
 #game .player .actions {
     background-color: white;
@@ -259,32 +78,13 @@
     font-size: 0.9em;
     margin-right: 1em;
 }
-
-#game .player .children {
-    background-color: white;
-    overflow: auto;
-    padding: 0.5em 1em 1em;
-}
-
-#game .player .children .boy {
-    float: left;
-}
-
-#game .player .children .girl {
-    float: right;
-}
-
-#game .player .children .summary {
-    color: rgb(51, 51, 51);
-    margin-top: 0.1em;
-    text-align: center;
-}
+*/
 
 #game .player .pay {
     height: 6em;
     position: absolute;
     right: -22.5em;
-    top: 25%;
+    top: 4em;
 }
 
 #game .player .payday {
