@@ -1,13 +1,4 @@
-- new UI
--- summary below name/cash 
---- marriage?
---- insurance
---- toll bridge
---- millionaire
--- drawers
---- millionaire
-
-- millionaire toggle, should include children/life insurance red square
+- lucky square
 - allow toll bridge owner to change?
 - allow for children values to be directly manipulated (mistake adding kid)
 

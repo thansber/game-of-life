@@ -40,7 +40,9 @@ function($, Player, Util) {
     }},
     {type:"events", handle:function($player, $event) {
       if ($event.hasClass("millionaire")) {
-        
+        Player.becomeMillionaire($player);
+      } else if ($event.hasClass("lucky-number")) {
+        // TODO: where do I put the drop-down for other players??????
       } else {
         Player.adjustCash($player, $event.data("amount"));
       }

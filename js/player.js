@@ -1,41 +1,11 @@
 define( /* Player */
-["jquery", "util"],
-function($, Util) {
+["jquery", "data", "summary", "util"],
+function($, Data, Summary, Util) {
 
   var $player = null;
   var $game = null;
   var players = [];
-  var drawers = [
-    {name:"jobs", desc:"Jobs"},
-    {name:"insurance", desc:"Insurance"},
-    {name:"marriage", desc:"Marriage"},
-    {name:"children", desc:"Children"},
-    {name:"taxes", desc:"Taxes"},
-    {name:"revenge", desc:"Revenge"},
-    {name:"toll-bridge", desc:"Toll Bridge"},
-    {name:"events", desc:"Events"}
-  ];
-  var insurance = [
-    {name:"auto", price:1000}, 
-    {name:"life", price:10000}, 
-    {name:"fire", price:10000}, 
-    {name:"stock", price:50000}
-  ];
-  var jobs = [
-    {name:"d", desc:"Doctor", salary:50000, summary:"is a Doctor"},
-    {name:"j", desc:"Journalist", salary:24000, summary:"is a Journalist"},
-    {name:"l", desc:"Lawyer", salary:50000, summary:"is a Lawyer"},
-    {name:"t", desc:"Teacher", salary:20000, summary:"is a Teacher"},
-    {name:"p", desc:"Physicist", salary:30000, summary:"is a Physicist"},
-    {name:"u", desc:"University", salary:16000, summary:"is a University Student"},
-    {name:"b", desc:"Business", salary:12000, summary:"has a Business Degree"}
-  ];
-  var events = [
-    {type:"tuition", desc:"Pay tuition", amount:-2000, color:"red" },
-    {type:"house", desc:"Buy a house", amount:-40000, color:"red" },
-    {type:"orphanage", desc:"Help an orphanage", amount:-120000, color:"red" },
-    {type:"millionaire", desc:"Become a millionaire", amount:null, color:"green" }
-  ];
+  
   var priceFormatter = /(\d+)(\d{3})/;
   
   var adjustCash = function($player, amount, callback) {
@@ -46,22 +16,41 @@ function($, Util) {
     $cash.toggleClass("adding", amount > 0).toggleClass("subtracting", amount < 0).addClass("init");
     updateCash($player, amount, "change");
     
-    setTimeout(function() { 
-      changeCashState($player, {add:"moving"}); 
-    }, 20);
-    setTimeout(function() { 
-      changeCashState($player, {add:"reset", remove:"init moving"});
-    }, 550);
-    setTimeout(function() { 
-      updateCash($player, player.cash, "current");
-      changeCashState($player, {add:"moving"});
-    }, 1100);
-    setTimeout(function() { 
-      changeCashState($player, {remove:"adding subtracting reset moving"});
+    if (amount != 0) {
+      setTimeout(function() { 
+        changeCashState($player, {add:"moving"}); 
+      }, 20);
+      setTimeout(function() { 
+        changeCashState($player, {add:"reset", remove:"init moving"});
+      }, 550);
+      setTimeout(function() { 
+        updateCash($player, player.cash, "current");
+        changeCashState($player, {add:"moving"});
+      }, 1100);
+      setTimeout(function() { 
+        changeCashState($player, {remove:"adding subtracting reset moving"});
+        if (callback) {
+          callback.apply(undefined);
+        }
+      }, 2200);
+    } else {
       if (callback) {
         callback.apply(undefined);
       }
-    }, 2200);
+    }
+  };
+  
+  var anyOtherMillionaires = function(player) {
+    var otherMillionaire = false;
+    players.forEach(function(p) {
+      if (player.name !== p.name) {
+        if (p.millionaire) {
+          otherMillionaire = true;
+          return true;
+        }
+      }
+    });
+    return otherMillionaire;
   };
   
   var append = function(player) {
@@ -77,7 +66,7 @@ function($, Util) {
     
     markup[m++] = '<div class="summary"></div>'
     markup[m++] = '<div class="drawers">';
-    drawers.forEach(function(drawer) {
+    Data.drawers.forEach(function(drawer) {
       markup[m++] = '<div class="drawer" data-type="'  + drawer.name + '">';
       markup[m++] = drawer.desc;
       markup[m++] = '</div>';
@@ -132,7 +121,7 @@ function($, Util) {
   var appendEvents = function() {
     var markup = [], m = 0;
     markup[m++] = '<div class="drawer-content events">';
-    events.forEach(function(event) {
+    Data.events.forEach(function(event) {
       markup[m++] = '<button class="' + event.color + ' ' + event.type + '" data-amount="' + event.amount + '">';
       markup[m++] = event.desc;
       markup[m++] = '</button>'
@@ -144,7 +133,7 @@ function($, Util) {
   var appendInsurance = function() {
     var markup = [], m = 0;
     markup[m++] = '<div class="drawer-content insurance">';
-    insurance.forEach(function(ins) {
+    Data.insurance.forEach(function(ins) {
       markup[m++] = '<p class="choice ' + ins.name + '" data-name="' + ins.name + '" data-price="' + ins.price + '">';
       markup[m++] = ins.name.toUpperCase();
       markup[m++] = '</p>';
@@ -156,7 +145,7 @@ function($, Util) {
   var appendJobs = function() {
     var markup = [], m = 0;
     markup[m++] = '<div class="drawer-content jobs">';
-    jobs.forEach(function(job) {
+    Data.jobs.forEach(function(job) {
       markup[m++] = '<p class="job ' + job.name + '" data-name="' + job.name + '" data-salary="' + job.salary + '">';
       markup[m++] = job.desc;
       markup[m++] = '</p>';
@@ -264,6 +253,10 @@ function($, Util) {
     return $game.find(".player").eq(index);
   };
   
+  var hasInsurance = function(player, insurance) {
+    return $.inArray(insurance, player.insurance) > -1;
+  };
+  
   var updateCash = function($player, value, cashType) {
     var formattedValue = "" + value;
     while (priceFormatter.test(formattedValue)) {
@@ -274,22 +267,6 @@ function($, Util) {
       formattedValue = "+" + formattedValue;
     }
     $player.find(".cash ." + cashType).find(".value").text(formattedValue);
-  };
-  
-  var updateChildrenSummary = function($player) {
-    var player = players[getPlayerIndex($player)];
-    var summary = "";
-
-    if (player.sons > 0) {
-      summary += player.sons + " son" + (player.sons > 1 ? "s" : "");
-      if (player.daughters > 0) {
-        summary += " and ";
-      }
-    }
-    if (player.daughters > 0) {
-      summary += player.daughters + " daughter" + (player.daughters > 1 ? "s" : "");
-    }
-    $player.find(".children .summary").text(summary);
   };
   
   return {
@@ -305,15 +282,47 @@ function($, Util) {
         job: "",
         salary: 0,
         insurance: [],
-        married: false,
         sons: 0,
         daughters: 0,
-        tollBridgeOwned: false
+        married: false,
+        tollBridgeOwned: false,
+        millionaire: false
       };
       players.push(player);
       append(player);
     },
     adjustCash: adjustCash,
+    becomeMillionaire: function($player) {
+      var player = players[getPlayerIndex($player)];
+      player.millionaire = true;
+      
+      var finalInsuranceCallback = function() {
+        var amount = 0;
+        if (hasInsurance(player, "life")) {
+          amount += 8000;
+        }
+        if (hasInsurance(player, "stock")) {
+          amount += 120000;
+        }
+        adjustCash($player, amount);
+      };
+      
+      var lifeInsuranceCallback = function() {
+        if (hasInsurance(player, "life")) {
+          adjustCash($player, 240000, finalInsuranceCallback);
+        } else {
+          finalInsuranceCallback();
+        }
+      };
+      var firstMillionaireCallback = function() {
+        if (!anyOtherMillionaires(player)) {
+          adjustCash($player, 240000, lifeInsuranceCallback);
+        } else {
+          lifeInsuranceCallback();
+        }
+      };
+      adjustCash($player, (player.sons + player.daughters) * 48000, firstMillionaireCallback);
+    },
     buyInsurance: function($insurance) {
       var $player = $insurance.closest(".player");
       var player = players[getPlayerIndex($player)];
@@ -401,34 +410,7 @@ function($, Util) {
   	   adjustCash($game.find(".player").eq(targetIndex), -200000);
   	 },
   	 updateSummary: function($player) {
-  	   var player = players[getPlayerIndex($player)];
-  	   var summary = [], s = 0;
-  	   
-  	   if (player.job) {
-  	     jobs.forEach(function(job) {
-  	       if (player.job === job.name) {
-  	         summary[s++] = job.summary; 
-  	       }
-  	     })
-  	   }
-  	   
-  	   if (player.sons > 0 || player.daughters > 0) {
-  	     if (summary.length > 0) {
-  	       summary[s++] = ", ";
-  	     }
-        summary[s++] = "has ";
-  	     if (player.sons > 0) {
-  	       summary[s++] = player.sons + " son" + (player.sons > 1 ? "s" : "");
-  	       if (player.daughters > 0) {
-  	         summary[s++] = " and ";
-  	       }
-  	     }
-  	     if (player.daughters > 0) {
-          summary[s++] = player.daughters + " daughter" + (player.daughters > 1 ? "s" : "");
-  	     }
-  	   }
-  	   
-  	   $player.find(".summary").html(summary.join(""));
+  	   $player.find(".summary").html(Summary.update(players[getPlayerIndex($player)]));
   	 }
   };    
 });	

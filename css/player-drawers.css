@@ -213,6 +213,14 @@
 
 #game .player .toll-bridge .crossed {
     font-size: 1.25em;
+    opacity: 0.3;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
+#game .player .toll-bridge .crossed.selected {
+    opacity: 1;
 }
 
 /* ====== */
@@ -232,4 +240,8 @@
 
 #game .player .events button:last-child {
     margin-right: 0;
+}
+
+#game .player .events button.red {
+    margin-bottom: 1em;
 }
