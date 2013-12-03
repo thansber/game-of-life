@@ -4,22 +4,51 @@
   width: 34%;
 }
 
+#scoreboard .icon {
+    cursor: pointer;
+    height: 16px;
+    position: relative;
+    top: 1.2em;
+    width: 16px;
+}
+
+#scoreboard.game-started .icon {
+    display: none;
+}
+
 #scoreboard .arrow {
+    float: left;
 }
 
 #scoreboard .arrow.up {
+    background-image: url("../images/arrow-090.png");
+    clear: left;
 }
 
 #scoreboard .arrow.down {
+    background-image: url("../images/arrow-270.png");
+}
+
+#scoreboard .arrow.up.first,
+#scoreboard .arrow.down.last {
+    opacity: 0;
+}
+
+#scoreboard .delete {
+    background-image: url("../images/minus-button.png");
+    float: right;
 }
 
 #scoreboard .player {
+    border-radius: 12px;
     border-style: solid;
     border-width: 2px;
+    float: left;
     font-size: 1.5em;
-    margin-bottom: 0.75em;
+    margin: 0 0 0.5em 0.25em;
     overflow: auto;
     position: relative;
+    width: 85%;
 }
 
 #scoreboard .player.light {

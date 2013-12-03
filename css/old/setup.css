@@ -1,4 +1,4 @@
-#setup {
+#newPlayer {
     background-color: rgb(85, 85, 85);
     color: rgb(227, 227, 227);
     overflow: auto;
@@ -8,26 +8,26 @@
     transition-timing-function: ease;
 }
 
-#setup.collapsed {
+#newPlayer.collapsed {
     height: 0;
     overflow: hidden;
     padding: 2em 1em 0;
 }
 
-#setup input {
+#newPlayer input {
     float: left;
     font-size: 1.4em;
     margin-right: 1em;
     width: 19.5em;
 }
 
-#setup .swatches {
+#newPlayer .swatches {
     clear: left;
     float: left;
     margin-top: 1em;
 }
 
-#setup .swatch {
+#newPlayer .swatch {
     border: 1px solid black;
     border-radius: 8px;
     cursor: pointer;
@@ -42,62 +42,62 @@
     width: 3em;
 }
 
-#setup .swatch[data-color='C90000'] {
+#newPlayer .swatch[data-color='C90000'] {
   background-color: #C90000;
 }
 
-#setup .swatch[data-color='FFC0CB'] {
+#newPlayer .swatch[data-color='FFC0CB'] {
   background-color: #FFC0CB;
 }
 
-#setup .swatch[data-color='EE8833'] {
+#newPlayer .swatch[data-color='EE8833'] {
   background-color: #EE8833;
 }
 
-#setup .swatch[data-color='009900'] {
+#newPlayer .swatch[data-color='009900'] {
   background-color: #009900;
 }
 
-#setup .swatch[data-color='1A65A0'] {
+#newPlayer .swatch[data-color='1A65A0'] {
   background-color: #1A65A0;
 }
 
-#setup .swatch[data-color='BCD2EE'] {
+#newPlayer .swatch[data-color='BCD2EE'] {
   background-color: #BCD2EE;
 }
 
-#setup .swatch[data-color='FFFFFF'] {
+#newPlayer .swatch[data-color='FFFFFF'] {
   background-color: #FFFFFF;
 }
 
 
-#setup .swatch:hover {
+#newPlayer .swatch:hover {
     box-shadow: 0 0 6px rgb(255, 255, 255);
     opacity: 0.5;
 }
 
-#setup .swatch.selected {
+#newPlayer .swatch.selected {
     box-shadow: 0 0 12px rgb(255, 255, 255);
     opacity: 1;
 }
 
-#setup .swatch.disabled {
+#newPlayer .swatch.disabled {
     background-color: rgb(104, 104, 104);
     box-shadow: none;
     opacity: 0.2;
 }
 
-#setup.collapsed .swatch {
+#newPlayer.collapsed .swatch {
     box-shadow: 0 0 0;
 }
 
-#setup button {
+#newPlayer button {
     font-size: 1.5em;
     margin: 0.4em 0 0 1em;
     padding: 0.5em;
 }
 
-#setup .toggler {
+#newPlayer .toggler {
     background-repeat: no-repeat;
     background-size: cover;
     cursor: pointer;
@@ -111,11 +111,11 @@
     width: 3em;
 }
 
-#setup .toggler.hide {
+#newPlayer .toggler.hide {
     background-image: url("../images/arrow-090.png");
 }
 
-#setup .toggler.show {
+#newPlayer .toggler.show {
     background-image: url("../images/arrow-270.png");
     height: 1.75em;
     right: 2.5em;

@@ -12,6 +12,9 @@ function($, Game, Util) {
         .on('click', '.add', function() {
           Game.addPlayer();
         })
+        .on('click', '.start', function() {
+          Game.start();
+        })
         .on('click', '.toggler', function() {
           var $toggler = $(this);
           $toggler.closest('section').toggleClass('collapsed');
