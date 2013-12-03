@@ -1,10 +1,10 @@
 define( /* Summary */
-["jquery", "data"],
+["jquery", "../data"],
 function($, Data) {
 
   var summary = [];
   var s = 0;
-  
+
   var childrenSummary = function(player) {
     if (player.sons > 0 || player.daughters > 0) {
       if (summary.length > 0) {
@@ -22,37 +22,37 @@ function($, Data) {
       }
     }
   };
-  
+
   var insuranceSummary = function(player) {
     if (player.insurance.length > 0) {
       var ownsInsurance = $.merge([], player.insurance);
       if (summary.length > 0) {
         summary[s++] = ", ";
       }
-      summary[s++] = " owns "
-      
+      summary[s++] = " owns ";
+
       if (ownsInsurance.length === 1) {
         summary[s++] = ownsInsurance[0];
       } else if (ownsInsurance.length === 2) {
-        summary[s++] = ownsInsurance.join(" and ")
+        summary[s++] = ownsInsurance.join(" and ");
       } else {
-        ownsInsurance[ownsInsurance.length - 1] = "and " + ownsInsurance[ownsInsurance.length - 1]; 
+        ownsInsurance[ownsInsurance.length - 1] = "and " + ownsInsurance[ownsInsurance.length - 1];
         summary[s++] = ownsInsurance.join(", ");
       }
       summary[s++] = " insurance";
     }
   };
-  
+
   var jobSummary = function(player) {
     if (player.job) {
       Data.jobs.forEach(function(job) {
         if (player.job === job.name) {
-          summary[s++] = job.summary; 
+          summary[s++] = job.summary;
         }
-      })
+      });
     }
   };
-  
+
   var marriageSummary = function(player) {
     if (player.married) {
       if (summary.length > 0) {
@@ -61,7 +61,7 @@ function($, Data) {
       summary[s++] = "is married";
     }
   };
-  
+
   var millionaireSummary = function(player) {
     if (player.millionaire) {
       if (summary.length > 0) {
@@ -70,7 +70,7 @@ function($, Data) {
       summary[s++] = "and is a MILLIONAIRE!";
     }
   };
-  
+
   var tollBridgeSummary = function(player) {
     if (player.tollBridgeOwned) {
       if (summary.length > 0) {
@@ -78,21 +78,21 @@ function($, Data) {
       }
       summary[s++] = "owns the toll bridge";
     }
-  }
-  
+  };
+
   return {
     update: function(player) {
       summary = [];
       s = 0;
-        
+
       jobSummary(player);
       marriageSummary(player);
       childrenSummary(player);
       insuranceSummary(player);
       tollBridgeSummary(player);
       millionaireSummary(player);
-      
+
       return summary.join("");
     }
-  };    
-});	
+  };
+});

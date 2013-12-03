@@ -2,6 +2,18 @@
 - allow toll bridge owner to change?
 - allow for children values to be directly manipulated (mistake adding kid)
 
-Chrome issues
-=============
-- cash adjuster has blank space between input and add/remove
+
+
+Version 3.0
+===========
+- Leave top the same
+- Left side = scoreboard
+    - should players have no space or separated?
+    - animation as standings change, all move at same time
+    - need a way to select current player (arrow/glow)
+- Right side = drawers/actions
+    - selecting another player can be done via scoreboard
+- Store all actions taken in local storage
+    - Start over
+    - Replay
+    - Graphs

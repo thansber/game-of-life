@@ -1,10 +1,24 @@
-require(
-["jquery", "handlers", "player"], 
-function($, Handlers, Player) {
+require([
+  'jquery',
+  'game',
+  'handlers',
+  'scoreboard',
+  'setup'
+], function(
+  $,
+  Game,
+  Handlers,
+  Scoreboard,
+  Setup
+) {
+
   $(document).ready(function() {
     Handlers.init();
-    Player.init();
-    
-    $("#newPlayer input").focus();
+    Game.init();
+    Scoreboard.init();
+    Setup.init();
+
+    Setup.autoSetup(4);
   });
+
 });

@@ -9,16 +9,16 @@ function($) {
     }
     return hex;
   };
-  
+
   var hexToRgb = function(hex) {
     hex = cleanupHex(hex);
     return [
-      parseInt(hex.substr(0, 2), 16) / 255, 
-      parseInt(hex.substr(2, 2), 16) / 255, 
+      parseInt(hex.substr(0, 2), 16) / 255,
+      parseInt(hex.substr(2, 2), 16) / 255,
       parseInt(hex.substr(4), 16) / 255
     ];
   };
-  
+
   return {
     choiceChanged: function($choice) {
       $choice.siblings().removeClass("selected").end().addClass("selected");
@@ -32,5 +32,5 @@ function($) {
       var level = 0.213 * rgb[0] + 0.715 * rgb[1] + 0.072 * rgb[2];
       return level < 0.5 ? "light" : "dark";
     }
-  };    
-});	
+  };
+});

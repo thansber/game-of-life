@@ -1,5 +1,5 @@
 define( /* Drawers */
-["jquery", "player", "util"],
+["jquery", "./player", "../util"],
 function($, Player, Util) {
 
   var contentHandlers = [
@@ -48,26 +48,26 @@ function($, Player, Util) {
       }
     }}
   ];
-  
+
   var openHandlers = {
     revenge: function($player) {
       var revengeTargets = Player.getPlayersForRevenge($player);
-      var $revenge = $player.find(".revenge.drawer-content"); 
+      var $revenge = $player.find(".revenge.drawer-content");
       var $whom = $revenge.find(".whom");
       $whom.empty();
-      
+
       revengeTargets.forEach(function(target, i) {
         var option = '<option value="' + target.index + '">' + target.name + '</option>';
         $whom.append($(option));
       });
-      
+
       var anyoneToSue = revengeTargets.length > 0;
       $revenge.find(".nobody").toggle(!anyoneToSue);
       $revenge.find(".sue").toggle(anyoneToSue);
       $whom.toggle(anyoneToSue);
     }
   };
-  
+
   return {
     click: function($player, $target) {
       var $content = $target.closest(".drawer-content");
@@ -87,4 +87,4 @@ function($, Player, Util) {
       });
     }
   };
-});	
+});

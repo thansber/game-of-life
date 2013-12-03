@@ -6,9 +6,7 @@
   <link rel="stylesheet" href="css/main.css"/>
   <link rel="stylesheet" href="css/buttons.css"/>
   <link rel="stylesheet" href="css/setup.css"/>
-  <link rel="stylesheet" href="css/player.css"/>
-  <link rel="stylesheet" href="css/player-cash.css"/>
-  <link rel="stylesheet" href="css/player-drawers.css"/>
+  <link rel="stylesheet" href="css/scoreboard.css"/>
   <!--[if lt IE 9]>
   <script src="${staticUri}ui/js/lib/html5.js"></script>
   <script src="${staticUri}ui/js/lib/shims.js"></script>
@@ -16,9 +14,9 @@
 </head>
 
 <body>
-<div id="version">v2.0</div>
+<div id="version">v3.0</div>
 
-<section id="newPlayer">
+<section id="setup">
   <div class="toggler hide"></div>
   <input type="text" placeholder="Enter player name" />
   <div class="swatches">
@@ -33,10 +31,11 @@
   <button class="grey add">Add player to game</button>
 </section>
 
-<section id="game"><!-- players are added via Javascript --></section>
+<section id="scoreboard"><!-- players are added via Javascript --></section>
+<section id="actions"></section>
 
 <script src="js/lib/prefixfree.min.js"></script>
-<script>var require = { baseUrl : "js/old" };</script>
+<script>var require = { baseUrl : "js" };</script>
 <script data-main="main" src="js/lib/require-jquery-min.js"></script>
 </body>
 
