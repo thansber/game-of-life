@@ -38,6 +38,18 @@ function($, Player, Scoreboard) {
       $setup = $('#setup');
     },
 
+    movePlayer: function($target, howMuch) {
+      var $player = Scoreboard.findPlayer($target),
+          player = this.playerBy({elem: $player}),
+          playerIndex = Scoreboard.indexOf($player),
+          movedPlayer = game.players.splice(playerIndex, 1)[0];
+
+      // TODO: update scoreboard
+      if (howMuch < 0) {
+        game.players.splice(playerIndex + howMuch, 0, movedPlayer);
+      }
+    },
+
     numPlayers: function() {
       return game.players.length;
     },
@@ -45,6 +57,11 @@ function($, Player, Scoreboard) {
     playerBy: function(options) {
       var opt = options || {},
           foundPlayer = null;
+
+      if (opt.elem) {
+        opt.name = opt.elem.data('name');
+      }
+
       if (opt.index !== undefined) {
         return game.players[opt.index];
       } else if (opt.name) {
@@ -57,6 +74,19 @@ function($, Player, Scoreboard) {
       }
 
       return false;
+    },
+
+    players: function() {
+      return game.players;
+    },
+
+    removePlayer: function($target) {
+      // $target is the delete button
+      var $player = Scoreboard.findPlayer($target),
+          player = this.playerBy({elem: $player});
+
+      game.players.splice(Scoreboard.indexOf($player), 1);
+      Scoreboard.removePlayer($player);
     }
   };
 

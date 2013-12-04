@@ -20,6 +20,14 @@ function($, Game, Util) {
           $toggler.closest('section').toggleClass('collapsed');
           $toggler.toggleClass('show hide');
         });
+
+      $('#scoreboard')
+        .on('click', '.move.up', function() {
+          Game.movePlayer($(this), -1);
+        })
+        .on('click', '.delete', function() {
+          Game.removePlayer($(this));
+        });
     }
   };
 });

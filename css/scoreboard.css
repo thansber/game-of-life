@@ -1,7 +1,7 @@
 #scoreboard {
   float: left;
   padding: 1em;
-  width: 34%;
+  width: 45%;
 }
 
 #scoreboard .icon {
@@ -22,21 +22,32 @@
 
 #scoreboard .arrow.up {
     background-image: url("../images/arrow-090.png");
-    clear: left;
 }
 
 #scoreboard .arrow.down {
     background-image: url("../images/arrow-270.png");
 }
 
-#scoreboard .arrow.up.first,
-#scoreboard .arrow.down.last {
+#scoreboard .arrow.up.first {
     opacity: 0;
+}
+
+#scoreboard .arrow.up.last {
+    margin-left: 16px;
+}
+
+#scoreboard .arrow.down.last {
+    display: none;
 }
 
 #scoreboard .delete {
     background-image: url("../images/minus-button.png");
     float: right;
+}
+
+#scoreboard .player-container {
+    overflow: auto;
+    position: relative;
 }
 
 #scoreboard .player {
@@ -47,7 +58,6 @@
     font-size: 1.5em;
     margin: 0 0 0.5em 0.25em;
     overflow: auto;
-    position: relative;
     width: 85%;
 }
 

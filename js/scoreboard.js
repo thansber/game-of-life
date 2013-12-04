@@ -3,36 +3,79 @@ define( /* Scoreboard */
 function($, Util) {
 
   var $scoreboard = null,
-      _private = {};
+      cashFormatter = /(\d+)(\d{3})/,
+      _private = {
+        containerFor: function($elem) {
+          return $elem.closest('.player-container');
+        },
+        updateArrows: function() {
+          var upArrows = $scoreboard.find('.up.arrow'),
+              downArrows = $scoreboard.find('.down.arrow');
+          upArrows.removeClass('last');
+          upArrows.first().addClass('first');
+          upArrows.last().addClass('last');
+          downArrows.removeClass('last').last().addClass('last');
+        }
+      };
 
   return {
     addPlayer: function(player) {
       var markup = [], i = 0,
-          $markup;
+          $markup,
+          $player;
 
-      markup[i++] = '<div class="up arrow icon" title="Move this player up"></div>';
-      markup[i++] = '<div class="down arrow icon" title="Move this player down"></div>';
-      markup[i++] = '<div class="player ' + Util.textColorFromBackground(player.color) + '"';
-      markup[i++] = ' data-name="' + player.name + '"';
-      markup[i++] = ' data-color="' + player.color + '"';
-      markup[i++] = '>';
-      markup[i++] = '<p class="name">' + player.name + '</p>';
-      markup[i++] = '<p class="cash">$<span class="value">' + player.cash + '</p>';
+      markup[i++] = '<div class="player-container">';
+      markup[i++] =   '<div class="move up arrow icon" title="Move this player up"></div>';
+      markup[i++] =   '<div class="move down arrow icon" title="Move this player down"></div>';
+      markup[i++] =   '<div class="player ' + Util.textColorFromBackground(player.color) + '"';
+      markup[i++] =   ' data-name="' + player.name + '"';
+      markup[i++] =   ' data-color="' + player.color + '"';
+      markup[i++] =   '>';
+      markup[i++] =     '<p class="name">' + player.name + '</p>';
+      markup[i++] =     '<p class="cash">$<span class="value"></p>';
+      markup[i++] =   '</div>';
+      markup[i++] =   '<div class="delete icon" title="Delete this player"></div>';
       markup[i++] = '</div>';
-      markup[i++] = '<div class="delete icon" title="Delete this player"></div>';
 
       $scoreboard.append(markup.join(''));
-      $scoreboard.find('.player').last().css({
+      $player = $scoreboard.find('.player').last();
+
+      $player.css({
         backgroundColor: "#" + player.color,
         borderColor: Util.isWhite(player.color) ? "#666" : "#" + player.color,
       });
 
-      $scoreboard.find('.up.arrow').first().addClass('first');
-      $scoreboard.find('.down.arrow').removeClass('last').last().addClass('last');
+      this.formatCash($player, player);
+      _private.updateArrows();
+    },
+
+    findPlayer: function($elem) {
+      if ($elem.is('.player')) {
+        return $elem;
+      }
+
+      return _private.containerFor($elem).find('.player');
+    },
+
+    formatCash: function($player, player) {
+      var formattedCash = '' + player.cash;
+      while (cashFormatter.test(formattedCash)) {
+        formattedCash = formattedCash.replace(cashFormatter, '$1' + ',' + '$2');
+      }
+      $player.find('.cash .value').text(formattedCash);
     },
 
     init: function() {
       $scoreboard = $('#scoreboard');
+    },
+
+    indexOf: function($player) {
+      return $scoreboard.find('.player-container').index(_private.containerFor($player));
+    },
+
+    removePlayer: function($player) {
+      _private.containerFor($player).remove();
+      _private.updateArrows();
     }
   };
 });

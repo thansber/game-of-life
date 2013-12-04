@@ -51,11 +51,15 @@ function(Game, Scoreboard) {
       });
     });
 
-    describe('#playerBy', function() {
+    describe('multiple players', function() {
 
       beforeEach(function() {
         var self = this,
-            names = ['Name1', 'Name2', 'Name3'];
+            names = ['Name1', 'Name2', 'Name3', 'Name4'];
+
+        this.scoreboard = affix('#scoreboard');
+        Scoreboard.init();
+
         names.forEach(function(name) {
           self.name.val(name);
           Game.addPlayer();
@@ -63,26 +67,122 @@ function(Game, Scoreboard) {
         });
       });
 
-      describe('by index', function() {
-        it('handles 0', function() {
-          expect(Game.playerBy({index: 0}).name).toEqual('Name1');
-        });
-        it('finds the correct player', function() {
-          expect(Game.playerBy({index: 1}).name).toEqual('Name2');
-        });
-        it('handles a bad index', function() {
-          expect(Game.playerBy({index: 20})).toBeFalsy();
+      describe('#movePlayer', function() {
+        describe('moving up', function() {
+          describe('the 2nd player', function() {
+            it('re-orders correctly', function() {
+              var expectedNames = ['Name2', 'Name1', 'Name3', 'Name4'],
+                  moveButton = this.scoreboard.find('.move.up').eq(1);
+              Game.movePlayer(moveButton, -1);
+              Game.players().forEach(function(player, i) {
+                expect(player.name).toEqual(expectedNames[i]);
+              });
+            });
+          });
         });
       });
 
-      describe('by name', function() {
-        it('find the correct player', function() {
-          expect(Game.playerBy({name: 'Name3'})).toBeDefined();
+      describe('#playerBy', function() {
+
+        describe('by index', function() {
+          it('handles 0', function() {
+            expect(Game.playerBy({index: 0}).name).toEqual('Name1');
+          });
+          it('finds the correct player', function() {
+            expect(Game.playerBy({index: 1}).name).toEqual('Name2');
+          });
+          it('handles a bad index', function() {
+            expect(Game.playerBy({index: 20})).toBeFalsy();
+          });
         });
-        it('handles a bad name', function() {
-          expect(Game.playerBy({name: 'I-do-not-exist'})).toBeFalsy();
+
+        describe('by name', function() {
+          it('finds the correct player', function() {
+            expect(Game.playerBy({name: 'Name3'})).toBeTruthy();
+          });
+          it('handles a bad name', function() {
+            expect(Game.playerBy({name: 'I-do-not-exist'})).toBeFalsy();
+          });
+        });
+
+        describe('by elem', function() {
+          it('finds the correct player', function() {
+            this.testPlayer = affix('div[data-name="Name1"]');
+            expect(Game.playerBy({elem: this.testPlayer })).toBeTruthy();
+          });
+          it('handles an element with a bogus name', function() {
+            this.testPlayer = affix('div[data-name="Does not exist"]');
+            expect(Game.playerBy({elem: this.testPlayer })).toBeFalsy();
+          });
+          it('handles an element with a missing name', function() {
+            this.testPlayer = affix('div');
+            expect(Game.playerBy({elem: this.testPlayer })).toBeFalsy();
+          });
         });
       });
+
+      describe('#removePlayer', function() {
+        describe('when removing the first player', function() {
+          beforeEach(function() {
+            this.deleteButton = this.scoreboard.find('.delete').first();
+          });
+
+          it('removes it', function() {
+            expect(Game.numPlayers()).toEqual(4);
+            Game.removePlayer(this.deleteButton);
+            expect(Game.numPlayers()).toEqual(3);
+          });
+
+          it('removes the correct player', function() {
+            var expectedNames = ['Name2', 'Name3', 'Name4'];
+            Game.removePlayer(this.deleteButton);
+            Game.players().forEach(function(player, i) {
+              expect(player.name).toEqual(expectedNames[i]);
+            });
+          });
+        });
+
+        describe('when removing a middle player', function() {
+          beforeEach(function() {
+            this.deleteButton = this.scoreboard.find('.delete').eq(2);
+          });
+
+          it('removes it', function() {
+            expect(Game.numPlayers()).toEqual(4);
+            Game.removePlayer(this.deleteButton);
+            expect(Game.numPlayers()).toEqual(3);
+          });
+
+          it('removes the correct player', function() {
+            var expectedNames = ['Name1', 'Name2', 'Name4'];
+            Game.removePlayer(this.deleteButton);
+            Game.players().forEach(function(player, i) {
+              expect(player.name).toEqual(expectedNames[i]);
+            });
+          });
+        });
+
+        describe('when removing the last player', function() {
+          beforeEach(function() {
+            this.deleteButton = this.scoreboard.find('.delete').last();
+          });
+
+          it('removes it', function() {
+            expect(Game.numPlayers()).toEqual(4);
+            Game.removePlayer(this.deleteButton);
+            expect(Game.numPlayers()).toEqual(3);
+          });
+
+          it('removes the correct player', function() {
+            var expectedNames = ['Name1', 'Name2', 'Name3'];
+            Game.removePlayer(this.deleteButton);
+            Game.players().forEach(function(player, i) {
+              expect(player.name).toEqual(expectedNames[i]);
+            });
+          });
+        });
+      });
+
     });
 
   });
