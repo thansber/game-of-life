@@ -10,6 +10,27 @@ function(Data, Player) {
       });
     });
 
+    describe('#adjustCash', function() {
+      beforeEach(function() {
+        this.player = new Player();
+      });
+
+      it('returns the player', function() {
+        expect(this.player.adjustCash(0)).toEqual(this.player);
+      });
+
+      describe('for a positive amount', function() {
+        it('changes the cash', function() {
+          expect(this.player.adjustCash(5000).cash).toEqual(15000);
+        });
+      });
+      describe('for a negative amount', function() {
+        it('changes the cash', function() {
+          expect(this.player.adjustCash(-5000).cash).toEqual(5000);
+        });
+      });
+    });
+
     describe('#setJob', function() {
       describe('a valid value', function() {
         it('sets the job using the provided value', function() {

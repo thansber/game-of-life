@@ -16,6 +16,11 @@ function($, Data) {
   };
 
   $.extend(Player.prototype, {
+    adjustCash: function(amount) {
+      this.cash += amount;
+      return this;
+    },
+
     setJob: function(jobId) {
       var self = this;
       Data.jobs.forEach(function(job) {

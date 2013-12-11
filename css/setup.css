@@ -3,12 +3,9 @@
     color: rgb(227, 227, 227);
     overflow: auto;
     padding: 1em;
-    transition-property: height padding;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
 }
 
-#setup.collapsed {
+.game-started #setup {
     height: 0;
     overflow: hidden;
     padding: 2em 1em 0;
@@ -84,6 +81,7 @@
 #setup .swatch.disabled {
     background-color: rgb(104, 104, 104);
     box-shadow: none;
+    cursor: default;
     opacity: 0.2;
 }
 
@@ -93,32 +91,26 @@
 
 #setup button {
     font-size: 1.5em;
-    margin: 0.4em 0 0 1em;
+    margin: 0.75em 0 0 1em;
     padding: 0.5em;
 }
 
-#setup .toggler {
-    background-repeat: no-repeat;
-    background-size: cover;
+
+#re-setup {
+    color: rgb(208, 208, 208);
     cursor: pointer;
+    display: none;
     float: right;
-    height: 3em;
-    position: relative;
-    top: 1em;
-    transition-property: height width;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    width: 3em;
+    position: absolute;
+    left: 3.2em;
+    top: 0.25em;
 }
 
-#setup .toggler.hide {
-    background-image: url("../images/arrow-090.png");
+.game-started #re-setup {
+    display: inline-block;
 }
 
-#setup .toggler.show {
-    background-image: url("../images/arrow-270.png");
-    height: 1.75em;
-    right: 2.5em;
-    top: -2em;
-    width: 1.75em;
+#re-setup:hover {
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 12px rgb(255, 255, 255)
 }

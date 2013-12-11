@@ -3,7 +3,6 @@ button {
     box-shadow: 2px 2px 1px rgb(102, 102, 102);
     color: rgb(240, 240, 240);
     cursor: pointer;
-    outline: none;
     padding: 2px 8px 3px;
     position: relative;
     text-shadow: 2px 2px 3px rgb(17, 17, 17);

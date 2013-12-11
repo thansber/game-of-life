@@ -9,6 +9,10 @@
     "grunt-contrib-jasmine": "~0.5.2",
     "phantomjs": "1.8.2-0",
     "grunt-template-jasmine-requirejs": "~0.1.8",
-    "grunt-notify": "~0.2.16"
+    "grunt-notify": "~0.2.16",
+    "growl": "~1.7.0",
+    "grunt-growl": "~0.1.5",
+    "jasmine-node": "~1.11.0",
+    "grunt-jasmine-node": "~0.1.0"
   }
 }

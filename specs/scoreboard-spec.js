@@ -41,22 +41,22 @@ function(Scoreboard) {
         });
       });
 
-      describe('#formatCash', function() {
+      describe('#updatePlayerCash', function() {
         it('does nothing to values < 1000', function() {
           this.playerObj.cash = 500;
-          Scoreboard.formatCash(this.player, this.playerObj);
+          Scoreboard.updatePlayerCash(this.player, this.playerObj);
           expect(this.cashValue).toContainText('500');
         });
 
         it('formats values > 1000', function() {
           this.playerObj.cash = 10500;
-          Scoreboard.formatCash(this.player, this.playerObj);
+          Scoreboard.updatePlayerCash(this.player, this.playerObj);
           expect(this.cashValue).toContainText('10,500');
         });
 
         it('formats values > 1000000', function() {
           this.playerObj.cash = 12345678;
-          Scoreboard.formatCash(this.player, this.playerObj);
+          Scoreboard.updatePlayerCash(this.player, this.playerObj);
           expect(this.cashValue).toContainText('12,345,678');
         });
       });
@@ -69,6 +69,7 @@ function(Scoreboard) {
         Scoreboard.addPlayer({name: 'Name 1', color: '000000', cash: 1000000});
         Scoreboard.addPlayer({name: 'Name 2', color: '000000', cash: 1000000});
         Scoreboard.addPlayer({name: 'Name 3', color: '000000', cash: 1000000});
+        Scoreboard.addPlayer({name: 'Name 4', color: '000000', cash: 1000000});
       });
 
       describe('#addPlayer', function() {
@@ -77,7 +78,7 @@ function(Scoreboard) {
         });
 
         it('does not treat up arrows for players 2-n as the first one', function() {
-          expect(this.scoreboard.find('.player-container').filter(':gt(0)').find('.up.arrow')).not.toHaveClass('first');
+          expect(this.scoreboard.find('.player-container').not(':first').find('.up.arrow')).not.toHaveClass('first');
         });
 
         it('treats the last up arrow as the last one', function() {
@@ -89,7 +90,16 @@ function(Scoreboard) {
         });
 
         it('does not treat down arrows for players 1-(n-1) as the last one', function() {
-          expect(this.scoreboard.find('.down.arrow').filter(':lt(2)')).not.toHaveClass('last');
+          expect(this.scoreboard.find('.down.arrow').not(':last')).not.toHaveClass('last');
+        });
+      });
+
+      describe('#currentPlayer', function() {
+        it('returns the current player', function() {
+          Scoreboard.nextPlayer();
+          Scoreboard.nextPlayer();
+          Scoreboard.nextPlayer();
+          expect(Scoreboard.currentPlayer()).toHaveData('name', 'Name 3');
         });
       });
 
@@ -113,25 +123,101 @@ function(Scoreboard) {
         it('returns the index', function() {
           expect(Scoreboard.indexOf(this.scoreboard.find('.player').first())).toEqual(0);
         });
+
+        it('handles a player container', function() {
+          expect(Scoreboard.indexOf(this.scoreboard.find('.player-container').eq(2))).toEqual(2);
+        });
       });
 
+      describe('#movePlayer', function() {
+        describe('moving up', function() {
+          describe('the 2nd player', function() {
+            it('swaps the 1st and 2nd players', function() {
+              this.playerToMove = Scoreboard.playerBy({ index: 1 });
+              Scoreboard.movePlayer(this.playerToMove, -1);
+              expect(Scoreboard.playerBy({ position: 'first' })).toHaveData('name', 'Name 2');
+            });
+          });
+
+          describe('the last player', function() {
+            it('swaps the last and 2nd-to-last players', function() {
+              this.playerToMove = Scoreboard.playerBy({ position: 'last' });
+              Scoreboard.movePlayer(this.playerToMove, -1);
+              expect(Scoreboard.playerBy({ index: 2 })).toHaveData('name', 'Name 4');
+            });
+          });
+        });
+
+        describe('moving down', function() {
+          describe('the 1st player', function() {
+            it('swaps the 1st and 2nd players', function() {
+              this.playerToMove = Scoreboard.playerBy({ position: 'first' });
+              Scoreboard.movePlayer(this.playerToMove, 1);
+              expect(Scoreboard.playerBy({ index: 0 })).toHaveData('name', 'Name 2');
+              expect(Scoreboard.playerBy({ index: 1 })).toHaveData('name', 'Name 1');
+            });
+          });
+
+          describe('the 2nd to last player', function() {
+            it('swaps the last and 2nd-to-last players', function() {
+              this.playerToMove = Scoreboard.playerBy({ index: 2 });
+              Scoreboard.movePlayer(this.playerToMove, 1);
+              expect(Scoreboard.playerBy({ index: 2 })).toHaveData('name', 'Name 4');
+              expect(Scoreboard.playerBy({ position: 'last' })).toHaveData('name', 'Name 3');
+            });
+          });
+        });
+      });
+
+      describe('#nextPlayer', function() {
+        beforeEach(function() {
+          this.players = this.scoreboard.find('.player-container');
+        });
+        describe('when starting the game', function() {
+          it('gives the first player the turn', function() {
+            Scoreboard.nextPlayer();
+            expect(this.players.first()).toHaveClass('has-turn');
+          });
+        });
+
+        describe('after the game has started', function() {
+          it('gives the next player the turn', function() {
+            Scoreboard.nextPlayer();
+            Scoreboard.nextPlayer();
+            expect(this.players.eq(0)).not.toHaveClass('has-turn');
+            expect(this.players.eq(1)).toHaveClass('has-turn');
+          });
+        });
+
+        describe('going from last player to first', function() {
+          it('should loop back to the first player', function() {
+            _(this.players.length).times(function() {
+              Scoreboard.nextPlayer();
+            });
+            expect(this.players.last()).toHaveClass('has-turn');
+            Scoreboard.nextPlayer();
+            expect(this.players.first()).toHaveClass('has-turn');
+            expect(this.players.last()).not.toHaveClass('has-turn');
+          });
+        });
+      });
 
       describe('#removePlayer', function() {
         it('removes the player', function() {
+          expect(this.scoreboard.find('.player-container')).toHaveLength(4);
+          Scoreboard.removePlayer(Scoreboard.playerBy({ index: 1 }));
           expect(this.scoreboard.find('.player-container')).toHaveLength(3);
-          Scoreboard.removePlayer(this.scoreboard.find('.player').eq(1));
-          expect(this.scoreboard.find('.player-container')).toHaveLength(2);
         });
 
         describe('when the last player is removed', function() {
           beforeEach(function() {
-            Scoreboard.removePlayer(this.scoreboard.find('.player').eq(2));
+            Scoreboard.removePlayer(Scoreboard.playerBy({ position: 'last' }));
           });
           it('updates the last up arrow to the previous player', function() {
-            expect(this.scoreboard.find('.up.arrow').eq(1)).toHaveClass('last');
+            expect(this.scoreboard.find('.up.arrow').eq(2)).toHaveClass('last');
           });
           it('updates the last down arrow to the previous player', function() {
-            expect(this.scoreboard.find('.down.arrow').eq(1)).toHaveClass('last');
+            expect(this.scoreboard.find('.down.arrow').eq(2)).toHaveClass('last');
           });
         });
       });

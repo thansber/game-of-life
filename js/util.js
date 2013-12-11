@@ -2,15 +2,17 @@ define( /* Util */
 ["jquery"],
 function($) {
 
-  var cleanupHex = function(hex) {
+  var cashFormatter = /(\d+)(\d{3})/,
+
+  cleanupHex = function(hex) {
     hex = hex.replace("#", "");
     if (hex.length === 3) {
       hex = hex + hex;
     }
     return hex;
-  };
+  },
 
-  var hexToRgb = function(hex) {
+  hexToRgb = function(hex) {
     hex = cleanupHex(hex);
     return [
       parseInt(hex.substr(0, 2), 16) / 255,
@@ -22,6 +24,13 @@ function($) {
   return {
     choiceChanged: function($choice) {
       $choice.siblings().removeClass("selected").end().addClass("selected");
+    },
+    formatCash: function(cashValue) {
+      var formattedCash = '' + cashValue;
+      while (cashFormatter.test(formattedCash)) {
+        formattedCash = formattedCash.replace(cashFormatter, '$1' + ',' + '$2');
+      }
+      return formattedCash;
     },
     isWhite: function(hex) {
       var rgb = hexToRgb(hex);

@@ -1,9 +1,16 @@
 define(/* Game */
-['jquery', 'player', 'scoreboard'],
-function($, Player, Scoreboard) {
+['jquery', 'underscore', 'player', 'scoreboard'],
+function($, _, Player, Scoreboard) {
 
   var game = null,
-      $setup = null;
+      $setup = null,
+      _private = {
+        swatchFor: function(player) {
+          return $setup.find('.swatch').filter(function() {
+            return $(this).data('color') === player.color;
+          });
+        }
+      };
 
   var Game = function() {
     this.players = [];
@@ -12,6 +19,12 @@ function($, Player, Scoreboard) {
   $.extend(Game.prototype, {
     addPlayer: function(player) {
       this.players.push(player);
+    },
+
+    alreadyUsed: function(name) {
+      return _(game.players).some(function(player) {
+        return player.name === name;
+      });
     }
   });
 
@@ -22,7 +35,7 @@ function($, Player, Scoreboard) {
           name = $name.val(),
           player = null;
 
-      if (!name || $swatch.length === 0) {
+      if (!name || $swatch.length === 0 || game.alreadyUsed(name)) {
         return false;
       }
 
@@ -31,6 +44,12 @@ function($, Player, Scoreboard) {
       game.addPlayer(player);
       Scoreboard.addPlayer(player);
       $name.focus().select();
+
+      return player;
+    },
+
+    currentPlayer: function() {
+      return this.playerBy({ elem: Scoreboard.currentPlayer() });
     },
 
     init: function() {
@@ -39,14 +58,16 @@ function($, Player, Scoreboard) {
     },
 
     movePlayer: function($target, howMuch) {
+      // $target is the move up/down button
       var $player = Scoreboard.findPlayer($target),
           player = this.playerBy({elem: $player}),
           playerIndex = Scoreboard.indexOf($player),
-          movedPlayer = game.players.splice(playerIndex, 1)[0];
+          movedPlayer = game.players.splice(playerIndex, 1);
 
-      // TODO: update scoreboard
-      if (howMuch < 0) {
+      if (howMuch) {
         game.players.splice(playerIndex + howMuch, 0, movedPlayer);
+        game.players = _.flatten(game.players);
+        Scoreboard.movePlayer($player, howMuch);
       }
     },
 
@@ -87,6 +108,17 @@ function($, Player, Scoreboard) {
 
       game.players.splice(Scoreboard.indexOf($player), 1);
       Scoreboard.removePlayer($player);
+      _private.swatchFor(player).removeClass('disabled');
+    },
+
+    resetup: function() {
+      $('body').removeClass('game-started');
+      Scoreboard.resetup();
+    },
+
+    start: function() {
+      $('body').addClass('game-started');
+      Scoreboard.nextPlayer();
     }
   };
 

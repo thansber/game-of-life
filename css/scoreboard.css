@@ -1,7 +1,8 @@
 #scoreboard {
-  float: left;
-  padding: 1em;
-  width: 45%;
+    float: left;
+    padding: 1em;
+    position: relative;
+    width: 40%;
 }
 
 #scoreboard .icon {
@@ -12,7 +13,7 @@
     width: 16px;
 }
 
-#scoreboard.game-started .icon {
+.game-started #scoreboard .icon {
     display: none;
 }
 
@@ -50,6 +51,10 @@
     position: relative;
 }
 
+#scoreboard .player-container.has-turn .player {
+    width: 90%;
+}
+
 #scoreboard .player {
     border-radius: 12px;
     border-style: solid;
@@ -58,6 +63,8 @@
     font-size: 1.5em;
     margin: 0 0 0.5em 0.25em;
     overflow: auto;
+    transition-property: width;
+    transition-duration: 0.5s;
     width: 85%;
 }
 
@@ -68,6 +75,42 @@
 #scoreboard .player.dark {
     color: rgb(17, 17, 17);
 }
+
+#scoreboard .player[data-color="C90000"] {
+    background-color: #C90000;
+    border-color: #C90000;
+}
+
+#scoreboard .player[data-color="FFC0CB"] {
+    background-color: #FFC0CB;
+    border-color: #FFC0CB;
+}
+
+#scoreboard .player[data-color="EE8833"] {
+    background-color: #EE8833;
+    border-color: #EE8833;
+}
+
+#scoreboard .player[data-color="009900"] {
+    background-color: #009900;
+    border-color: #009900;
+}
+
+#scoreboard .player[data-color="1A65A0"] {
+    background-color: #1A65A0;
+    border-color: #1A65A0;
+}
+
+#scoreboard .player[data-color="BCD2EE"] {
+    background-color: #BCD2EE;
+    border-color: #BCD2EE;
+}
+
+#scoreboard .player[data-color="FFFFFF"] {
+    background-color: #FFFFFF;
+    border-color: #666666;
+}
+
 
 #scoreboard .player .name {
     float: left;
@@ -83,3 +126,30 @@
     width: 5em;
 }
 
+#cash-change {
+    display: none;
+    font-size:  1.25em;
+    margin-top: 32px;
+    position: absolute;
+    right: -2.5em;
+    transition-property: right;
+    transition-duration: 1s;
+    transition-delay: 1s;
+    transition-timing-function: ease;
+}
+
+#cash-change.gaining {
+    color: rgb(93, 156, 70);
+}
+
+#cash-change.losing {
+    color: rgb(223, 51, 54);
+}
+
+#cash-change.is-animating {
+    right: 8em;
+}
+
+.game-started #cash-change {
+    display: block;
+}

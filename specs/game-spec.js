@@ -37,16 +37,25 @@ function(Game, Scoreboard) {
       });
 
       describe('when no name has been entered', function() {
-        it('returns false', function() {
-          expect(Game.addPlayer()).toBe(false);
+        it('does nothing', function() {
+          expect(Game.addPlayer()).toBeFalsy();
         });
       });
 
       describe('when no color has been selected', function() {
-        it('returns false', function() {
+        it('does nothing', function() {
           this.name.val('Name');
           this.swatch.removeClass('selected');
-          expect(Game.addPlayer()).toBe(false);
+          expect(Game.addPlayer()).toBeFalsy();
+        });
+      });
+
+      describe('when a name already used is used again', function() {
+        it('does nothing', function() {
+          this.name.val('Name');
+          expect(Game.addPlayer()).toBeTruthy();
+          this.swatch.removeClass('disabled').addClass('selected');
+          expect(Game.addPlayer()).toBeFalsy();
         });
       });
     });
@@ -65,18 +74,36 @@ function(Game, Scoreboard) {
           Game.addPlayer();
           self.swatch.addClass('selected');
         });
+
+        this.checkPlayerNames = function(expectedNames) {
+          Game.players().forEach(function(player, i) {
+            expect(player.name).toEqual(expectedNames[i]);
+          });
+        };
       });
 
       describe('#movePlayer', function() {
         describe('moving up', function() {
           describe('the 2nd player', function() {
             it('re-orders correctly', function() {
-              var expectedNames = ['Name2', 'Name1', 'Name3', 'Name4'],
-                  moveButton = this.scoreboard.find('.move.up').eq(1);
-              Game.movePlayer(moveButton, -1);
-              Game.players().forEach(function(player, i) {
-                expect(player.name).toEqual(expectedNames[i]);
-              });
+              Game.movePlayer(this.scoreboard.find('.move.up').eq(1), -1);
+              this.checkPlayerNames(['Name2', 'Name1', 'Name3', 'Name4']);
+            });
+          });
+
+          describe('the last player', function() {
+            it('re-orders correctly', function() {
+              Game.movePlayer(this.scoreboard.find('.move.up').last(), -1);
+              this.checkPlayerNames(['Name1', 'Name2', 'Name4', 'Name3']);
+            });
+          });
+        });
+
+        describe('moving down', function() {
+          describe('the 1st player', function() {
+            it('re-orders correctly', function() {
+              Game.movePlayer(this.scoreboard.find('.move.down').first(), 1);
+              this.checkPlayerNames(['Name2', 'Name1', 'Name3', 'Name4']);
             });
           });
         });
@@ -134,11 +161,14 @@ function(Game, Scoreboard) {
           });
 
           it('removes the correct player', function() {
-            var expectedNames = ['Name2', 'Name3', 'Name4'];
             Game.removePlayer(this.deleteButton);
-            Game.players().forEach(function(player, i) {
-              expect(player.name).toEqual(expectedNames[i]);
-            });
+            this.checkPlayerNames(['Name2', 'Name3', 'Name4']);
+          });
+
+          it('re-enables the swatch for the deleted player', function() {
+            expect(this.swatch).toHaveClass('disabled');
+            Game.removePlayer(this.deleteButton);
+            expect(this.swatch).not.toHaveClass('disabled');
           });
         });
 
@@ -154,11 +184,8 @@ function(Game, Scoreboard) {
           });
 
           it('removes the correct player', function() {
-            var expectedNames = ['Name1', 'Name2', 'Name4'];
             Game.removePlayer(this.deleteButton);
-            Game.players().forEach(function(player, i) {
-              expect(player.name).toEqual(expectedNames[i]);
-            });
+            this.checkPlayerNames(['Name1', 'Name2', 'Name4']);
           });
         });
 
@@ -174,11 +201,8 @@ function(Game, Scoreboard) {
           });
 
           it('removes the correct player', function() {
-            var expectedNames = ['Name1', 'Name2', 'Name3'];
             Game.removePlayer(this.deleteButton);
-            Game.players().forEach(function(player, i) {
-              expect(player.name).toEqual(expectedNames[i]);
-            });
+            this.checkPlayerNames(['Name1', 'Name2', 'Name3']);
           });
         });
       });

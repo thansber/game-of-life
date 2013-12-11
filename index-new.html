@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/buttons.css"/>
   <link rel="stylesheet" href="css/setup.css"/>
   <link rel="stylesheet" href="css/scoreboard.css"/>
+  <link rel="stylesheet" href="css/actions.css"/>
   <!--[if lt IE 9]>
   <script src="${staticUri}ui/js/lib/html5.js"></script>
   <script src="${staticUri}ui/js/lib/shims.js"></script>
@@ -15,9 +16,9 @@
 
 <body>
 <div id="version">v3.0</div>
+<div id="re-setup">I need to make player changes</div>
 
 <section id="setup">
-  <div class="toggler hide"></div>
   <input type="text" placeholder="Enter player name" />
   <div class="swatches">
     <p class="swatch" data-color="C90000"></p> <!-- red -->
@@ -32,8 +33,34 @@
   <button class="green start">Start game</button>
 </section>
 
-<section id="scoreboard"><!-- players are added via Javascript --></section>
-<section id="actions"></section>
+<section id="scoreboard">
+<!-- players are added via Javascript -->
+    <div id="cash-change">
+        <span class="type"></span><span class="value"></span>
+    </div>
+</section>
+
+
+<section id="actions">
+  <div class="primary">
+    <button class="grey next-player button">Next Player</button>
+    <div class="adjust-cash">
+      <button class="green add adjuster">+</button>
+      <input type="text" maxlength="3" />
+      <button class="red minus adjuster">-</button>
+      <label>(x1000)</label>
+    </div>
+    <button class="red payday button">Pay Day!</button>
+  </div>
+
+  <div class="contextual">
+    <nav>
+        <div class="go left"></div>
+        <div class="go right"></div>
+    </nav>
+    <div class="main"></div>
+  </div>
+</section>
 
 <script src="js/lib/prefixfree.min.js"></script>
 <script data-main="js/main" src="js/lib/require.js"></script>

@@ -1,0 +1,108 @@
+#actions {
+    float: right;
+    padding: 1em;
+    width: 45%;
+}
+
+.game-started #actions {
+    display: inline-block;
+}
+
+#actions .primary {
+    overflow: auto;
+    padding: 0 1em 1em 0;
+}
+
+#actions .primary .button {
+    border-radius: 30px;
+    font-size: 150%;
+    height: 3em;
+    width: 25%;
+}
+
+#actions .primary .next-player {
+    float: left;
+}
+
+#actions .primary .adjust-cash {
+    float: left;
+    font-size: 1.5em;
+    text-align: center;
+    width: 50%;
+}
+
+#actions .primary .adjust-cash .adjuster {
+    box-shadow: 0 0 0;
+    font-size: 1.33em;
+    margin-top: 0.6em;
+    padding: 0 0.2em;
+    position: relative;
+}
+
+#actions .primary .adjust-cash .add {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    left: 9px;
+}
+
+#actions .primary .adjust-cash .minus {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    right: 9px;
+}
+
+#actions .primary .adjust-cash input {
+    border-color: rgb(204, 204, 204);
+    border-style: solid none;
+    border-width: 2px 0;
+    font-size: 1.33em;
+    text-align: center;
+    width: 3em;
+}
+
+#actions .primary .adjust-cash label {
+    color: rgb(132, 132, 132);
+    display: block;
+    font-size: 0.5em;
+    text-align: center;
+}
+
+#actions .primary .payday {
+    float: right;
+}
+
+
+
+#actions .contextual {
+    overflow: auto;
+    width: 97%;
+}
+
+#actions .contextual nav {
+    overflow: auto;
+    margin-bottom: 1em;
+}
+
+#actions .contextual .main {
+    border-color: rgb(36, 71, 173);
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 2px;
+    clear: both;
+    height: 14em;
+}
+
+#actions .contextual .go {
+    background-color: green;
+    height: 24px;
+    width: 24px;
+}
+
+#actions .contextual .go.left {
+    background-image: url(
+    float: left;
+}
+
+#actions .contextual .go.right {
+    float: right;
+}
