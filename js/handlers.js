@@ -1,6 +1,6 @@
 define( /* Handlers */
-['jquery', 'actions', 'game', 'scoreboard', 'util'],
-function($, Actions, Game, Scoreboard, Util) {
+['jquery', 'actions', 'board', 'game', 'scoreboard', 'util'],
+function($, Actions, Board, Game, Scoreboard, Util) {
 
   return {
     init: function() {
@@ -21,9 +21,12 @@ function($, Actions, Game, Scoreboard, Util) {
         .on('transitionend webkitTransitionEnd', function() { Actions.resetCashChange(); });
 
       $('#actions')
-        .on('click', '.next-player', function() { Scoreboard.nextPlayer(); })
+        .on('click', '.next-player', function() { Board.nextPlayer(); })
         .on('click', '.add.adjuster', function() { Actions.adjustCash(1); })
-        .on('click', '.minus.adjuster', function() { Actions.adjustCash(-1); });
+        .on('click', '.minus.adjuster', function() { Actions.adjustCash(-1); })
+        .on('click', '.board .job', function() { Board.setJob($(this)); })
+        .on('click', '.board .go.left', function() { Board.previousAction(); })
+        .on('click', '.board .go.right', function() { Board.nextAction(); });
 
     }
   };

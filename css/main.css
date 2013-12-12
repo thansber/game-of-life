@@ -39,6 +39,10 @@ body {
     top: 1px;
 }
 
+.icon {
+    cursor: pointer;
+}
+
 #version {
     color: rgba(255, 255, 255, 1);
     font-size: 0.6em;

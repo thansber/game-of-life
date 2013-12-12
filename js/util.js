@@ -22,8 +22,17 @@ function($) {
   };
 
   return {
-    choiceChanged: function($choice) {
-      $choice.siblings().removeClass("selected").end().addClass("selected");
+    choiceChanged: function($choice, options) {
+      var $siblings,
+          opt = options || {};
+
+      if (opt.parentSelector && opt.choiceSelector) {
+        $siblings = $choice.closest(opt.parentSelector).find(opt.choiceSelector);
+      } else {
+        $siblings = $choice.siblings();
+      }
+      $siblings.removeClass("selected");
+      $choice.addClass("selected");
     },
     formatCash: function(cashValue) {
       var formattedCash = '' + cashValue;

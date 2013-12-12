@@ -14,6 +14,7 @@ requirejs.config({
 require([
   'jquery',
   'actions',
+  'board',
   'game',
   'handlers',
   'scoreboard',
@@ -21,6 +22,7 @@ require([
 ], function(
   $,
   Actions,
+  Board,
   Game,
   Handlers,
   Scoreboard,
@@ -33,6 +35,7 @@ require([
     Scoreboard.init();
     Setup.init();
     Actions.init();
+    Board.init();
 
     Setup.autoSetup(4);
   });

@@ -1,0 +1,113 @@
+#actions .board {
+    overflow: auto;
+    width: 97%;
+}
+
+#actions .board nav {
+    overflow: auto;
+    margin-top: 1em;
+}
+
+#actions .board .main {
+    border-color: rgb(26, 26, 26);
+    border-radius: 20px;
+    border-style: solid;
+    border-width: 2px;
+    clear: both;
+    height: 14em;
+    overflow: hidden;
+    position: relative;
+}
+
+#actions .board .go {
+    background-size: cover;
+    height: 24px;
+    width: 24px;
+}
+
+#actions .board .go.left {
+    background-image: url('../images/navigation-180.png');
+    float: left;
+}
+
+#actions .board .go.right {
+    background-image: url('../images/navigation.png');
+    float: right;
+}
+
+#actions .board .action {
+    left: 50%;
+    margin-left: 1000%;
+    position: absolute;
+    top: 50%;
+    transition-property: margin-left;
+    transition-duration: 0.75s;
+    transition-timing-function: ease;
+    width: 50%;
+}
+
+#actions .board .action.vertically-centered {
+    height: 30%;
+    margin-top: -6%;
+}
+
+#actions .board .action.selected {
+    margin-left: 0;
+}
+
+#actions .board .action.vertically-centered.selected {
+    margin-left: -25%;
+}
+
+#actions .board .action .large.button {
+    font-size: 2em;
+    height: 100%;
+    width: 100%;
+}
+
+#actions .board .action.jobs {
+    left: 2%;
+    top: 11%;
+    width: 100%;
+}
+
+#actions .board .action.jobs .row {
+    margin: 0 0 2em 6%;
+    overflow: auto;
+    width: 100%;
+}
+
+#actions .board .action.jobs .row.single {
+    margin-left: 34%;
+}
+
+#actions .board .action.jobs .job {
+    background-color: rgb(136, 136, 136);
+    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102) );
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    font-size: 1.5em;
+    opacity: 0.2;
+    padding: 0.1em 0.35em 0.2em;
+    text-align: center;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    width: 25%;
+}
+
+#actions .board .action.jobs .job.first {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#actions .board .action.jobs .job.last {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#actions .board .action.jobs .job.selected {
+    opacity: 1;
+}

@@ -70,39 +70,3 @@
 #actions .primary .payday {
     float: right;
 }
-
-
-
-#actions .contextual {
-    overflow: auto;
-    width: 97%;
-}
-
-#actions .contextual nav {
-    overflow: auto;
-    margin-bottom: 1em;
-}
-
-#actions .contextual .main {
-    border-color: rgb(36, 71, 173);
-    border-radius: 20px;
-    border-style: solid;
-    border-width: 2px;
-    clear: both;
-    height: 14em;
-}
-
-#actions .contextual .go {
-    background-color: green;
-    height: 24px;
-    width: 24px;
-}
-
-#actions .contextual .go.left {
-    background-image: url(
-    float: left;
-}
-
-#actions .contextual .go.right {
-    float: right;
-}
