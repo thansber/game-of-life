@@ -3,6 +3,11 @@ define( /* Data */
 function($) {
 
   return {
+    actions: [
+      'auto-insurance',
+      'tuition',
+      'jobs'
+    ],
     drawers: [
       {name:"jobs", desc:"Jobs"},
       {name:"insurance", desc:"Insurance"},
@@ -21,9 +26,9 @@ function($) {
       {type:"millionaire", desc:"Become a millionaire", amount:null, color:"green" }
     ],
     insurance: [
-      {name:"auto", price:1000}, 
-      {name:"life", price:10000}, 
-      {name:"fire", price:10000}, 
+      {name:"auto", price:1000},
+      {name:"life", price:10000},
+      {name:"fire", price:10000},
       {name:"stock", price:50000}
     ],
     jobs: [
@@ -35,5 +40,5 @@ function($) {
       {name:"u", desc:"University", salary:16000, summary:"is a University Student"},
       {name:"b", desc:"Business", salary:12000, summary:"has a Business Degree"}
     ]
-  };    
-});	
+  };
+});

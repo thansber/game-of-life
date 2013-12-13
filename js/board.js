@@ -1,43 +1,49 @@
 define( /* Board */
-['game', 'scoreboard', 'util'],
-function(Game, Scoreboard, Util) {
+['data', 'game', 'scoreboard', 'util'],
+function(Data, Game, Scoreboard, Util) {
 
   var $actions,
       $board,
+
       initializers = {
-        tuition: {},
         jobs: function(player) {
-          var $job,
+          var $jobs = $actions.filter('.jobs').find('.job'),
               $playerJob;
+
           if (!player.job) {
-            return;
+            $playerJob = $jobs.first();
+          } else {
+            $playerJob = $jobs.filter(function() {
+              return $(this).data('job') === player.job.name;
+            });
           }
 
-          $actions.filter('.jobs').each(function() {
-            $job = $(this);
-            if ($job.data('job') === player.job.name) {
-              $playerJob = $job;
-            }
-          });
-
-          _private.selectJob($playerJob);
+          _private.selectJob($playerJob, { clear: !player.job });
         }
       },
+
       _private = {
+        currentPlayerAction: function() {
+          var playerAt = Game.currentPlayer().at,
+              $playerAction;
+
+          return $actions.filter(function() {
+            return $(this).data('type') === playerAt;
+          });
+        },
         selectedAction: function() {
           return $actions.filter('.selected');
         },
-        selectJob: function($job) {
-          if ($job && $job.length > 0) {
-            Util.choiceChanged($job, {
-              parentSelector: '.jobs',
-              choiceSelector: '.job'
-            });
-          }
+        selectJob: function($job, options) {
+          Util.choiceChanged($job, _.extend({
+            parentSelector: '.jobs',
+            choiceSelector: '.job',
+          }, options));
         },
         updateNavigation: function() {
-          $board.find('.go.left').toggle(this.selectedAction().index() > 0);
-          $board.find('.go.right').toggle(this.selectedAction().index() < $actions.length - 1);
+          var selectedActionIndex = $actions.index(this.selectedAction());
+          $board.find('.go.left').toggle(selectedActionIndex > 0);
+          $board.find('.go.right').toggle(selectedActionIndex < $actions.length - 1);
         }
       };
 
@@ -64,6 +70,9 @@ function(Game, Scoreboard, Util) {
 
     nextPlayer: function() {
       Scoreboard.nextPlayer();
+      Util.choiceChanged(_private.currentPlayerAction());
+      this.initializeSpace();
+      _private.updateNavigation();
     },
 
     previousAction: function() {
@@ -75,6 +84,11 @@ function(Game, Scoreboard, Util) {
     setJob: function($job) {
       _private.selectJob($job);
       Game.currentPlayer().setJob($job.data('job'));
+    },
+
+    skipAction: function() {
+      Game.currentPlayer().nextAction();
+      this.nextAction();
     }
   };
 });

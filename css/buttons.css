@@ -23,6 +23,15 @@ button.red:hover {
     background: linear-gradient(rgb(191, 50, 53), rgb(223, 51, 54));
 }
 
+button.orange {
+    background: linear-gradient(rgb(255, 165, 0), rgb(252, 184, 58));
+    border: 2px solid rgb(238, 156, 51);
+}
+
+button.orange:hover {
+    background: linear-gradient(rgb(252, 184, 58), rgb(255, 165, 0));
+}
+
 button.green {
     background: linear-gradient(rgb(93, 156, 70), rgb(61, 104, 50));
     border: 2px solid rgb(34, 87, 38);

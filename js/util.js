@@ -31,8 +31,13 @@ function($) {
       } else {
         $siblings = $choice.siblings();
       }
-      $siblings.removeClass("selected");
-      $choice.addClass("selected");
+      $siblings.removeClass('selected');
+
+      if (opt.clear) {
+        $choice.removeClass('selected');
+      } else {
+        $choice.addClass('selected');
+      }
     },
     formatCash: function(cashValue) {
       var formattedCash = '' + cashValue;

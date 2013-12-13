@@ -59,10 +59,31 @@
     margin-left: -25%;
 }
 
-#actions .board .action .large.button {
-    font-size: 2em;
+#actions .board .action .button {
     height: 100%;
     width: 100%;
+}
+
+#actions .board .action .large.button {
+    font-size: 2em;
+}
+
+#actions .board .action .medium.button {
+    font-size: 1.5em;
+    width: 60%;
+}
+
+#actions .board .action .skip.button {
+    margin-left: 3%;
+    width: 25%;
+}
+
+#actions .board .action.insurance {
+    width: 100%;
+}
+
+#actions .board .action.insurance.selected {
+    margin-left: -45%;
 }
 
 #actions .board .action.jobs {

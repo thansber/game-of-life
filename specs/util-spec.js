@@ -34,6 +34,15 @@ function(_, Util) {
           Util.choiceChanged($goingToBeSelected);
           expect($goingToBeSelected).toHaveClass('selected');
         });
+
+        it('clears all selected choices', function() {
+          var $wasSelected = this.choices.eq(3);
+          $wasSelected.addClass('selected');
+          Util.choiceChanged($wasSelected, {clear:true});
+          this.container.find(this.choiceClass).each(function() {
+            expect($(this)).not.toHaveClass('selected');
+          });
+        });
       });
 
       describe('siblings with different parents', function() {
@@ -68,6 +77,10 @@ function(_, Util) {
           Util.choiceChanged($goingToBeSelected);
           expect($goingToBeSelected).toHaveClass('selected');
         });
+      });
+
+      describe('clearing', function() {
+
       });
     });
 

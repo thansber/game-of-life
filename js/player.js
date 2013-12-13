@@ -1,6 +1,6 @@
 define( /* Player */
-["jquery", "data"],
-function($, Data) {
+['jquery', 'underscore', 'data'],
+function($, _, Data) {
 
   var Player = function(name, color) {
     this.name = name;
@@ -13,12 +13,26 @@ function($, Data) {
     this.married = false;
     this.tollBridgeOwned = false;
     this.millionaire = false;
+    this.at = Data.actions[0];
   };
 
   $.extend(Player.prototype, {
+    addInsurance: function(type) {
+      this.insurance.push(type);
+    },
+
     adjustCash: function(amount) {
       this.cash += amount;
       return this;
+    },
+
+    hasInsurance: function(type) {
+      return _.contains(this.insurance, type);
+    },
+
+    nextAction: function() {
+      var actionIndex = _.indexOf(Data.actions, this.at);
+      this.at = Data.actions[++actionIndex];
     },
 
     setJob: function(jobId) {

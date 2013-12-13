@@ -118,7 +118,6 @@ function($, _, Player, Scoreboard) {
 
     start: function() {
       $('body').addClass('game-started');
-      Scoreboard.nextPlayer();
     }
   };
 

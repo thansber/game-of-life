@@ -8,7 +8,7 @@ function($, Actions, Board, Game, Scoreboard, Util) {
       $('#setup')
         .on('click', '.swatch', function(e) { Util.choiceChanged($(e.target)); })
         .on('click', '.add', function() { Game.addPlayer(); })
-        .on('click', '.start', function() { Game.start(); });
+        .on('click', '.start', function() { Game.start(); Board.nextPlayer(); });
 
       $('#re-setup').on('click', function() { Game.resetup(); });
 
@@ -26,7 +26,8 @@ function($, Actions, Board, Game, Scoreboard, Util) {
         .on('click', '.minus.adjuster', function() { Actions.adjustCash(-1); })
         .on('click', '.board .job', function() { Board.setJob($(this)); })
         .on('click', '.board .go.left', function() { Board.previousAction(); })
-        .on('click', '.board .go.right', function() { Board.nextAction(); });
+        .on('click', '.board .go.right', function() { Board.nextAction(); })
+        .on('click', '.board .action .skip', function() { Board.skipAction(); });
 
     }
   };
