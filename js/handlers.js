@@ -22,12 +22,13 @@ function($, Actions, Board, Game, Scoreboard, Util) {
 
       $('#actions')
         .on('click', '.next-player', function() { Board.nextPlayer(); })
-        .on('click', '.add.adjuster', function() { Actions.adjustCash(1); })
-        .on('click', '.minus.adjuster', function() { Actions.adjustCash(-1); })
+        .on('click', '.add.adjuster', function() { Actions.manualCashAdjustment(1); })
+        .on('click', '.minus.adjuster', function() { Actions.manualCashAdjustment(-1); })
         .on('click', '.board .job', function() { Board.setJob($(this)); })
         .on('click', '.board .go.left', function() { Board.previousAction(); })
         .on('click', '.board .go.right', function() { Board.nextAction(); })
-        .on('click', '.board .action .skip', function() { Board.skipAction(); });
+        .on('click', '.board .action .skip', function() { Board.skipAction(); })
+        .on('click', '.board .action .buy', function() { Board.buyInsurance($(this)); });
 
     }
   };

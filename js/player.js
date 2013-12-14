@@ -18,7 +18,9 @@ function($, _, Data) {
 
   $.extend(Player.prototype, {
     addInsurance: function(type) {
-      this.insurance.push(type);
+      if (!this.hasInsurance(type)) {
+        this.insurance.push(type);
+      }
     },
 
     adjustCash: function(amount) {

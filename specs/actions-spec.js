@@ -22,18 +22,16 @@ function(Actions, Game, Player, Scoreboard) {
         spyOn(Scoreboard, 'updatePlayerCash');
       });
 
-      describe('when no value is entered', function() {
+      describe('when no amount is provided', function() {
         it('does nothing', function() {
-          this.adjusterValue.val('');
-          Actions.adjustCash(1);
+          Actions.adjustCash(0);
           expect(this.cashChangeType).toHaveText('');
         });
       });
 
       describe('adding cash', function() {
         beforeEach(function() {
-          this.adjusterValue.val('123');
-          Actions.adjustCash(1);
+          Actions.adjustCash(123000);
         });
 
         it('sets the proper class to change the color', function() {
@@ -55,8 +53,7 @@ function(Actions, Game, Player, Scoreboard) {
 
       describe('removing cash', function() {
         beforeEach(function() {
-          this.adjusterValue.val('45');
-          Actions.adjustCash(-1);
+          Actions.adjustCash(-45000);
         });
 
         it('sets the proper class to change the color', function() {
@@ -79,10 +76,40 @@ function(Actions, Game, Player, Scoreboard) {
       describe('subsequent adjustments', function() {
         it('clears all classes', function() {
           this.adjusterValue.val('1');
-          Actions.adjustCash(-1);
+          Actions.adjustCash(-1000);
           expect(this.cashChange).toHaveClass('losing');
-          Actions.adjustCash(1);
+          Actions.adjustCash(1000);
           expect(this.cashChange).not.toHaveClass('losing');
+        });
+      });
+    });
+
+    describe('#manualCashAdjustment', function() {
+      beforeEach(function() {
+        spyOn(Actions, 'adjustCash');
+      });
+
+      describe('when no amount is provided', function() {
+        it('does nothing', function() {
+          this.adjusterValue.val('');
+          Actions.manualCashAdjustment(1);
+          expect(Actions.adjustCash).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('when a positive amount is provided', function() {
+        it('adjusts the cash by the amount', function() {
+          this.adjusterValue.val('5');
+          Actions.manualCashAdjustment(1);
+          expect(Actions.adjustCash).toHaveBeenCalledWith(5000);
+        });
+      });
+
+      describe('when a negative amount is provided', function() {
+        it('adjusts the cash by the amount', function() {
+          this.adjusterValue.val('22');
+          Actions.manualCashAdjustment(-1);
+          expect(Actions.adjustCash).toHaveBeenCalledWith(-22000);
         });
       });
     });

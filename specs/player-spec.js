@@ -25,6 +25,13 @@ function(Data, Player) {
         this.player.addInsurance('bar');
         expect(this.player.insurance.length).toEqual(2);
       });
+
+      it('does not add duplicate values', function() {
+        expect(this.player.insurance.length).toEqual(0);
+        this.player.addInsurance('foo');
+        this.player.addInsurance('foo');
+        expect(this.player.insurance.length).toEqual(1);
+      });
     });
 
     describe('#adjustCash', function() {

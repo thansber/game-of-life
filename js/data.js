@@ -25,12 +25,12 @@ function($) {
       {type:"lucky-number", desc:"Someone landed on my lucky number", amount:24000, color:"green" },
       {type:"millionaire", desc:"Become a millionaire", amount:null, color:"green" }
     ],
-    insurance: [
-      {name:"auto", price:1000},
-      {name:"life", price:10000},
-      {name:"fire", price:10000},
-      {name:"stock", price:50000}
-    ],
+    insurance: {
+      auto: { price: 1000 },
+      life: { price: 10000 },
+      fire: { price: 10000 },
+      stock: { price: 50000 }
+    },
     jobs: [
       {name:"d", desc:"Doctor", salary:50000, summary:"is a Doctor"},
       {name:"j", desc:"Journalist", salary:24000, summary:"is a Journalist"},

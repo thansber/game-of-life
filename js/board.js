@@ -1,6 +1,6 @@
 define( /* Board */
-['data', 'game', 'scoreboard', 'util'],
-function(Data, Game, Scoreboard, Util) {
+['actions', 'data', 'game', 'scoreboard', 'util'],
+function(Actions, Data, Game, Scoreboard, Util) {
 
   var $actions,
       $board,
@@ -48,6 +48,18 @@ function(Data, Game, Scoreboard, Util) {
       };
 
   return {
+    buyInsurance: function($button) {
+      var type = $button.data('insurance'),
+          insurance = Data.insurance[type];
+
+      if (!insurance) {
+        return;
+      }
+
+      Actions.adjustCash(-1 * insurance.price);
+      Game.currentPlayer().addInsurance(type);
+    },
+
     init: function() {
       $board = $('#actions .board');
       $actions = $board.find('.action');

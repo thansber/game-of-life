@@ -19,16 +19,16 @@ function($, Game, Scoreboard, Util) {
       };
 
   return {
-    adjustCash: function(multiplier) {
-      var amount = $actions.find('.adjust-cash').find('input').val(),
+    adjustCash: function(amount) {
+      var amt = +amount,
           changeOptions,
           currentPlayer = Game.currentPlayer();
 
-      if (!amount) {
+      if (!amt) {
         return;
       }
 
-      if (multiplier > 0) {
+      if (amt > 0) {
         changeOptions = {
           sign: '+',
           cssClass: 'gaining'
@@ -40,18 +40,26 @@ function($, Game, Scoreboard, Util) {
         };
       }
 
-      $cashChange.removeClass('gaining losing').addClass(changeOptions.cssClass);
+      $cashChange.removeClass('is-animating gaining losing').addClass(changeOptions.cssClass);
       $cashChange.find('.type').text(changeOptions.sign);
-      $cashChange.find('.value').text(Util.formatCash(amount * 1000));
+      $cashChange.find('.value').text(Util.formatCash(Math.abs(amt)));
 
       $cashChange.addClass('is-animating');
-      currentPlayer.adjustCash(+amount * 1000 * multiplier);
+      currentPlayer.adjustCash(amt);
       Scoreboard.updatePlayerCash(Scoreboard.currentPlayer(), currentPlayer);
     },
 
     init: function() {
       $actions = $('#actions');
       $cashChange = $('#cash-change');
+    },
+
+    manualCashAdjustment: function(multiplier) {
+      var manualAmount = $actions.find('.adjust-cash').find('input').val();
+      if (!manualAmount) {
+        return;
+      }
+      this.adjustCash(+manualAmount * 1000 * multiplier);
     },
 
     resetCashChange: function() {
