@@ -56,8 +56,6 @@
 
 #scoreboard .player {
     border-radius: 12px;
-    border-style: solid;
-    border-width: 2px;
     float: left;
     font-size: 1.5em;
     margin: 0 0 0.5em 0.25em;
@@ -77,37 +75,30 @@
 
 #scoreboard .player[data-color="C90000"] {
     background-color: #C90000;
-    border-color: #C90000;
 }
 
 #scoreboard .player[data-color="FFC0CB"] {
     background-color: #FFC0CB;
-    border-color: #FFC0CB;
 }
 
 #scoreboard .player[data-color="EE8833"] {
     background-color: #EE8833;
-    border-color: #EE8833;
 }
 
 #scoreboard .player[data-color="009900"] {
     background-color: #009900;
-    border-color: #009900;
 }
 
 #scoreboard .player[data-color="1A65A0"] {
     background-color: #1A65A0;
-    border-color: #1A65A0;
 }
 
 #scoreboard .player[data-color="BCD2EE"] {
     background-color: #BCD2EE;
-    border-color: #BCD2EE;
 }
 
 #scoreboard .player[data-color="FFFFFF"] {
     background-color: #FFFFFF;
-    border-color: #666666;
 }
 
 
