@@ -40,11 +40,13 @@ function($, Game, Scoreboard, Util) {
         };
       }
 
-      $cashChange.removeClass('is-animating gaining losing').addClass(changeOptions.cssClass);
+      $cashChange.removeClass('gaining losing').addClass(changeOptions.cssClass);
       $cashChange.find('.type').text(changeOptions.sign);
       $cashChange.find('.value').text(Util.formatCash(Math.abs(amt)));
 
-      $cashChange.addClass('is-animating');
+      $cashChange.finish().css({ right: '' }).delay(1000).animate({ right: '8em' }, {
+        duration: 1000
+      });
       currentPlayer.adjustCash(amt);
       Scoreboard.updatePlayerCash(Scoreboard.currentPlayer(), currentPlayer);
     },
