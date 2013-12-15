@@ -13,8 +13,8 @@ function($, Actions, Board, Game, Scoreboard, Util) {
       $('#re-setup').on('click', function() { Game.resetup(); });
 
       $('#scoreboard')
-        .on('click', '.move.up', function() { Game.movePlayer($(this), -1); })
-        .on('click', '.move.down', function() { Game.movePlayer($(this), 1); })
+        .on('click', '.move.left', function() { Game.movePlayer($(this), -1); })
+        .on('click', '.move.right', function() { Game.movePlayer($(this), 1); })
         .on('click', '.delete', function() { Game.removePlayer($(this)); });
 
       $('#cash-change')

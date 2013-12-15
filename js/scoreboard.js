@@ -4,17 +4,21 @@ function($, Util) {
 
   var $scoreboard = null,
       $cashChange = null,
+      numPlayerClasses = ['one-player', 'two-players', 'three-players', 'four-players', 'five-players', 'six-players', 'seven-players'],
       _private = {
         containerFor: function($elem) {
           return $elem.hasClass('player-container') ? $elem : $elem.closest('.player-container');
         },
         updateArrows: function() {
-          var upArrows = $scoreboard.find('.up.arrow'),
-              downArrows = $scoreboard.find('.down.arrow');
-          upArrows.removeClass('first last');
-          upArrows.first().addClass('first');
-          upArrows.last().addClass('last');
-          downArrows.removeClass('last').last().addClass('last');
+          var leftArrows = $scoreboard.find('.left.arrow'),
+              rightArrows = $scoreboard.find('.right.arrow');
+          leftArrows.removeClass('first').first().addClass('first');
+          rightArrows.removeClass('last').last().addClass('last');
+        },
+
+        updatePlayerWidths: function() {
+          $scoreboard.removeClass(numPlayerClasses.join(' '));
+          $scoreboard.addClass(numPlayerClasses[$scoreboard.find('.player-container').length - 1]);
         }
       };
 
@@ -25,15 +29,15 @@ function($, Util) {
           $player;
 
       markup[i++] = '<div class="player-container">';
-      markup[i++] =   '<div class="move up arrow icon" title="Move this player up"></div>';
-      markup[i++] =   '<div class="move down arrow icon" title="Move this player down"></div>';
       markup[i++] =   '<div class="player ' + Util.textColorFromBackground(player.color) + '"';
       markup[i++] =   ' data-name="' + player.name + '"';
       markup[i++] =   ' data-color="' + player.color + '">';
       markup[i++] =     '<p class="name">' + player.name + '</p>';
       markup[i++] =     '<p class="cash">$<span class="value"></p>';
+      markup[i++] =     '<p class="delete icon" title="Delete this player"></p>';
+      markup[i++] =     '<p class="move right arrow icon" title="Move this player right"></p>';
+      markup[i++] =     '<p class="move left arrow icon" title="Move this player left"></p>';
       markup[i++] =   '</div>';
-      markup[i++] =   '<div class="delete icon" title="Delete this player"></div>';
       markup[i++] = '</div>';
 
       $scoreboard.append(markup.join(''));
@@ -41,6 +45,7 @@ function($, Util) {
 
       this.updatePlayerCash($player, player);
       _private.updateArrows();
+      _private.updatePlayerWidths();
     },
 
     currentPlayer: function() {
@@ -109,6 +114,7 @@ function($, Util) {
     removePlayer: function($player) {
       _private.containerFor($player).remove();
       _private.updateArrows();
+      _private.updatePlayerWidths();
     },
 
     resetup: function() {

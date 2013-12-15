@@ -1,14 +1,13 @@
 #scoreboard {
-    float: left;
-    padding: 1em;
     position: relative;
-    width: 40%;
+    width: 100%;
 }
 
 #scoreboard .icon {
     height: 16px;
+    margin-right: 0.25em;
     position: relative;
-    top: 1.2em;
+    top: 0.6em;
     width: 16px;
 }
 
@@ -17,26 +16,22 @@
 }
 
 #scoreboard .arrow {
-    float: left;
+    float: right;
 }
 
-#scoreboard .arrow.up {
-    background-image: url("../images/arrow-090.png");
+#scoreboard .arrow.left {
+    background-image: url("../images/arrow-180.png");
 }
 
-#scoreboard .arrow.down {
-    background-image: url("../images/arrow-270.png");
+#scoreboard .arrow.right {
+    background-image: url("../images/arrow-000.png");
 }
 
-#scoreboard .arrow.up.first {
-    opacity: 0;
+#scoreboard .arrow.left.first {
+    display: none;
 }
 
-#scoreboard .arrow.up.last {
-    margin-left: 16px;
-}
-
-#scoreboard .arrow.down.last {
+#scoreboard .arrow.right.last {
     display: none;
 }
 
@@ -46,23 +41,45 @@
 }
 
 #scoreboard .player-container {
+    float: left;
     overflow: auto;
     position: relative;
 }
 
+#scoreboard.one-player .player-container {
+    width: 100%;
+}
+
+#scoreboard.two-players .player-container {
+    width: 50%;
+}
+
+#scoreboard.three-players .player-container {
+    width: 33.33%;
+}
+
+#scoreboard.four-players .player-container {
+    width: 25%;
+}
+
+#scoreboard.five-players .player-container {
+    width: 20%;
+}
+
+#scoreboard.six-players .player-container {
+    width: 16.66%;
+}
+
+#scoreboard.seven-players .player-container {
+    width: 14.28%;
+}
+
 #scoreboard .player-container.has-turn .player {
-    width: 90%;
 }
 
 #scoreboard .player {
-    border-radius: 12px;
     float: left;
-    font-size: 1.5em;
-    margin: 0 0 0.5em 0.25em;
-    overflow: auto;
-    transition-property: width;
-    transition-duration: 0.5s;
-    width: 85%;
+    width: 100%;
 }
 
 #scoreboard .player.light {
@@ -110,10 +127,15 @@
 }
 
 #scoreboard .player .cash {
+    display: none;
     float: right;
     padding: 0.5em 0 0 0;
     position: relative;
     width: 5em;
+}
+
+#scoreboard.game-started .player .cash {
+    display: inline-block;
 }
 
 #cash-change {

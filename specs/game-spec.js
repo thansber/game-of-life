@@ -83,26 +83,26 @@ function(Game, Scoreboard) {
       });
 
       describe('#movePlayer', function() {
-        describe('moving up', function() {
+        describe('moving left', function() {
           describe('the 2nd player', function() {
             it('re-orders correctly', function() {
-              Game.movePlayer(this.scoreboard.find('.move.up').eq(1), -1);
+              Game.movePlayer(this.scoreboard.find('.move.left').eq(1), -1);
               this.checkPlayerNames(['Name2', 'Name1', 'Name3', 'Name4']);
             });
           });
 
           describe('the last player', function() {
             it('re-orders correctly', function() {
-              Game.movePlayer(this.scoreboard.find('.move.up').last(), -1);
+              Game.movePlayer(this.scoreboard.find('.move.left').last(), -1);
               this.checkPlayerNames(['Name1', 'Name2', 'Name4', 'Name3']);
             });
           });
         });
 
-        describe('moving down', function() {
+        describe('moving right', function() {
           describe('the 1st player', function() {
             it('re-orders correctly', function() {
-              Game.movePlayer(this.scoreboard.find('.move.down').first(), 1);
+              Game.movePlayer(this.scoreboard.find('.move.right').first(), 1);
               this.checkPlayerNames(['Name2', 'Name1', 'Name3', 'Name4']);
             });
           });
