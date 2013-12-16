@@ -100,9 +100,8 @@
     color: rgb(208, 208, 208);
     cursor: pointer;
     display: none;
-    float: right;
     position: absolute;
-    left: 3.2em;
+    left: 1em;
     top: 0.25em;
 }
 

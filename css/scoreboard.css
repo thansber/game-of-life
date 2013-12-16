@@ -74,7 +74,8 @@
     width: 14.28%;
 }
 
-#scoreboard .player-container.has-turn .player {
+#scoreboard .player-container.has-turn {
+    box-shadow: 0 12px 8px 0 rgb(224, 224, 224, 0.75);
 }
 
 #scoreboard .player {
@@ -134,8 +135,14 @@
     width: 5em;
 }
 
-#scoreboard.game-started .player .cash {
+.game-started #scoreboard .player .cash {
     display: inline-block;
+}
+
+#next-player {
+    border-radius: 30px;
+    font-size: 150%;
+    height: 3em;
 }
 
 #cash-change {
