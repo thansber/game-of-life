@@ -3,7 +3,6 @@ define( /* Scoreboard */
 function($, Util) {
 
   var $scoreboard = null,
-      $cashChange = null,
       numPlayerClasses = ['one-player', 'two-players', 'three-players', 'four-players', 'five-players', 'six-players', 'seven-players'],
       _private = {
         containerFor: function($elem) {
@@ -45,7 +44,7 @@ function($, Util) {
       $scoreboard.append(markup.join(''));
       $player = $scoreboard.find('.player').last();
 
-      this.updatePlayerCash($player, player);
+      this.updatePlayerCash(player);
       _private.updateArrows();
       _private.updatePlayerWidths();
     },
@@ -64,7 +63,6 @@ function($, Util) {
 
     init: function() {
       $scoreboard = $('#scoreboard');
-      $cashChange = $('#cash-change');
     },
 
     indexOf: function($player) {
@@ -109,6 +107,10 @@ function($, Util) {
         return $scoreboard.find('.player').eq(opt.index);
       } else if (opt.position && positions[opt.position] !== undefined) {
         return $scoreboard.find('.player').eq(positions[opt.position]);
+      } else if (opt.player) {
+        return $scoreboard.find('.player').filter(function() {
+          return $(this).data('name') === opt.player.name;
+        });
       }
     },
 
@@ -122,7 +124,12 @@ function($, Util) {
       $scoreboard.find('.player-container.has-turn').removeClass('has-turn');
     },
 
-    updatePlayerCash: function($player, player) {
+    updatePlayerCash: function(player) {
+      var $player = this.playerBy({ player: player });
+      if ($player.length === 0) {
+        console.error('Unable to find a player using...');
+        console.dir(player);
+      }
       $player.find('.cash .value').text(Util.formatCash(player.cash));
     }
 

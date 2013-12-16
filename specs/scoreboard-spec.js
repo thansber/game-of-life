@@ -44,19 +44,19 @@ function(Scoreboard) {
       describe('#updatePlayerCash', function() {
         it('does nothing to values < 1000', function() {
           this.playerObj.cash = 500;
-          Scoreboard.updatePlayerCash(this.player, this.playerObj);
+          Scoreboard.updatePlayerCash(this.playerObj);
           expect(this.cashValue).toContainText('500');
         });
 
         it('formats values > 1000', function() {
           this.playerObj.cash = 10500;
-          Scoreboard.updatePlayerCash(this.player, this.playerObj);
+          Scoreboard.updatePlayerCash(this.playerObj);
           expect(this.cashValue).toContainText('10,500');
         });
 
         it('formats values > 1000000', function() {
           this.playerObj.cash = 12345678;
-          Scoreboard.updatePlayerCash(this.player, this.playerObj);
+          Scoreboard.updatePlayerCash(this.playerObj);
           expect(this.cashValue).toContainText('12,345,678');
         });
       });
@@ -194,6 +194,32 @@ function(Scoreboard) {
             Scoreboard.nextPlayer();
             expect(this.players.first()).toHaveClass('has-turn');
             expect(this.players.last()).not.toHaveClass('has-turn');
+          });
+        });
+      });
+
+      describe('#playerBy', function() {
+        describe('index', function() {
+          it('finds the correct player', function() {
+            var expectedNames = ['Name 3', 'Name 1', 'Name 4', 'Name 2'];
+            _([2, 0, 3, 1]).each(function(index, i) {
+              expect(Scoreboard.playerBy({index: index}).data('name')).toEqual(expectedNames[i]);
+            });
+          });
+        });
+
+        describe('position', function() {
+          it('finds the first player', function() {
+            expect(Scoreboard.playerBy({position:'first'}).data('name')).toEqual('Name 1');
+          });
+          it('finds the last player', function() {
+            expect(Scoreboard.playerBy({position:'last'}).data('name')).toEqual('Name 4');
+          });
+        });
+
+        describe('player', function() {
+          it('finds the correct player', function() {
+            expect(Scoreboard.playerBy({player: {name:'Name 3'}}).data('name')).toEqual('Name 3');
           });
         });
       });

@@ -143,11 +143,3 @@
     position: absolute;
     right: -2.5em;
 }
-
-#cash-change.gaining {
-    color: rgb(93, 156, 70);
-}
-
-#cash-change.losing {
-    color: rgb(223, 51, 54);
-}

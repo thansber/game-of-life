@@ -21,6 +21,14 @@
     float: right;
 }
 
+#board .player .cash-change.gaining {
+    color: rgb(93, 156, 70);
+}
+
+#board .player .cash-change.losing {
+    color: rgb(223, 51, 54);
+}
+
 #board .main {
     float: left;
     height: 14em;

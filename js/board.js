@@ -1,6 +1,6 @@
 define( /* Board */
-['actions', 'data', 'game', 'scoreboard', 'util'],
-function(Actions, Data, Game, Scoreboard, Util) {
+['data', 'game', 'scoreboard', 'util'],
+function(Data, Game, Scoreboard, Util) {
 
   var $actions,
       $board,
@@ -56,6 +56,28 @@ function(Actions, Data, Game, Scoreboard, Util) {
       };
 
   return {
+    adjustCash: function(options) {
+      var opt = options || {},
+          amount = +opt.by,
+          player = options.player,
+          changeOptions = {};
+
+      if (!amount) {
+        return;
+      }
+
+      changeOptions.sign = amount > 0 ? '+' : '-';
+      changeOptions.cssClass = amount > 0 ? 'gaining' : 'losing';
+
+      $cashChange.removeClass('gaining losing').addClass(changeOptions.cssClass);
+      $cashChange.find('.type').text(changeOptions.sign);
+      $cashChange.find('.value').text(Util.formatCash(Math.abs(amount)));
+
+
+      player.adjustCash(amount);
+      Scoreboard.updatePlayerCash(player);
+    },
+
     buyInsurance: function($button) {
       var type = $button.data('insurance'),
           insurance = Data.insurance[type];
@@ -64,7 +86,7 @@ function(Actions, Data, Game, Scoreboard, Util) {
         return;
       }
 
-      Actions.adjustCash(-1 * insurance.price);
+      this.adjustCash(-1 * insurance.price);
       Game.currentPlayer().addInsurance(type);
     },
 
@@ -72,6 +94,7 @@ function(Actions, Data, Game, Scoreboard, Util) {
       $board = $('#board');
       $header = $board.find('.player');
       $actions = $board.find('.action');
+      $cashChange = $board.find('.cash-change');
     },
 
     initializeSpace: function() {

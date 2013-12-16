@@ -1,20 +1,20 @@
 define(
 [
   'underscore',
-  'actions',
   'board',
   'game',
   'player',
+  'scoreboard',
   'util',
   'jasmine-fixture',
   'jasmine-jquery'
 ],
 function(
   _,
-  Actions,
   Board,
   Game,
   Player,
+  Scoreboard,
   Util
 ) {
 
@@ -25,15 +25,86 @@ function(
       this.goLeft = this.board.affix('.go.left');
       this.goRight = this.board.affix('.go.right');
 
+      this.cashChange = this.board.affix('.cash-change');
+      this.cashChangeType = this.cashChange.affix('.type');
+      this.cashChangeValue = this.cashChange.affix('.value');
+
       this.currentPlayer = new Player();
       spyOn(Game, 'currentPlayer').andReturn(this.currentPlayer);
 
       Board.init();
     });
 
+    describe('#adjustCash', function() {
+      beforeEach(function() {
+        spyOn(Scoreboard, 'updatePlayerCash');
+      });
+
+      describe('when no amount is provided', function() {
+        it('does nothing', function() {
+          Board.adjustCash({ player: this.currentPlayer, by: 0 });
+          expect(this.cashChangeType).toHaveText('');
+        });
+      });
+
+      describe('adding cash', function() {
+        beforeEach(function() {
+          Board.adjustCash({ player: this.currentPlayer, by: 123000 });
+        });
+
+        it('sets the proper class to change the color', function() {
+          expect(this.cashChange).toHaveClass('gaining');
+        });
+        it('sets the sign', function() {
+          expect(this.cashChangeType).toHaveText('+');
+        });
+        it('sets the proper class to change the color', function() {
+          expect(this.cashChangeValue).toHaveText('123,000');
+        });
+        it('adds the proper amount to the current player', function() {
+          expect(this.currentPlayer.cash).toEqual(133000);
+        });
+        it('updates the scoreboard', function() {
+          expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
+        });
+      });
+
+      describe('removing cash', function() {
+        beforeEach(function() {
+          Board.adjustCash({ player: this.currentPlayer, by: -45000 });
+        });
+
+        it('sets the proper class to change the color', function() {
+          expect(this.cashChange).toHaveClass('losing');
+        });
+        it('sets the sign', function() {
+          expect(this.cashChangeType).toHaveText('-');
+        });
+        it('sets the proper class to change the color', function() {
+          expect(this.cashChangeValue).toHaveText('45,000');
+        });
+        it('removes the proper amount from the current player', function() {
+          expect(this.currentPlayer.cash).toEqual(-35000);
+        });
+        it('updates the scoreboard', function() {
+          expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
+        });
+      });
+
+      describe('subsequent adjustments', function() {
+        it('clears all classes', function() {
+          Board.adjustCash({ player: this.currentPlayer, by: -1000 });
+          expect(this.cashChange).toHaveClass('losing');
+          Board.adjustCash({ player: this.currentPlayer, by: 1000 });
+          expect(this.cashChange).not.toHaveClass('losing');
+        });
+      });
+
+    });
+
     describe('#buyInsurance', function() {
       beforeEach(function() {
-        spyOn(Actions, 'adjustCash');
+        spyOn(Board, 'adjustCash');
         this.insuranceButton = this.board.affix('button');
         this.insuranceButton.data('insurance', 'stock');
       });
@@ -42,7 +113,7 @@ function(
         it('does nothing', function() {
           this.insuranceButton.data('insurance', 'invalid');
           Board.buyInsurance(this.insuranceButton);
-          expect(Actions.adjustCash).not.toHaveBeenCalled();
+          expect(Board.adjustCash).not.toHaveBeenCalled();
         });
       });
 
@@ -50,7 +121,7 @@ function(
         it('adjusts the player cash by the insurance price', function() {
           this.insuranceButton.data('insurance', 'stock');
           Board.buyInsurance(this.insuranceButton);
-          expect(Actions.adjustCash).toHaveBeenCalledWith(-50000);
+          expect(Board.adjustCash).toHaveBeenCalledWith(-50000);
         });
         it('adds the insurance to the player', function() {
           this.insuranceButton.data('insurance', 'life');
