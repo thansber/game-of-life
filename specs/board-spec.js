@@ -70,6 +70,12 @@ function(
           it('updates the scoreboard', function() {
             expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
           });
+          it('clears the sign', function() {
+            expect(this.cashChangeType).toHaveText('');
+          });
+          it('clears the value', function() {
+            expect(this.cashChangeValue).toHaveText('');
+          });
         });
       });
 
@@ -97,6 +103,12 @@ function(
           });
           it('updates the scoreboard', function() {
             expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
+          });
+          it('clears the sign', function() {
+            expect(this.cashChangeType).toHaveText('');
+          });
+          it('clears the value', function() {
+            expect(this.cashChangeValue).toHaveText('');
           });
         });
       });
@@ -174,11 +186,15 @@ function(
         this.firstAction.addClass('selected');
         this.nextAction = this.board.affix('.action');
         Board.init();
+        Board.nextAction();
       });
 
       it('selects the next available action', function() {
-        Board.nextAction();
         expect(this.nextAction).toHaveClass('selected');
+      });
+
+      it('initializes the space for the next action', function() {
+        expect(Board.initializeSpace).toHaveBeenCalled();
       });
     });
 
@@ -196,6 +212,20 @@ function(
 
       it('sets the job on the current player', function() {
         expect(Game.currentPlayer().job.desc).toEqual('Journalist');
+      });
+    });
+
+    describe('#skipAction', function() {
+      beforeEach(function() {
+        spyOn(this.currentPlayer, 'nextAction');
+        spyOn(Board, 'nextAction');
+        Board.skipAction();
+      });
+      it('updates the player to the next action', function() {
+        expect(this.currentPlayer.nextAction).toHaveBeenCalled();
+      });
+      it('moves to the next action', function() {
+        expect(Board.nextAction).toHaveBeenCalled();
       });
     });
 
