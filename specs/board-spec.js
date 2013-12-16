@@ -59,11 +59,17 @@ function(
         it('sets the proper class to change the color', function() {
           expect(this.cashChangeValue).toHaveText('123,000');
         });
-        xit('adds the proper amount to the current player', function() {
-          expect(this.currentPlayer.cash).toEqual(133000);
-        });
-        xit('updates the scoreboard', function() {
-          expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
+
+        describe('when animation completes', function() {
+          beforeEach(function() {
+            Scoreboard.animateCash.mostRecentCall.args[2].apply();
+          });
+          it('adds the proper amount to the current player', function() {
+            expect(this.currentPlayer.cash).toEqual(133000);
+          });
+          it('updates the scoreboard', function() {
+            expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
+          });
         });
       });
 
@@ -81,11 +87,17 @@ function(
         it('sets the proper class to change the color', function() {
           expect(this.cashChangeValue).toHaveText('45,000');
         });
-        xit('removes the proper amount from the current player', function() {
-          expect(this.currentPlayer.cash).toEqual(-35000);
-        });
-        xit('updates the scoreboard', function() {
-          expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
+
+        describe('when animation completes', function() {
+          beforeEach(function() {
+            Scoreboard.animateCash.mostRecentCall.args[2].apply();
+          });
+          it('removes the proper amount from the current player', function() {
+            expect(this.currentPlayer.cash).toEqual(-35000);
+          });
+          it('updates the scoreboard', function() {
+            expect(Scoreboard.updatePlayerCash).toHaveBeenCalled();
+          });
         });
       });
 
