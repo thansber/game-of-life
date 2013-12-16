@@ -8,7 +8,7 @@ function($, Actions, Board, Game, Scoreboard, Util) {
       $('#setup')
         .on('click', '.swatch', function(e) { Util.choiceChanged($(e.target)); })
         .on('click', '.add', function() { Game.addPlayer(); })
-        .on('click', '.start', function() { Game.start(); Board.nextPlayer(); });
+        .on('click', '.start', function() { Game.start(); Actions.nextPlayer(); });
 
       $('#re-setup').on('click', function() { Game.resetup(); });
 
@@ -21,10 +21,13 @@ function($, Actions, Board, Game, Scoreboard, Util) {
         .on('transitionend webkitTransitionEnd', function() { Actions.resetCashChange(); });
 
       $('#actions')
-        .on('click', '.next-player', function() { Board.nextPlayer(); })
+        .on('click', '.next-player', function() { Actions.nextPlayer(); })
         .on('click', '.add.adjuster', function() { Actions.manualCashAdjustment(1); })
         .on('click', '.minus.adjuster', function() { Actions.manualCashAdjustment(-1); })
         .on('click', '.payday.interest', function() { $(this).toggleClass('selected'); });
+
+      $('#board')
+        .on('click', '.main .insurance .buy', function() { Board.buyInsurance($(this)); });
 
         /*
         .on('click', '.board .job', function() { Board.setJob($(this)); })

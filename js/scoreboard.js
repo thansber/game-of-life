@@ -49,6 +49,29 @@ function($, Util) {
       _private.updatePlayerWidths();
     },
 
+    animateCash: function(player, $cash, callback) {
+      var $animatingCash = $cash.clone(),
+          animationDone = function() {
+            $(this).remove();
+            if (callback) {
+              callback.apply();
+            }
+          };
+      $animatingCash.addClass('animating');
+      $animatingCash.appendTo($cash.parent());
+      $animatingCash.offset($cash.offset());
+
+      var $playerCash = this.currentPlayer().find('.cash .value');
+      $animatingCash.delay(500).animate({
+        left: $playerCash.offset().left,
+        opacity: 0,
+        top: $playerCash.offset().top
+      }, {
+        duration: 500,
+        complete: animationDone
+      });
+    },
+
     currentPlayer: function() {
       return this.findPlayer($scoreboard.find('.player-container.has-turn'));
     },

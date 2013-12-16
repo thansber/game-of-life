@@ -24,6 +24,10 @@ function(Data, Game, Scoreboard, Util) {
       },
 
       _private = {
+        clearCashChange: function() {
+          $cashChange.find('.type').text('');
+          $cashChange.find('.value').text('');
+        },
         currentPlayerAction: function() {
           var playerAt = Game.currentPlayer().at,
               $playerAction;
@@ -36,8 +40,7 @@ function(Data, Game, Scoreboard, Util) {
           var currentPlayer = Game.currentPlayer(),
               $cashChange = $header.find('.cash-change');
           $header.find('.name').text(currentPlayer.name);
-          $cashChange.find('.sign').text('');
-          $cashChange.find('.value').text('');
+          this.clearCashChange();
         },
         selectedAction: function() {
           return $actions.filter('.selected');
@@ -47,11 +50,6 @@ function(Data, Game, Scoreboard, Util) {
             parentSelector: '.jobs',
             choiceSelector: '.job',
           }, options));
-        },
-        updateNavigation: function() {
-          var selectedActionIndex = $actions.index(this.selectedAction());
-          $board.find('.go.left').toggle(selectedActionIndex > 0);
-          $board.find('.go.right').toggle(selectedActionIndex < $actions.length - 1);
         }
       };
 
@@ -73,21 +71,24 @@ function(Data, Game, Scoreboard, Util) {
       $cashChange.find('.type').text(changeOptions.sign);
       $cashChange.find('.value').text(Util.formatCash(Math.abs(amount)));
 
-
-      player.adjustCash(amount);
-      Scoreboard.updatePlayerCash(player);
+      Scoreboard.animateCash(player, $cashChange, function() {
+        player.adjustCash(amount);
+        Scoreboard.updatePlayerCash(player);
+        _private.clearCashChange();
+      });
     },
 
     buyInsurance: function($button) {
       var type = $button.data('insurance'),
-          insurance = Data.insurance[type];
+          insurance = Data.insurance[type],
+          player = Game.currentPlayer();
 
       if (!insurance) {
         return;
       }
 
-      this.adjustCash(-1 * insurance.price);
-      Game.currentPlayer().addInsurance(type);
+      this.adjustCash({ player: player, by: -1 * insurance.price });
+      player.addInsurance(type);
     },
 
     init: function() {
@@ -109,21 +110,12 @@ function(Data, Game, Scoreboard, Util) {
     nextAction: function() {
       Util.choiceChanged(_private.selectedAction().next());
       this.initializeSpace();
-      _private.updateNavigation();
     },
 
     nextPlayer: function() {
-      Scoreboard.nextPlayer();
       Util.choiceChanged(_private.currentPlayerAction());
       this.initializeSpace();
       _private.initializeHeader();
-      _private.updateNavigation();
-    },
-
-    previousAction: function() {
-      Util.choiceChanged(_private.selectedAction().prev());
-      this.initializeSpace();
-      _private.updateNavigation();
     },
 
     setJob: function($job) {

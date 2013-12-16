@@ -18,6 +18,11 @@ function($, Board, Game, Scoreboard, Util) {
         player: Game.currentPlayer(),
         by: +manualAmount * 1000 * multiplier
       });
+    },
+
+    nextPlayer: function() {
+      Scoreboard.nextPlayer();
+      Board.nextPlayer();
     }
 
   };

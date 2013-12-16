@@ -19,6 +19,7 @@
 
 #board .player .cash-change {
     float: right;
+    position: relative;
 }
 
 #board .player .cash-change.gaining {
@@ -27,6 +28,10 @@
 
 #board .player .cash-change.losing {
     color: rgb(223, 51, 54);
+}
+
+#board .player .cash-change.animating {
+    position: absolute;
 }
 
 #board .main {
@@ -74,43 +79,6 @@
 
 
 
-
-#actions .board {
-    overflow: auto;
-    width: 97%;
-}
-
-#actions .board nav {
-    overflow: auto;
-    margin-top: 1em;
-}
-
-#actions .board .main {
-    border-color: rgb(26, 26, 26);
-    border-radius: 20px;
-    border-style: solid;
-    border-width: 2px;
-    clear: both;
-    height: 14em;
-    overflow: hidden;
-    position: relative;
-}
-
-#actions .board .go {
-    background-size: cover;
-    height: 24px;
-    width: 24px;
-}
-
-#actions .board .go.left {
-    background-image: url('../images/navigation-180.png');
-    float: left;
-}
-
-#actions .board .go.right {
-    background-image: url('../images/navigation.png');
-    float: right;
-}
 
 #actions .board .action .button {
     height: 100%;
