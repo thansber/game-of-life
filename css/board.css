@@ -1,3 +1,72 @@
+#board {
+    border: 2px solid rgb(134, 134, 134);
+    float: left;
+    margin: 2% 1%;
+    width: 60%;
+}
+
+#board .player {
+    border-bottom: 2px solid rgb(134, 134, 134);
+    color: rgb(238, 238, 238);
+    font-size: 150%;
+    padding: 0.4em 1em 0.5em;
+    overflow: auto;
+}
+
+#board .player .name {
+    float: left;
+}
+
+#board .player .cash-change {
+    float: right;
+}
+
+#board .main {
+    float: left;
+    height: 14em;
+    overflow: hidden;
+    padding: 2.5%;
+    position: relative;
+    width: 70%;
+}
+
+#board .main .action {
+    margin-left: 1000%;
+    transition-property: margin-left;
+    transition-duration: 0.75s;
+    transition-timing-function: ease;
+}
+
+#board .main .action.selected {
+    margin-left: 0;
+}
+
+#board .main .action .button {
+    display: block;
+    margin: 0 0 1em 0;
+    padding: 0.4em 0 0.5em;
+    width: 75%;
+}
+
+#board .main .action .medium.button {
+    font-size: 1.5em;
+}
+
+#board .main .action .skip.button {
+}
+
+
+
+#board .spaces {
+    float: right;
+    font-size: 125%;
+    text-align: center;
+    width: 25%;
+}
+
+
+
+
 #actions .board {
     overflow: auto;
     width: 97%;
@@ -35,30 +104,6 @@
     float: right;
 }
 
-#actions .board .action {
-    left: 50%;
-    margin-left: 1000%;
-    position: absolute;
-    top: 50%;
-    transition-property: margin-left;
-    transition-duration: 0.75s;
-    transition-timing-function: ease;
-    width: 50%;
-}
-
-#actions .board .action.vertically-centered {
-    height: 30%;
-    margin-top: -6%;
-}
-
-#actions .board .action.selected {
-    margin-left: 0;
-}
-
-#actions .board .action.vertically-centered.selected {
-    margin-left: -25%;
-}
-
 #actions .board .action .button {
     height: 100%;
     width: 100%;
@@ -66,16 +111,6 @@
 
 #actions .board .action .large.button {
     font-size: 2em;
-}
-
-#actions .board .action .medium.button {
-    font-size: 1.5em;
-    width: 60%;
-}
-
-#actions .board .action .skip.button {
-    margin-left: 3%;
-    width: 25%;
 }
 
 #actions .board .action.insurance {
