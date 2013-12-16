@@ -4,6 +4,7 @@ function(Actions, Data, Game, Scoreboard, Util) {
 
   var $actions,
       $board,
+      $header,
 
       initializers = {
         jobs: function(player) {
@@ -30,6 +31,13 @@ function(Actions, Data, Game, Scoreboard, Util) {
           return $actions.filter(function() {
             return $(this).data('type') === playerAt;
           });
+        },
+        initializeHeader: function() {
+          var currentPlayer = Game.currentPlayer(),
+              $cashChange = $header.find('.cash-change');
+          $header.find('.name').text(currentPlayer.name);
+          $cashChange.find('.sign').text('');
+          $cashChange.find('.value').text('');
         },
         selectedAction: function() {
           return $actions.filter('.selected');
@@ -61,7 +69,8 @@ function(Actions, Data, Game, Scoreboard, Util) {
     },
 
     init: function() {
-      $board = $('#actions .board');
+      $board = $('#board');
+      $header = $board.find('.player');
       $actions = $board.find('.action');
     },
 
@@ -84,6 +93,7 @@ function(Actions, Data, Game, Scoreboard, Util) {
       Scoreboard.nextPlayer();
       Util.choiceChanged(_private.currentPlayerAction());
       this.initializeSpace();
+      _private.initializeHeader();
       _private.updateNavigation();
     },
 

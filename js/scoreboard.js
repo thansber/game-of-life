@@ -34,9 +34,11 @@ function($, Util) {
       markup[i++] =   ' data-color="' + player.color + '">';
       markup[i++] =     '<p class="name">' + player.name + '</p>';
       markup[i++] =     '<p class="cash">$<span class="value"></p>';
-      markup[i++] =     '<p class="delete icon" title="Delete this player"></p>';
-      markup[i++] =     '<p class="move right arrow icon" title="Move this player right"></p>';
-      markup[i++] =     '<p class="move left arrow icon" title="Move this player left"></p>';
+      markup[i++] =     '<div class="actions">';
+      markup[i++] =       '<p class="move left arrow icon" title="Move this player left"></p>';
+      markup[i++] =       '<p class="move right arrow icon" title="Move this player right"></p>';
+      markup[i++] =       '<p class="delete icon" title="Delete this player"></p>';
+      markup[i++] =     '</div>';
       markup[i++] =   '</div>';
       markup[i++] = '</div>';
 
@@ -94,7 +96,6 @@ function($, Util) {
       }
 
       $next.addClass('has-turn');
-      $cashChange.css('top', 70 * this.indexOf($next));
     },
 
     playerBy: function(options) {

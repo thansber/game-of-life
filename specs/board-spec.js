@@ -21,8 +21,7 @@ function(
   describe('Board', function() {
 
     beforeEach(function() {
-      this.actionContainer = affix('#actions');
-      this.board = this.actionContainer.affix('.board');
+      this.board = affix('#board');
       this.goLeft = this.board.affix('.go.left');
       this.goRight = this.board.affix('.go.right');
 

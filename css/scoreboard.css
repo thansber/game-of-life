@@ -1,22 +1,25 @@
 #scoreboard {
     position: relative;
+    height: 4em;
     width: 100%;
 }
 
 #scoreboard .icon {
+    display: inline-block;
     height: 16px;
     margin-right: 0.25em;
     position: relative;
-    top: 0.6em;
     width: 16px;
 }
 
-.game-started #scoreboard .icon {
+.game-started #scoreboard .actions {
     display: none;
 }
 
-#scoreboard .arrow {
-    float: right;
+#scoreboard .actions {
+    margin-top: 0.5em;
+    text-align: center;
+    width: 100%;
 }
 
 #scoreboard .arrow.left {
@@ -37,13 +40,12 @@
 
 #scoreboard .delete {
     background-image: url("../images/minus-button.png");
-    float: right;
 }
 
 #scoreboard .player-container {
     float: left;
-    overflow: auto;
     position: relative;
+    text-align: center;
 }
 
 #scoreboard.one-player .player-container {
@@ -74,13 +76,20 @@
     width: 14.28%;
 }
 
-#scoreboard .player-container.has-turn {
-    box-shadow: 0 12px 8px 0 rgb(224, 224, 224, 0.75);
-}
-
 #scoreboard .player {
     float: left;
+    height: 100%;
+    padding: 0.25em 0;
+    transition-property: font-size;
+    transition-duration: 0.5s;
+    transition-timing-function: ease;
     width: 100%;
+}
+
+#scoreboard .player-container.has-turn .player {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    font-size: 133%;
 }
 
 #scoreboard .player.light {
@@ -119,30 +128,12 @@
     background-color: #FFFFFF;
 }
 
-
-#scoreboard .player .name {
-    float: left;
-    margin-bottom: 0.5em;
-    padding: 0.5em 0 0 1em;
-    top: 0.6em;
-}
-
 #scoreboard .player .cash {
     display: none;
-    float: right;
-    padding: 0.5em 0 0 0;
-    position: relative;
-    width: 5em;
 }
 
 .game-started #scoreboard .player .cash {
-    display: inline-block;
-}
-
-#next-player {
-    border-radius: 30px;
-    font-size: 150%;
-    height: 3em;
+    display: block;
 }
 
 #cash-change {
@@ -159,12 +150,4 @@
 
 #cash-change.losing {
     color: rgb(223, 51, 54);
-}
-
-#cash-change.is-animating {
-    right: 8em;
-}
-
-.game-started #cash-change {
-    display: block;
 }
