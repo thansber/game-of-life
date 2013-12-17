@@ -27,15 +27,9 @@ function($, Actions, Board, Game, Scoreboard, Util) {
         .on('click', '.payday.interest', function() { $(this).toggleClass('selected'); });
 
       $('#board')
-        .on('click', '.main .insurance .buy', function() { Board.buyInsurance($(this)); });
-
-        /*
-        .on('click', '.board .job', function() { Board.setJob($(this)); })
-        .on('click', '.board .go.left', function() { Board.previousAction(); })
-        .on('click', '.board .go.right', function() { Board.nextAction(); })
-        .on('click', '.board .action .skip', function() { Board.skipAction(); })
-        .on('click', '.board .action .buy', function() { Board.buyInsurance($(this)); });
-        */
+        .on('click', '.main .execute', function() { Board.execute($(this)); })
+        .on('click', '.main .skip', function() { Board.skipAction(); })
+        .on('click', '.main .job', function() { Board.setJob($(this)); });
 
     }
   };

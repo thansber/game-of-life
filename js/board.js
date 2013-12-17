@@ -1,6 +1,6 @@
 define( /* Board */
-['data', 'game', 'scoreboard', 'util'],
-function(Data, Game, Scoreboard, Util) {
+['data', 'game', 'scoreboard', 'space', 'util'],
+function(Data, Game, Scoreboard, Space, Util) {
 
   var $actions,
       $board,
@@ -29,8 +29,7 @@ function(Data, Game, Scoreboard, Util) {
           $cashChange.find('.value').text('');
         },
         currentPlayerAction: function() {
-          var playerAt = Game.currentPlayer().at,
-              $playerAction;
+          var playerAt = Game.currentPlayer().at;
 
           return $actions.filter(function() {
             return $(this).data('type') === playerAt;
@@ -78,17 +77,10 @@ function(Data, Game, Scoreboard, Util) {
       });
     },
 
-    buyInsurance: function($button) {
-      var type = $button.data('insurance'),
-          insurance = Data.insurance[type],
-          player = Game.currentPlayer();
-
-      if (!insurance) {
-        return;
-      }
-
-      this.adjustCash({ player: player, by: -1 * insurance.price });
-      player.addInsurance(type);
+    execute: function($elem) {
+      var self = this,
+          space = Space.from($elem.closest('.action').data('type'));
+      space.execute($elem, Game.currentPlayer(), this);
     },
 
     init: function() {
@@ -99,12 +91,8 @@ function(Data, Game, Scoreboard, Util) {
     },
 
     initializeSpace: function() {
-      var spaceType = _private.selectedAction().data('type'),
-          initializer = initializers[spaceType];
-
-      if (initializer) {
-        initializer(Game.currentPlayer());
-      }
+      var space = Space.from(_private.selectedAction().data('type'));
+      space.initialize(Game.currentPlayer(), this);
     },
 
     nextAction: function() {
@@ -118,8 +106,15 @@ function(Data, Game, Scoreboard, Util) {
       _private.initializeHeader();
     },
 
+    selectJob: function($job, options) {
+      Util.choiceChanged($job, _.extend({
+        parentSelector: '.jobs',
+        choiceSelector: '.job',
+      }, options));
+    },
+
     setJob: function($job) {
-      _private.selectJob($job);
+      this.selectJob($job);
       Game.currentPlayer().setJob($job.data('job'));
     },
 

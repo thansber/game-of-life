@@ -36,7 +36,7 @@
 
 #board .main {
     float: left;
-    height: 14em;
+    height: 20em;
     overflow: hidden;
     padding: 2.5%;
     position: relative;
@@ -44,14 +44,17 @@
 }
 
 #board .main .action {
-    margin-left: 1000%;
-    transition-property: margin-left;
+    left: 500%;
+    margin-left: 1.5em;
+    position: absolute;
+    transition-property: left;
     transition-duration: 0.75s;
     transition-timing-function: ease;
+    width: 100%;
 }
 
 #board .main .action.selected {
-    margin-left: 0;
+    left: 0;
 }
 
 #board .main .action .button {
@@ -61,6 +64,10 @@
     width: 75%;
 }
 
+#board .main .action .large.button {
+    font-size: 2em;
+}
+
 #board .main .action .medium.button {
     font-size: 1.5em;
 }
@@ -68,6 +75,19 @@
 #board .main .action .skip.button {
 }
 
+#board .main .action .job.button {
+    font-size: 1em;
+    margin-bottom: 0.4em;
+    opacity: 0.2;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    width: 50%;
+}
+
+#board .main .action .job.button.selected {
+    opacity: 1;
+}
 
 
 #board .spaces {
@@ -75,71 +95,4 @@
     font-size: 125%;
     text-align: center;
     width: 25%;
-}
-
-
-
-
-#actions .board .action .button {
-    height: 100%;
-    width: 100%;
-}
-
-#actions .board .action .large.button {
-    font-size: 2em;
-}
-
-#actions .board .action.insurance {
-    width: 100%;
-}
-
-#actions .board .action.insurance.selected {
-    margin-left: -45%;
-}
-
-#actions .board .action.jobs {
-    left: 2%;
-    top: 11%;
-    width: 100%;
-}
-
-#actions .board .action.jobs .row {
-    margin: 0 0 2em 6%;
-    overflow: auto;
-    width: 100%;
-}
-
-#actions .board .action.jobs .row.single {
-    margin-left: 34%;
-}
-
-#actions .board .action.jobs .job {
-    background-color: rgb(136, 136, 136);
-    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102) );
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    display: inline-block;
-    float: left;
-    font-size: 1.5em;
-    opacity: 0.2;
-    padding: 0.1em 0.35em 0.2em;
-    text-align: center;
-    transition-property: opacity;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    width: 25%;
-}
-
-#actions .board .action.jobs .job.first {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
-#actions .board .action.jobs .job.last {
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-#actions .board .action.jobs .job.selected {
-    opacity: 1;
 }

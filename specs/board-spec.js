@@ -121,39 +121,6 @@ function(
           expect(this.cashChange).not.toHaveClass('losing');
         });
       });
-
-    });
-
-    describe('#buyInsurance', function() {
-      beforeEach(function() {
-        spyOn(Board, 'adjustCash');
-        this.insuranceButton = this.board.affix('button');
-        this.insuranceButton.data('insurance', 'stock');
-      });
-
-      describe('for an invalid type', function() {
-        it('does nothing', function() {
-          this.insuranceButton.data('insurance', 'invalid');
-          Board.buyInsurance(this.insuranceButton);
-          expect(Board.adjustCash).not.toHaveBeenCalled();
-        });
-      });
-
-      describe('for a valid insurance type', function() {
-        it('adjusts the player cash by the insurance price', function() {
-          this.insuranceButton.data('insurance', 'stock');
-          Board.buyInsurance(this.insuranceButton);
-          expect(Board.adjustCash).toHaveBeenCalledWith({
-            player: this.currentPlayer,
-            by: -50000
-          });
-        });
-        it('adds the insurance to the player', function() {
-          this.insuranceButton.data('insurance', 'life');
-          Board.buyInsurance(this.insuranceButton);
-          expect(this.currentPlayer.hasInsurance('life')).toBe(true);
-        });
-      });
     });
 
     describe('#initializeSpace', function() {

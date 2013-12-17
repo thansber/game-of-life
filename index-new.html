@@ -47,12 +47,28 @@
     <p class="cash-change"><span class="type"></span><span class="value"></span></p>
   </h1>
   <div class="main">
-    <div class="action auto insurance vertically-centered selected" data-type="auto-insurance">
-      <button class="orange medium button buy" data-insurance="auto">Buy auto insurance</button>
+
+    <div class="action auto insurance" data-type="auto-insurance">
+      <button class="orange medium button execute" data-insurance="auto">Buy auto insurance</button>
       <button class="grey medium button skip">Skip auto insurance</button>
     </div>
 
+    <div class="action tuition" data-type="tuition">
+      <button class="red large button execute" data-amount="-2000">Pay tuition</button>
+    </div>
+
+    <div class="action jobs selected" data-type="jobs">
+      <button class="grey button job execute" data-job="d">Doctor</button>
+      <button class="grey button job execute" data-job="j">Journalist</button>
+      <button class="grey button job execute" data-job="l">Lawyer</button>
+      <button class="grey button job execute" data-job="t">Teacher</button>
+      <button class="grey button job execute" data-job="p">Physicist</button>
+      <button class="grey button job execute" data-job="u">University</button>
+      <button class="grey button job execute" data-job="b">Business</button>
+    </div>
+
   </div>
+
   <div class="spaces">
     <p class="current">Current</p>
     <p class="children">Children</p>
@@ -71,39 +87,6 @@
   <button class="red payday button">Pay Day!</button>
   <div class="payday interest">with interest</div>
 </section>
-
-<!--
-  <div class="board">
-    <div class="main">
-
-      <div class="action tuition vertically-centered" data-type="tuition">
-        <button class="red large button">Pay tuition</button>
-      </div>
-
-      <div class="action jobs" data-type="jobs">
-        <div class="row">
-          <p class="job first" data-job="d">Doctor</p>
-          <p class="job" data-job="j">Journalist</p>
-          <p class="job last" data-job="l">Lawyer</p>
-        </div>
-        <div class="row">
-          <p class="job first" data-job="t">Teacher</p>
-          <p class="job" data-job="p">Physicist</p>
-          <p class="job last" data-job="u">University</p>
-        </div>
-        <div class="row single">
-          <p class="job first last" data-job="b">Business</p>
-        </div>
-      </div>
-
-    </div>
-    <nav>
-      <div class="go left icon"></div>
-      <div class="go right icon"></div>
-    </nav>
-  </div>
-</section>
--->
 
 <script src="js/lib/prefixfree.min.js"></script>
 <script data-main="js/main" src="js/lib/require.js"></script>
