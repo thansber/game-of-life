@@ -13,6 +13,7 @@ function($, _, Data) {
     this.married = false;
     this.tollBridgeOwned = false;
     this.millionaire = false;
+    this.at = 'fire-insurance';
     this.at = Data.actions[0];
   };
 
@@ -40,6 +41,10 @@ function($, _, Data) {
     nextAction: function() {
       var actionIndex = _.indexOf(Data.actions, this.at);
       this.at = Data.actions[++actionIndex];
+    },
+
+    salary: function() {
+      return this.job ? this.job.salary : 0;
     },
 
     setJob: function(jobId) {

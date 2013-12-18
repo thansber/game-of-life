@@ -80,6 +80,16 @@ function(Data, Player) {
       });
     });
 
+    describe('#salary', function() {
+      it('handles a player without a job', function() {
+        expect(this.player.salary()).toEqual(0);
+      });
+      it('returns the player salary based on their job', function() {
+        this.player.setJob('j');
+        expect(this.player.salary()).toEqual(24000);
+      });
+    });
+
     describe('#setJob', function() {
       describe('a valid value', function() {
         it('sets the job using the provided value', function() {
