@@ -87,6 +87,7 @@ function($, _, Data) {
   new Space('life-insurance', { executor: executors.buyInsurance });
   new Space('marriage', { executor: executors.marriage });
   new Space('house', { executor: executors.simpleTransaction });
+  new Space('fire-insurance', { executor: executors.buyInsurance });
 
   return {
     from: function(id) {
