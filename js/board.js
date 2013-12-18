@@ -83,10 +83,15 @@ function(Data, Game, Scoreboard, Space, Util) {
           amount = +opt.by,
           others = Game.playersExcept(opt.player);
 
-      others.forEach(function(player) {
-        self.adjustCash({ player: player, by: amount * -1 });
+      others.forEach(function(player, i) {
+        setTimeout(function() {
+          self.adjustCash({ player: player, by: amount * -1 });
+        }, Scoreboard.cashAnimationDelay() * i);
       });
-      this.adjustCash({ player: opt.player, by: amount * others.length });
+
+      setTimeout(function() {
+        self.adjustCash({ player: opt.player, by: amount * others.length });
+      }, Scoreboard.cashAnimationDelay() * others.length);
     },
 
     execute: function($elem) {

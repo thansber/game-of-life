@@ -125,13 +125,14 @@ function(
       });
     });
 
-    describe('#everyonePays', function() {
+    xdescribe('#everyonePays', function() {
       beforeEach(function() {
         this.gameFixture = new GameFixture();
         this.gameFixture.setPlayers(['Name1', 'Name2', 'Name3', 'Name4']);
 
         this.player = Game.playerBy({index: 1});
         spyOn(Board, 'adjustCash');
+        spyOn(Scoreboard, 'cashAnimationDelay').andReturn(0);
       });
 
       describe('takes away for all other players', function() {

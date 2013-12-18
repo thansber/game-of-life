@@ -3,6 +3,7 @@ define( /* Scoreboard */
 function($, Util) {
 
   var $scoreboard = null,
+      CASH_ANIMATION_DELAY = 500,
       numPlayerClasses = ['one-player', 'two-players', 'three-players', 'four-players', 'five-players', 'six-players', 'seven-players'],
       _private = {
         containerFor: function($elem) {
@@ -61,8 +62,8 @@ function($, Util) {
       $animatingCash.appendTo($cash.parent());
       $animatingCash.offset($cash.offset());
 
-      var $playerCash = this.currentPlayer().find('.cash .value');
-      $animatingCash.delay(500).animate({
+      var $playerCash = this.playerBy({player: player}).find('.cash .value');
+      $animatingCash.delay(CASH_ANIMATION_DELAY).animate({
         left: $playerCash.offset().left,
         opacity: 0,
         top: $playerCash.offset().top
@@ -70,6 +71,10 @@ function($, Util) {
         duration: 500,
         complete: animationDone
       });
+    },
+
+    cashAnimationDelay: function() {
+      return CASH_ANIMATION_DELAY;
     },
 
     currentPlayer: function() {

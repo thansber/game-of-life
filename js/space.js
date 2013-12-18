@@ -28,15 +28,12 @@ function($, _, Data) {
     jobs: function($button, player, board) {
       board.selectJob($button);
       player.setJob($button.data('job'));
-      setTimeout(function() {
-
-      }, 1000);
     },
 
     marriage: function($button, player, board) {
       var amount = $button.data("amount");
       if (amount > 0) {
-
+        board.everyonePays({ player: player, by: amount });
       }
       player.getMarried();
     },
@@ -89,6 +86,7 @@ function($, _, Data) {
   new Space('jobs', { initializer: initializers.jobs, executor: executors.jobs });
   new Space('life-insurance', { executor: executors.buyInsurance });
   new Space('marriage', { executor: executors.marriage });
+  new Space('house', { executor: executors.simpleTransaction });
 
   return {
     from: function(id) {
