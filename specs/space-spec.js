@@ -55,7 +55,7 @@ function(
       });
 
       it('calls the registered executor', function() {
-        this.space.execute();
+        this.space.execute(affix('button'));
         expect(this.executor).toHaveBeenCalled();
       });
       it('calls any attached handlers with the element and player', function() {

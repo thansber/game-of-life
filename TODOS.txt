@@ -6,6 +6,7 @@
 
 Version 3.0
 ===========
+- when cash animation starts, clear cash change, needs to be in scoreboard but manipulate board????
 - Store all actions taken in local storage
     - Start over
     - Replay

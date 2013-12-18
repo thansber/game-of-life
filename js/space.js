@@ -31,7 +31,7 @@ function($, _, Data) {
     },
 
     marriage: function($button, player, board) {
-      var amount = $button.data("amount");
+      var amount = +$button.data("amount");
       if (amount > 0) {
         board.everyonePays({ player: player, by: amount });
       }
@@ -40,6 +40,10 @@ function($, _, Data) {
 
     simpleTransaction: function($button, player, board) {
       board.adjustCash({ player: player, by: +$button.data('amount') });
+    },
+
+    taxes: function($button, player, board) {
+      board.adjustCash({ player: player, by: player.salary() / -2 });
     }
   },
 
@@ -69,13 +73,24 @@ function($, _, Data) {
 
     execute: function($elem, player, board) {
       var self = this,
+          delay = $elem.data('delay'),
           dfd = $.Deferred(),
-          nextAction = function() {
-            setTimeout(function() {
-              player.nextAction();
-              board.nextAction();
-            }, self.executionDelay || 1000);
-          };
+          nextAction;
+
+      if (_.isUndefined(delay)) {
+        delay = self.executionDelay;
+      }
+      if (_.isUndefined(delay)) {
+        delay = 1000;
+      }
+
+      nextAction = function() {
+        setTimeout(function() {
+          player.nextAction();
+          board.nextAction();
+        }, +delay);
+      };
+
       dfd.done(this.executor, nextAction);
       return dfd.resolve($elem, player, board);
     }
@@ -88,6 +103,8 @@ function($, _, Data) {
   new Space('marriage', { executor: executors.marriage });
   new Space('house', { executor: executors.simpleTransaction });
   new Space('fire-insurance', { executor: executors.buyInsurance });
+  new Space('taxes1', { executor: executors.taxes });
+  new Space('stock-insurance', { executor: executors.buyInsurance });
 
   return {
     from: function(id) {
