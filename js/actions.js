@@ -23,6 +23,15 @@ function($, Board, Game, Scoreboard, Util) {
     nextPlayer: function() {
       Scoreboard.nextPlayer();
       Board.nextPlayer();
+    },
+
+    payPlayer: function() {
+      var currentPlayer = Game.currentPlayer();
+      // TODO: handle interest
+      Board.adjustCash({
+        player: currentPlayer,
+        by: currentPlayer.salary()
+      });
     }
 
   };

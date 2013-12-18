@@ -21,7 +21,8 @@ function($, Actions, Board, Game, Scoreboard, Util) {
         .on('click', '.next-player', function() { Actions.nextPlayer(); })
         .on('click', '.add.adjuster', function() { Actions.manualCashAdjustment(1); })
         .on('click', '.minus.adjuster', function() { Actions.manualCashAdjustment(-1); })
-        .on('click', '.payday.interest', function() { $(this).toggleClass('selected'); });
+        .on('click', '.payday', function() { Actions.payPlayer(); })
+        .on('click', '.payday-interest', function() { $(this).toggleClass('selected'); });
 
       $('#board')
         .on('click', '.main .execute', function() { Board.execute($(this)); })

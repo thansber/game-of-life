@@ -70,7 +70,7 @@
     box-shadow: none;
 }
 
-#actions .payday.interest {
+#actions .payday-interest {
     background: linear-gradient(rgb(191, 50, 53), rgb(223, 51, 54));
     border: 2px solid rgb(149, 43, 44);
     border-top: 0;
@@ -84,6 +84,6 @@
     transition-duration: 0.4s;
 }
 
-#actions .payday.interest.selected {
+#actions .payday-interest.selected {
     opacity: 1;
 }
