@@ -77,6 +77,18 @@ function(Data, Game, Scoreboard, Space, Util) {
       });
     },
 
+    everyonePays: function(options) {
+      var opt = options || {},
+          self = this,
+          amount = +opt.by,
+          others = Game.playersExcept(opt.player);
+
+      others.forEach(function(player) {
+        self.adjustCash({ player: player, by: amount * -1 });
+      });
+      this.adjustCash({ player: opt.player, by: amount * others.length });
+    },
+
     execute: function($elem) {
       var self = this,
           space = Space.from($elem.closest('.action').data('type'));

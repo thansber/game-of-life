@@ -1,5 +1,5 @@
 define( /* Player */
-["jquery", "../data", "./summary", "../util"],
+["jquery", "./data", "./summary", "../util"],
 function($, Data, Summary, Util) {
 
   var $player = null;

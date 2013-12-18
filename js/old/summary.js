@@ -1,5 +1,5 @@
 define( /* Summary */
-["jquery", "../data"],
+["jquery", "./data"],
 function($, Data) {
 
   var summary = [];

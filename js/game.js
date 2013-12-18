@@ -101,6 +101,12 @@ function($, _, Player, Scoreboard) {
       return game.players;
     },
 
+    playersExcept: function(exceptPlayer) {
+      return _.reject(this.players(), function(player) {
+        return player.name === exceptPlayer.name;
+      });
+    },
+
     removePlayer: function($target) {
       // $target is the delete button
       var $player = Scoreboard.findPlayer($target),

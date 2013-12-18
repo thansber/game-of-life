@@ -3,6 +3,7 @@ define(
   'underscore',
   'board',
   'game',
+  'game-fixture',
   'player',
   'scoreboard',
   'util',
@@ -13,6 +14,7 @@ function(
   _,
   Board,
   Game,
+  GameFixture,
   Player,
   Scoreboard,
   Util
@@ -119,6 +121,49 @@ function(
           expect(this.cashChange).toHaveClass('losing');
           Board.adjustCash({ player: this.currentPlayer, by: 1000 });
           expect(this.cashChange).not.toHaveClass('losing');
+        });
+      });
+    });
+
+    describe('#everyonePays', function() {
+      beforeEach(function() {
+        this.gameFixture = new GameFixture();
+        this.gameFixture.setPlayers(['Name1', 'Name2', 'Name3', 'Name4']);
+
+        this.player = Game.playerBy({index: 1});
+        spyOn(Board, 'adjustCash');
+      });
+
+      describe('takes away for all other players', function() {
+        beforeEach(function() {
+          Board.everyonePays({ player: this.player, by: 3000 });
+          this.adjustCashCalls = Board.adjustCash.argsForCall;
+        });
+        it('takes away from player 1', function() {
+          expect(this.adjustCashCalls[0][0]).toEqual({
+            player: Game.playerBy({index: 0}),
+            by: -3000
+          });
+        });
+        it('takes away from player 3', function() {
+          expect(this.adjustCashCalls[1][0]).toEqual({
+            player: Game.playerBy({index: 2}),
+            by: -3000
+          });
+        });
+        it('takes away from player 4', function() {
+          expect(Board.adjustCash.argsForCall[2][0]).toEqual({
+            player: Game.playerBy({index: 3}),
+            by: -3000
+          });
+        });
+      });
+
+      it('gives the player the amount for each player', function() {
+        Board.everyonePays({ player: this.player, by: 3000 });
+        expect(Board.adjustCash).toHaveBeenCalledWith({
+          player: this.player,
+          by: 9000
         });
       });
     });

@@ -33,6 +33,14 @@ function($, _, Data) {
       }, 1000);
     },
 
+    marriage: function($button, player, board) {
+      var amount = $button.data("amount");
+      if (amount > 0) {
+
+      }
+      player.getMarried();
+    },
+
     simpleTransaction: function($button, player, board) {
       board.adjustCash({ player: player, by: +$button.data('amount') });
     }
@@ -67,6 +75,7 @@ function($, _, Data) {
           dfd = $.Deferred(),
           nextAction = function() {
             setTimeout(function() {
+              player.nextAction();
               board.nextAction();
             }, self.executionDelay || 1000);
           };
@@ -78,7 +87,8 @@ function($, _, Data) {
   new Space('auto-insurance', { executor: executors.buyInsurance });
   new Space('tuition', { executor: executors.simpleTransaction });
   new Space('jobs', { initializer: initializers.jobs, executor: executors.jobs });
-
+  new Space('life-insurance', { executor: executors.buyInsurance });
+  new Space('marriage', { executor: executors.marriage });
 
   return {
     from: function(id) {

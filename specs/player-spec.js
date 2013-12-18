@@ -51,6 +51,14 @@ function(Data, Player) {
       });
     });
 
+    describe('#getMarried', function() {
+      it('sets the married flag', function() {
+        expect(this.player.married).toBe(false);
+        this.player.getMarried();
+        expect(this.player.married).toBe(true);
+      });
+    });
+
     describe('#hasInsurance', function() {
       beforeEach(function() {
         this.player.addInsurance('foo');

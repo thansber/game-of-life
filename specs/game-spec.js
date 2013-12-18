@@ -1,38 +1,41 @@
 define(
-['game', 'scoreboard', 'jasmine-fixture', 'jasmine-jquery'],
-function(Game, Scoreboard) {
+[
+  'game',
+  'game-fixture',
+  'scoreboard',
+  'jasmine-fixture',
+  'jasmine-jquery'
+],
+function(
+  Game,
+  GameFixture,
+  Scoreboard
+) {
 
   describe('Game', function() {
 
     beforeEach(function() {
-      this.playerFixture = affix('#setup');
-      this.name = this.playerFixture.affix('input');
-      this.swatch = this.playerFixture.affix('.swatch.selected');
-      this.swatch.data('color', '000000');
-      Game.init();
+      this.gameFixture = new GameFixture();
     });
 
     describe('#addPlayer', function() {
 
       describe('name and color entered', function() {
         beforeEach(function() {
-          this.name.val('Name');
+          spyOn(Scoreboard, 'addPlayer');
+          this.gameFixture.setPlayers(['Name 1']);
         });
 
         it('adds a player to the game', function() {
-          Game.addPlayer();
           expect(Game.numPlayers()).toEqual(1);
         });
 
         it('adds a player to the scoreboard', function() {
-          spyOn(Scoreboard, 'addPlayer');
-          Game.addPlayer();
           expect(Scoreboard.addPlayer).toHaveBeenCalledWith(Game.playerBy({index: 0}));
         });
 
         it('disables the selected swatch', function() {
-          Game.addPlayer();
-          expect(this.swatch).toHaveClass('disabled');
+          expect(this.gameFixture.swatch).toHaveClass('disabled');
         });
       });
 
@@ -44,18 +47,16 @@ function(Game, Scoreboard) {
 
       describe('when no color has been selected', function() {
         it('does nothing', function() {
-          this.name.val('Name');
-          this.swatch.removeClass('selected');
+          this.gameFixture.name.val('Name');
+          this.gameFixture.swatch.removeClass('selected');
           expect(Game.addPlayer()).toBeFalsy();
         });
       });
 
       describe('when a name already used is used again', function() {
         it('does nothing', function() {
-          this.name.val('Name');
-          expect(Game.addPlayer()).toBeTruthy();
-          this.swatch.removeClass('disabled').addClass('selected');
-          expect(Game.addPlayer()).toBeFalsy();
+          this.gameFixture.setPlayers(['Name 1', 'Name 1', 'Name 1']);
+          this.gameFixture.checkNames(Game.players(), ['Name 1']);
         });
       });
     });
@@ -63,23 +64,9 @@ function(Game, Scoreboard) {
     describe('multiple players', function() {
 
       beforeEach(function() {
-        var self = this,
-            names = ['Name1', 'Name2', 'Name3', 'Name4'];
-
         this.scoreboard = affix('#scoreboard');
         Scoreboard.init();
-
-        names.forEach(function(name) {
-          self.name.val(name);
-          Game.addPlayer();
-          self.swatch.addClass('selected');
-        });
-
-        this.checkPlayerNames = function(expectedNames) {
-          Game.players().forEach(function(player, i) {
-            expect(player.name).toEqual(expectedNames[i]);
-          });
-        };
+        this.gameFixture.setPlayers(['Name1', 'Name2', 'Name3', 'Name4']);
       });
 
       describe('#movePlayer', function() {
@@ -87,14 +74,14 @@ function(Game, Scoreboard) {
           describe('the 2nd player', function() {
             it('re-orders correctly', function() {
               Game.movePlayer(this.scoreboard.find('.move.left').eq(1), -1);
-              this.checkPlayerNames(['Name2', 'Name1', 'Name3', 'Name4']);
+              this.gameFixture.checkNames(Game.players(), ['Name2', 'Name1', 'Name3', 'Name4']);
             });
           });
 
           describe('the last player', function() {
             it('re-orders correctly', function() {
               Game.movePlayer(this.scoreboard.find('.move.left').last(), -1);
-              this.checkPlayerNames(['Name1', 'Name2', 'Name4', 'Name3']);
+              this.gameFixture.checkNames(Game.players(), ['Name1', 'Name2', 'Name4', 'Name3']);
             });
           });
         });
@@ -103,7 +90,7 @@ function(Game, Scoreboard) {
           describe('the 1st player', function() {
             it('re-orders correctly', function() {
               Game.movePlayer(this.scoreboard.find('.move.right').first(), 1);
-              this.checkPlayerNames(['Name2', 'Name1', 'Name3', 'Name4']);
+              this.gameFixture.checkNames(Game.players(), ['Name2', 'Name1', 'Name3', 'Name4']);
             });
           });
         });
@@ -148,6 +135,17 @@ function(Game, Scoreboard) {
         });
       });
 
+      describe('#playersExcept', function() {
+        it('returns the correct players', function() {
+          this.gameFixture.checkNames(Game.playersExcept(Game.players()[3]), ['Name1', 'Name2', 'Name3']);
+        });
+        it('leaves out the provided player', function() {
+          var exceptPlayer = Game.players()[1],
+              players = Game.playersExcept(exceptPlayer);
+          expect(players).not.toContain(exceptPlayer);
+        });
+      });
+
       describe('#removePlayer', function() {
         describe('when removing the first player', function() {
           beforeEach(function() {
@@ -162,13 +160,13 @@ function(Game, Scoreboard) {
 
           it('removes the correct player', function() {
             Game.removePlayer(this.deleteButton);
-            this.checkPlayerNames(['Name2', 'Name3', 'Name4']);
+            this.gameFixture.checkNames(Game.players(), ['Name2', 'Name3', 'Name4']);
           });
 
           it('re-enables the swatch for the deleted player', function() {
-            expect(this.swatch).toHaveClass('disabled');
+            expect(this.gameFixture.swatch).toHaveClass('disabled');
             Game.removePlayer(this.deleteButton);
-            expect(this.swatch).not.toHaveClass('disabled');
+            expect(this.gameFixture.swatch).not.toHaveClass('disabled');
           });
         });
 
@@ -185,7 +183,7 @@ function(Game, Scoreboard) {
 
           it('removes the correct player', function() {
             Game.removePlayer(this.deleteButton);
-            this.checkPlayerNames(['Name1', 'Name2', 'Name4']);
+            this.gameFixture.checkNames(Game.players(), ['Name1', 'Name2', 'Name4']);
           });
         });
 
@@ -202,7 +200,7 @@ function(Game, Scoreboard) {
 
           it('removes the correct player', function() {
             Game.removePlayer(this.deleteButton);
-            this.checkPlayerNames(['Name1', 'Name2', 'Name3']);
+            this.gameFixture.checkNames(Game.players(), ['Name1', 'Name2', 'Name3']);
           });
         });
       });

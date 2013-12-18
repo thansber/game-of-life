@@ -17,9 +17,6 @@ function($, Actions, Board, Game, Scoreboard, Util) {
         .on('click', '.move.right', function() { Game.movePlayer($(this), 1); })
         .on('click', '.delete', function() { Game.removePlayer($(this)); });
 
-      $('#cash-change')
-        .on('transitionend webkitTransitionEnd', function() { Actions.resetCashChange(); });
-
       $('#actions')
         .on('click', '.next-player', function() { Actions.nextPlayer(); })
         .on('click', '.add.adjuster', function() { Actions.manualCashAdjustment(1); })

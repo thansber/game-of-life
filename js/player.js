@@ -28,6 +28,11 @@ function($, _, Data) {
       return this;
     },
 
+    getMarried: function() {
+      this.married = true;
+      return this;
+    },
+
     hasInsurance: function(type) {
       return _.contains(this.insurance, type);
     },

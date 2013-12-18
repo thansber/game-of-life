@@ -6,22 +6,18 @@ function($) {
     actions: [
       'auto-insurance',
       'tuition',
-      'jobs',
-      'life-insurance',
-      'marriage',
-      'house',
-      'fire-insurance',
-      'taxes1',
-      'stock-insurance',
-      'taxes2',
-      'taxes3',
-      'orphanage',
-      'toll-bridge',
-      'property-taxes',
-      'day-of-reckoning',
-      'millionaire'
+      'jobs'
     ],
-    /*
+    drawers: [
+      {name:"jobs", desc:"Jobs"},
+      {name:"insurance", desc:"Insurance"},
+      {name:"marriage", desc:"Marriage"},
+      {name:"children", desc:"Children"},
+      {name:"taxes", desc:"Taxes"},
+      {name:"revenge", desc:"Revenge"},
+      {name:"toll-bridge", desc:"Toll Bridge"},
+      {name:"events", desc:"Events"}
+    ],
     events: [
       {type:"tuition", desc:"Pay tuition", amount:-2000, color:"red" },
       {type:"house", desc:"Buy a house", amount:-40000, color:"red" },
@@ -29,13 +25,12 @@ function($) {
       {type:"lucky-number", desc:"Someone landed on my lucky number", amount:24000, color:"green" },
       {type:"millionaire", desc:"Become a millionaire", amount:null, color:"green" }
     ],
-    */
-    insurance: {
-      auto: { price: 1000 },
-      life: { price: 10000 },
-      fire: { price: 10000 },
-      stock: { price: 50000 }
-    },
+    insurance: [
+      {name:'auto', price: 1000 },
+      {name:'life', price: 10000 },
+      {name:'fire', price: 10000 },
+      {name:'stock', price: 50000 }
+    ],
     jobs: [
       {name:"d", desc:"Doctor", salary:50000, summary:"is a Doctor"},
       {name:"j", desc:"Journalist", salary:24000, summary:"is a Journalist"},
