@@ -3,11 +3,6 @@ define( /* Data */
 function($) {
 
   return {
-    actions: [
-      'auto-insurance',
-      'tuition',
-      'jobs'
-    ],
     drawers: [
       {name:"jobs", desc:"Jobs"},
       {name:"insurance", desc:"Insurance"},
