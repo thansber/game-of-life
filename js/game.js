@@ -124,6 +124,12 @@ function($, _, Player, Scoreboard) {
 
     start: function() {
       $('body').addClass('game-started');
+    },
+
+    tollBridgeOwner: function() {
+      return _.find(this.players(), function(player) {
+        return player.tollBridgeOwned;
+      });
     }
   };
 

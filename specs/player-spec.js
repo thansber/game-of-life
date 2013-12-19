@@ -51,6 +51,30 @@ function(Data, Player) {
       });
     });
 
+    describe('#equals', function() {
+      beforeEach(function() {
+        this.player.name = 'Name';
+        this.otherPlayer = new Player();
+      });
+      describe('when the names match', function() {
+        beforeEach(function() {
+          this.otherPlayer.name = 'Name';
+        });
+        it('returns true', function() {
+          expect(this.player.equals(this.otherPlayer)).toBe(true);
+        });
+      });
+
+      describe('when the names do not match', function() {
+        beforeEach(function() {
+          this.otherPlayer.name = 'Another Name';
+        });
+        it('returns false', function() {
+          expect(this.player.equals(this.otherPlayer)).toBe(false);
+        });
+      });
+    });
+
     describe('#getMarried', function() {
       it('sets the married flag', function() {
         expect(this.player.married).toBe(false);

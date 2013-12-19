@@ -125,6 +125,42 @@ function(
       });
     });
 
+    describe('#tollBrodgeCrossed', function() {
+      describe('when nobody owns the toll bridge', function() {
+        it('sets the toll bridge ownder to the current player', function() {
+          Board.tollBridgeCrossed(Game.currentPlayer());
+          expect(Game.currentPlayer().tollBridgeOwned).toBe(true);
+        });
+      });
+
+      describe('when someone else owns the toll bridge', function() {
+        beforeEach(function() {
+          spyOn(Board, 'adjustCash');
+          this.gameFixture = new GameFixture();
+          this.gameFixture.setPlayers(['Name1', 'Name2']);
+          this.owner = Game.playerBy({ index: 1});
+          this.owner.tollBridgeOwned = true;
+          this.currentPlayer = Game.playerBy({ index: 0 });
+          Board.tollBridgeCrossed(this.currentPlayer);
+        });
+
+        it('takes cash from the crosser', function() {
+          expect(Board.adjustCash.argsForCall[0][0]).toEqual({
+            player: this.currentPlayer,
+            by: -24000
+          });
+        });
+
+        it('gives the cash to the owner', function() {
+          expect(Board.adjustCash.argsForCall[1][0]).toEqual({
+            player: this.owner,
+            by: 24000
+          });
+        });
+
+      });
+    });
+
     xdescribe('#everyonePays', function() {
       beforeEach(function() {
         this.gameFixture = new GameFixture();

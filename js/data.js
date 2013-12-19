@@ -23,9 +23,6 @@ function($) {
     ],
     /*
     events: [
-      {type:"tuition", desc:"Pay tuition", amount:-2000, color:"red" },
-      {type:"house", desc:"Buy a house", amount:-40000, color:"red" },
-      {type:"orphanage", desc:"Help an orphanage", amount:-120000, color:"red" },
       {type:"lucky-number", desc:"Someone landed on my lucky number", amount:24000, color:"green" },
       {type:"millionaire", desc:"Become a millionaire", amount:null, color:"green" }
     ],

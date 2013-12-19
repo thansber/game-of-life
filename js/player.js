@@ -13,7 +13,7 @@ function($, _, Data) {
     this.married = false;
     this.tollBridgeOwned = false;
     this.millionaire = false;
-    this.at = 'fire-insurance';
+    this.at = 'orphanage';
     this.at = Data.actions[0];
   };
 
@@ -27,6 +27,10 @@ function($, _, Data) {
     adjustCash: function(amount) {
       this.cash += amount;
       return this;
+    },
+
+    equals: function(other) {
+      return this.name === other.name;
     },
 
     getMarried: function() {

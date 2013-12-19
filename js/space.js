@@ -44,6 +44,10 @@ function($, _, Data) {
 
     taxes: function($button, player, board) {
       board.adjustCash({ player: player, by: player.salary() / -2 });
+    },
+
+    tollBridge: function($button, player, board) {
+      board.tollBridgeCrossed(player);
     }
   },
 
@@ -71,9 +75,9 @@ function($, _, Data) {
       return dfd.resolve(player, board);
     },
 
-    execute: function($elem, player, board) {
+    execute: function($button, player, board) {
       var self = this,
-          delay = $elem.data('delay'),
+          delay = $button.data('delay'),
           dfd = $.Deferred(),
           nextAction;
 
@@ -92,7 +96,7 @@ function($, _, Data) {
       };
 
       dfd.done(this.executor, nextAction);
-      return dfd.resolve($elem, player, board);
+      return dfd.resolve($button, player, board);
     }
   });
 
@@ -105,6 +109,10 @@ function($, _, Data) {
   new Space('fire-insurance', { executor: executors.buyInsurance });
   new Space('taxes1', { executor: executors.taxes });
   new Space('stock-insurance', { executor: executors.buyInsurance });
+  new Space('taxes2', { executor: executors.taxes });
+  new Space('taxes3', { executor: executors.taxes });
+  new Space('orphanage', { executor: executors.simpleTransaction });
+  new Space('toll-bridge', { executor: executors.tollBridge });
 
   return {
     from: function(id) {

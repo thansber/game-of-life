@@ -138,6 +138,18 @@ function(Data, Game, Scoreboard, Space, Util) {
     skipAction: function() {
       Game.currentPlayer().nextAction();
       this.nextAction();
+    },
+
+    tollBridgeCrossed: function(player) {
+      var owner = Game.tollBridgeOwner(),
+          amount = 24000;
+      if (!owner) {
+        player.tollBridgeOwned = true;
+        return;
+      }
+
+      this.adjustCash({ player: player, by: -1 * amount });
+      this.adjustCash({ player: owner, by: amount });
     }
   };
 });
