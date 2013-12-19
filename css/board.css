@@ -89,6 +89,25 @@
     opacity: 1;
 }
 
+#board .main .action.toll-bridge .message {
+    color: rgb(240, 240, 240);
+    display: none;
+    font-size: 175%;
+}
+
+#board .main .action.toll-bridge.owner .owner {
+    display: block;
+}
+
+#board .main .action.toll-bridge.crossed .crossed {
+    display: block;
+}
+
+#board .main .action.toll-bridge.owner .execute,
+#board .main .action.toll-bridge.crossed .execute {
+    display: none;
+}
+
 
 #board .spaces {
     float: right;

@@ -12,9 +12,10 @@ function($, _, Data) {
     this.daughters = 0;
     this.married = false;
     this.tollBridgeOwned = false;
+    this.tollBridgeCrossed = false;
     this.millionaire = false;
-    this.at = 'orphanage';
-    this.at = Data.actions[0];
+    this.at = 'toll-bridge';
+    //this.at = Data.actions[0];
   };
 
   $.extend(Player.prototype, {

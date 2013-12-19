@@ -141,15 +141,24 @@ function(Data, Game, Scoreboard, Space, Util) {
     },
 
     tollBridgeCrossed: function(player) {
-      var owner = Game.tollBridgeOwner(),
-          amount = 24000;
+      var self = this,
+          owner = Game.tollBridgeOwner(),
+          amount = 24000,
+          $action = _private.currentPlayerAction();
+
+      $action.removeClass('owner crossed');
       if (!owner) {
         player.tollBridgeOwned = true;
+        $action.addClass('owner');
         return;
       }
 
-      this.adjustCash({ player: player, by: -1 * amount });
+      $action.addClass('crossed');
+      player.tollBridgeCrossed = true;
       this.adjustCash({ player: owner, by: amount });
+      setTimeout(function() {
+        self.adjustCash({ player: player, by: -1 * amount });
+      }, Scoreboard.cashAnimationDelay());
     }
   };
 });

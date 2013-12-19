@@ -65,6 +65,13 @@ function($, _, Data) {
       }
 
       board.selectJob($playerJob, { clear: !player.job });
+    },
+
+    tollBridge: function(player, board) {
+      var $tollBridge = $('#board .action.toll-bridge');
+      $tollBridge.removeClass('owner crossed');
+      $tollBridge.toggleClass('owner', player.tollBridgeOwned);
+      $tollBridge.toggleClass('crossed', player.tollBridgeCrossed);
     }
   };
 
@@ -112,7 +119,7 @@ function($, _, Data) {
   new Space('taxes2', { executor: executors.taxes });
   new Space('taxes3', { executor: executors.taxes });
   new Space('orphanage', { executor: executors.simpleTransaction });
-  new Space('toll-bridge', { executor: executors.tollBridge });
+  new Space('toll-bridge', { initializer: initializers.tollBridge, executor: executors.tollBridge });
 
   return {
     from: function(id) {
