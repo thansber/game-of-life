@@ -120,6 +120,7 @@ function($, _, Data) {
   new Space('taxes3', { executor: executors.taxes });
   new Space('orphanage', { executor: executors.simpleTransaction });
   new Space('toll-bridge', { initializer: initializers.tollBridge, executor: executors.tollBridge });
+  new Space('property-taxes', { executor: executors.simpleTransaction });
 
   return {
     from: function(id) {
