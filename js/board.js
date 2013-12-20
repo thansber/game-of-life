@@ -77,21 +77,29 @@ function(Data, Game, Scoreboard, Space, Util) {
       });
     },
 
+    adjustCashMultiple: function(adjustments) {
+      var self = this;
+
+      adjustments.forEach(function(adjustment, i) {
+        setTimeout(function() {
+          self.adjustCash(adjustment);
+        }, Scoreboard.cashAnimationDelay() * i);
+      });
+    },
+
     everyonePays: function(options) {
       var opt = options || {},
           self = this,
           amount = +opt.by,
-          others = Game.playersExcept(opt.player);
+          others = Game.playersExcept(opt.player),
+          adjustments = [];
 
       others.forEach(function(player, i) {
-        setTimeout(function() {
-          self.adjustCash({ player: player, by: amount * -1 });
-        }, Scoreboard.cashAnimationDelay() * i);
+        adjustments.push({ player: player, by: amount * -1 });
       });
 
-      setTimeout(function() {
-        self.adjustCash({ player: opt.player, by: amount * others.length });
-      }, Scoreboard.cashAnimationDelay() * others.length);
+      adjustments.push({ player: opt.player, by: amount * others.length });
+      this.adjustCashMultiple(adjustments);
     },
 
     execute: function($elem) {
@@ -155,10 +163,11 @@ function(Data, Game, Scoreboard, Space, Util) {
 
       $action.addClass('crossed');
       player.tollBridgeCrossed = true;
-      this.adjustCash({ player: owner, by: amount });
-      setTimeout(function() {
-        self.adjustCash({ player: player, by: -1 * amount });
-      }, Scoreboard.cashAnimationDelay());
+
+      this.adjustCashMultiple([
+        { player: owner, by: amount },
+        { player: player, by: -1 * amount }
+      ]);
     }
   };
 });

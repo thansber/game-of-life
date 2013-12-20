@@ -72,11 +72,12 @@ function(
       beforeEach(function() {
         this.board = affix('#board');
         this.player = new Player();
+        spyOn(Board, 'adjustCash');
+        spyOn(Board, 'adjustCashMultiple');
       });
 
       describe('buying insurance', function() {
         beforeEach(function() {
-          spyOn(Board, 'adjustCash');
           this.insuranceButton = this.board.affix('button');
           this.insuranceButton.data('insurance', 'stock');
         });
@@ -106,9 +107,46 @@ function(
         });
       });
 
+      describe('day of reckoning', function() {
+        beforeEach(function() {
+          this.player.sons = 3;
+          this.player.daughters = 2;
+          Space.from('day-of-reckoning').execute(this.board.affix('button'), this.player, Board);
+        });
+
+        it('adds an adjustment for each child', function() {
+          expect(Board.adjustCashMultiple.argsForCall[0][0].length).toEqual(5);
+        });
+      });
+
+      describe('marriage', function() {
+        beforeEach(function() {
+          this.button = this.board.affix('button');
+          spyOn(Board, 'everyonePays');
+        });
+
+        it('sets the marriage flag on the player', function() {
+          Space.from('marriage').execute(this.button, this.player, Board);
+          expect(this.player.married).toBe(true);
+        });
+
+        it('does not change funds if there are no presents', function() {
+          Space.from('marriage').execute(this.button, this.player, Board);
+          expect(Board.everyonePays).not.toHaveBeenCalled();
+        });
+
+        it('gives presents to the player', function() {
+          this.button.data('amount', 2000);
+          Space.from('marriage').execute(this.button, this.player, Board);
+          expect(Board.everyonePays).toHaveBeenCalledWith({
+            player: this.player,
+            by: 2000
+          });
+        });
+      });
+
       describe('simple transactions', function() {
         beforeEach(function() {
-          spyOn(Board, 'adjustCash');
           this.button = this.board.affix('button');
           this.button.data('amount', '-4000');
         });
@@ -118,6 +156,20 @@ function(
           expect(Board.adjustCash).toHaveBeenCalledWith({
             player: this.player,
             by: -4000
+          });
+        });
+      });
+
+      describe('taxes', function() {
+        beforeEach(function() {
+          this.button = this.board.affix('button');
+          this.player.setJob('u');
+          Space.from('taxes1').execute(this.button, this.player, Board);
+        });
+        it('takes away half the player salary', function() {
+          expect(Board.adjustCash).toHaveBeenCalledWith({
+            player: this.player,
+            by: -8000
           });
         });
       });

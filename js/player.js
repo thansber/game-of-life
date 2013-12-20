@@ -14,8 +14,8 @@ function($, _, Data) {
     this.tollBridgeOwned = false;
     this.tollBridgeCrossed = false;
     this.millionaire = false;
-    this.at = 'toll-bridge';
-    //this.at = Data.actions[0];
+    this.at = 'day-of-reckoning';
+    this.at = Data.actions[0];
   };
 
   $.extend(Player.prototype, {

@@ -25,6 +25,15 @@ function($, _, Data) {
       board.adjustCash({ player: player, by: -1 * insurance.price });
     },
 
+    dayOfReckoning: function($button, player, board) {
+      var adjustments = [];
+      _.times(player.sons + player.daughters, function() {
+        adjustments.push({ player: player, by: 48000 });
+      });
+
+      board.adjustCashMultiple(adjustments);
+    },
+
     jobs: function($button, player, board) {
       board.selectJob($button);
       player.setJob($button.data('job'));
@@ -121,6 +130,7 @@ function($, _, Data) {
   new Space('orphanage', { executor: executors.simpleTransaction });
   new Space('toll-bridge', { initializer: initializers.tollBridge, executor: executors.tollBridge });
   new Space('property-taxes', { executor: executors.simpleTransaction });
+  new Space('day-of-reckoning', { executor: executors.dayOfReckoning });
 
   return {
     from: function(id) {

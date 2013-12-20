@@ -125,7 +125,7 @@ function(
       });
     });
 
-    describe('#tollBrodgeCrossed', function() {
+    describe('#tollBridgeCrossed', function() {
       describe('when nobody owns the toll bridge', function() {
         it('sets the toll bridge ownder to the current player', function() {
           Board.tollBridgeCrossed(Game.currentPlayer());
@@ -135,29 +135,29 @@ function(
 
       describe('when someone else owns the toll bridge', function() {
         beforeEach(function() {
-          spyOn(Board, 'adjustCash');
+          spyOn(Board, 'adjustCashMultiple');
           this.gameFixture = new GameFixture();
           this.gameFixture.setPlayers(['Name1', 'Name2']);
           this.owner = Game.playerBy({ index: 1});
           this.owner.tollBridgeOwned = true;
           this.currentPlayer = Game.playerBy({ index: 0 });
           Board.tollBridgeCrossed(this.currentPlayer);
-        });
-
-        it('takes cash from the crosser', function() {
-          expect(Board.adjustCash.argsForCall[0][0]).toEqual({
-            player: this.currentPlayer,
-            by: -24000
-          });
+          this.adjustCashArgs = Board.adjustCashMultiple.argsForCall[0][0];
         });
 
         it('gives the cash to the owner', function() {
-          expect(Board.adjustCash.argsForCall[1][0]).toEqual({
+          expect(this.adjustCashArgs[0]).toEqual({
             player: this.owner,
             by: 24000
           });
         });
 
+        it('takes cash from the crosser', function() {
+          expect(this.adjustCashArgs[1]).toEqual({
+            player: this.currentPlayer,
+            by: -24000
+          });
+        });
       });
     });
 
