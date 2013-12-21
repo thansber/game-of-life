@@ -43,7 +43,7 @@
     width: 70%;
 }
 
-#board .main .action {
+#board .main .space {
     left: 500%;
     margin-left: 1.5em;
     position: absolute;
@@ -53,61 +53,61 @@
     width: 100%;
 }
 
-#board .main .action.selected {
+#board .main .space.selected {
     left: 0;
 }
 
-#board .main .action .button {
+#board .main .space .button {
     display: block;
     margin: 0 0 1em 0;
     padding: 0.4em 0 0.5em;
     width: 75%;
 }
 
-#board .main .action .large.button {
+#board .main .space .large.button {
     font-size: 2em;
 }
 
-#board .main .action .medium.button {
+#board .main .space .medium.button {
     font-size: 1.5em;
 }
 
-#board .main .action .skip.button {
+#board .main .space .skip.button {
 }
 
-#board .main .action .selectable.button {
+#board .main .space .selectable.button {
     transition-property: opacity;
     transition-duration: 0.3s;
     transition-timing-function: ease;
 }
 
-#board .main .action .job.button {
+#board .main .space .job.button {
     font-size: 1em;
     margin-bottom: 0.4em;
     opacity: 0.2;
     width: 50%;
 }
 
-#board .main .action .job.button.selected {
+#board .main .space .job.button.selected {
     opacity: 1;
 }
 
-#board .main .action.toll-bridge .message {
+#board .main .space.toll-bridge .message {
     color: rgb(240, 240, 240);
     display: none;
     font-size: 175%;
 }
 
-#board .main .action.toll-bridge.owner .owner {
+#board .main .space.toll-bridge.owner .owner {
     display: block;
 }
 
-#board .main .action.toll-bridge.crossed .crossed {
+#board .main .space.toll-bridge.crossed .crossed {
     display: block;
 }
 
-#board .main .action.toll-bridge.owner .execute,
-#board .main .action.toll-bridge.crossed .execute {
+#board .main .space.toll-bridge.owner .execute,
+#board .main .space.toll-bridge.crossed .execute {
     display: none;
 }
 

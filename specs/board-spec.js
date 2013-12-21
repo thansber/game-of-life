@@ -296,11 +296,11 @@ function(
       });
     });
 
-    describe('#skipAction', function() {
+    describe('#skipSpace', function() {
       beforeEach(function() {
         spyOn(this.currentPlayer, 'nextSpace');
         spyOn(Board, 'nextSpace');
-        Board.skipAction();
+        Board.skipSpace();
       });
       it('updates the player to the next action', function() {
         expect(this.currentPlayer.nextSpace).toHaveBeenCalled();

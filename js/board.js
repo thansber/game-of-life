@@ -174,7 +174,7 @@ function(Data, Game, Scoreboard, Space, Util) {
       Util.choiceChanged($luckyNumber);
     },
 
-    skipAction: function() {
+    skipSpace: function() {
       Game.currentPlayer().nextSpace();
       this.nextSpace();
     },
