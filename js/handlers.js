@@ -27,7 +27,9 @@ function($, Actions, Board, Game, Scoreboard, Util) {
       $('#board')
         .on('click', '.main .execute', function() { Board.execute($(this)); })
         .on('click', '.main .skip', function() { Board.skipAction(); })
-        .on('click', '.main .job', function() { Board.setJob($(this)); });
+        .on('click', '.main .job', function() { Board.setJob($(this)); })
+        .on('click', '.main .lucky-number', function() { Board.setLuckyNumber($(this)); })
+        .on('click', '.categories .category', function() { Board.categoryChanged($(this)); });
 
     }
   };

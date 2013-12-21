@@ -75,6 +75,12 @@ function($, _, Player, Scoreboard) {
       return game.players.length;
     },
 
+    numMillionaires: function() {
+      return _.filter(this.players(), function(player) {
+        return player.millionaire;
+      }).length;
+    },
+
     playerBy: function(options) {
       var opt = options || {},
           foundPlayer = null;

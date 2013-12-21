@@ -15,79 +15,33 @@ button:active {
 }
 
 button.red {
-    background: linear-gradient(rgb(223, 51, 54), rgb(191, 50, 53));
     border: 2px solid rgb(149, 43, 44);
 }
 
-button.red:hover {
-    background: linear-gradient(rgb(191, 50, 53), rgb(223, 51, 54));
-}
-
 button.orange {
-    background: linear-gradient(rgb(255, 200, 100), rgb(255, 165, 0));
     border: 2px solid rgb(238, 156, 51);
 }
 
-button.orange:hover {
-    background: linear-gradient(rgb(255, 165, 0), rgb(255, 200, 100));
-}
-
 button.green {
-    background: linear-gradient(rgb(93, 156, 70), rgb(61, 104, 50));
     border: 2px solid rgb(34, 87, 38);
 }
 
-button.green:hover {
-    background: linear-gradient(rgb(61, 104, 50), rgb(93, 156, 70));
-}
-
 button.blue {
-    background: linear-gradient(rgb(0, 0, 255), rgb(0, 0, 127));
     border: 2px solid rgb(0, 0, 127);
 }
 
-button.blue:hover {
-    background: linear-gradient(rgb(0, 0, 127), rgb(0, 0, 255));
-}
-
 button.grey {
-    background: linear-gradient(rgb(102, 102, 102), rgb(51, 51, 51));
     border: 2px solid rgb(26, 26, 26);
 }
 
-button.grey:hover {
-    background: linear-gradient(rgb(51, 51, 51), rgb(102, 102, 102));
-}
-
 button.lightblue {
-    background: linear-gradient(rgb(188, 210, 238), rgb(142, 184, 237));
     border: 2px solid rgb(110, 169, 245);
-    color: rgb(51, 51, 51);
-    text-shadow: 2px 2px 3px rgb(232, 232, 232);
-}
-
-button.lightblue:hover {
-    background: linear-gradient(rgb(142, 184, 237), rgb(188, 210, 238));
 }
 
 button.pink {
-    background: linear-gradient(rgb(250, 212, 219), rgb(255, 192, 203));
     border: 2px solid rgb(217, 145, 158);
-    color: rgb(51, 51, 51);
-    text-shadow: 2px 2px 3px rgb(232, 232, 232);
-}
-
-button.pink:hover {
-    background: linear-gradient(rgb(255, 192, 203), rgb(250, 212, 219));
 }
 
 button.gold {
-    background: linear-gradient(rgb(255, 162, 0), rgb(255, 186, 64));
     border: 2px solid rgb(166, 106, 0);
-    color: rgb(51, 51, 51);
-    text-shadow: 2px 2px 3px rgb(204, 204, 204);
-}
-
-button.gold:hover {
-    background: linear-gradient(rgb(255, 186, 64), rgb(255, 162, 0));
 }

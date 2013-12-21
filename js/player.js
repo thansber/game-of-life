@@ -14,8 +14,8 @@ function($, _, Data) {
     this.tollBridgeOwned = false;
     this.tollBridgeCrossed = false;
     this.millionaire = false;
-    this.at = 'day-of-reckoning';
-    this.at = Data.actions[0];
+    this.luckyNumber = 0;
+    this.at = Data.spaces[0];
   };
 
   $.extend(Player.prototype, {
@@ -43,9 +43,11 @@ function($, _, Data) {
       return _.contains(this.insurance, type);
     },
 
-    nextAction: function() {
-      var actionIndex = _.indexOf(Data.actions, this.at);
-      this.at = Data.actions[++actionIndex];
+    nextSpace: function() {
+      var index = _.indexOf(Data.spaces, this.at);
+      if (index < Data.spaces.length - 1) {
+        this.at = Data.spaces[++index];
+      }
     },
 
     salary: function() {

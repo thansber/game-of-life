@@ -96,6 +96,22 @@ function(
         });
       });
 
+      describe('#numMillionaires', function() {
+        describe('when there are no millionaires', function() {
+          it('returns 0', function() {
+            expect(Game.numMillionaires()).toEqual(0);
+          });
+        });
+        describe('when there are millionaires', function() {
+          it('returns the millionaire count', function() {
+            Game.playerBy({ index: 0 }).millionaire = true;
+            Game.playerBy({ index: 2 }).millionaire = true;
+            Game.playerBy({ index: 3 }).millionaire = true;
+            expect(Game.numMillionaires()).toEqual(3);
+          });
+        });
+      });
+
       describe('#playerBy', function() {
 
         describe('by index', function() {

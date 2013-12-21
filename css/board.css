@@ -75,13 +75,16 @@
 #board .main .action .skip.button {
 }
 
+#board .main .action .selectable.button {
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+}
+
 #board .main .action .job.button {
     font-size: 1em;
     margin-bottom: 0.4em;
     opacity: 0.2;
-    transition-property: opacity;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
     width: 50%;
 }
 
@@ -108,10 +111,62 @@
     display: none;
 }
 
+#board .main .millionaire .choose-lucky-number,
+#board .main .millionaire .is-millionaire {
+    display: none;
+}
 
-#board .spaces {
+#board .main .millionaire.first .choose-lucky-number,
+#board .main .millionaire.later .is-millionaire {
+    display: block;
+}
+
+#board .main .millionaire.first .execute,
+#board .main .millionaire.later .execute {
+    display: none;
+}
+
+#board .main .millionaire h2 {
+    color: rgb(240, 240, 240);
+    font-size: 150%;
+    margin-bottom: 0.75em;
+}
+
+#board .main .millionaire .lucky-number {
+    display: inline-block;
+    font-size: 125%;
+    margin-right: 0.25em;
+    opacity: 0.2;
+    padding: 0.25em 0.4em 0.3em;
+    width: auto;
+}
+
+#board .main .millionaire .lucky-number.selected {
+    opacity: 1;
+}
+
+#board .categories {
     float: right;
     font-size: 125%;
+    height: 20em;
     text-align: center;
     width: 25%;
+}
+
+#board .categories .category {
+    border-color: rgb(134, 134, 134);
+    border-style: solid;
+    border-width: 0 0 2px 2px;
+    color: rgb(240, 240, 240);
+    cursor: pointer;
+    height: 2.35em;
+    padding-top: 18px;
+}
+
+#board .categories .category:hover {
+    background-color: rgb(51, 51, 51);
+}
+
+#board .categories .lucky.number.category {
+    border-bottom-width: 0;
 }

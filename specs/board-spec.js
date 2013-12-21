@@ -208,10 +208,10 @@ function(
     describe('#initializeSpace', function() {
       describe('for jobs', function() {
         beforeEach(function() {
-          this.action = this.board.affix('.action');
-          this.action.addClass('selected jobs');
-          this.action.data('type', 'jobs');
-          this.jobs = this.action.affix('.jobs');
+          this.space = this.board.affix('.space');
+          this.space.addClass('selected jobs');
+          this.space.data('type', 'jobs');
+          this.jobs = this.space.affix('.jobs');
           this.job = this.jobs.affix('.job');
           this.job.data('job', 'p');
           this.otherJob = this.jobs.affix('.job');
@@ -228,22 +228,54 @@ function(
       });
     });
 
-    describe('#nextAction', function() {
+    describe('#nextSpace', function() {
       beforeEach(function() {
         spyOn(Board, 'initializeSpace');
-        this.firstAction = this.board.affix('.action');
-        this.firstAction.addClass('selected');
-        this.nextAction = this.board.affix('.action');
+        this.firstSpace = this.board.affix('.space');
+        this.firstSpace.addClass('selected');
+        this.nextSpace = this.board.affix('.space');
         Board.init();
-        Board.nextAction();
+        Board.nextSpace();
       });
 
       it('selects the next available action', function() {
-        expect(this.nextAction).toHaveClass('selected');
+        expect(this.nextSpace).toHaveClass('selected');
       });
 
       it('initializes the space for the next action', function() {
         expect(Board.initializeSpace).toHaveBeenCalled();
+      });
+    });
+
+    describe('#setFirstMillionaire', function() {
+      beforeEach(function() {
+        this.spaces = this.board.affix('.space.millionaire');
+        this.gameFixture = new GameFixture();
+        this.gameFixture.setPlayers(['Name1', 'Name2', 'Name3']);
+        this.currentPlayer = Game.playerBy({ index: 1 });
+        Game.currentPlayer.andReturn(this.currentPlayer);
+      });
+      describe('when we are on the first millionaire', function() {
+        it('treats them as the first', function() {
+          this.currentPlayer.millionaire = true;
+          Board.setFirstMillionaire(this.spaces);
+          expect(this.spaces).toHaveClass('first');
+        });
+      });
+      describe('when we are not on a millionaire', function() {
+        it('prompts them to become a millionaire', function() {
+          Board.setFirstMillionaire(this.spaces);
+          expect(this.spaces).not.toHaveClass('first');
+          expect(this.spaces).not.toHaveClass('later');
+        });
+      });
+      describe('when we are on a millionaire after the first', function() {
+        it('treats them as a later millionaire', function() {
+          this.currentPlayer.millionaire = true;
+          Game.playerBy({ index: 2 }).millionaire = true;
+          Board.setFirstMillionaire(this.spaces);
+          expect(this.spaces).toHaveClass('later');
+        });
       });
     });
 
@@ -266,15 +298,15 @@ function(
 
     describe('#skipAction', function() {
       beforeEach(function() {
-        spyOn(this.currentPlayer, 'nextAction');
-        spyOn(Board, 'nextAction');
+        spyOn(this.currentPlayer, 'nextSpace');
+        spyOn(Board, 'nextSpace');
         Board.skipAction();
       });
       it('updates the player to the next action', function() {
-        expect(this.currentPlayer.nextAction).toHaveBeenCalled();
+        expect(this.currentPlayer.nextSpace).toHaveBeenCalled();
       });
       it('moves to the next action', function() {
-        expect(Board.nextAction).toHaveBeenCalled();
+        expect(Board.nextSpace).toHaveBeenCalled();
       });
     });
 

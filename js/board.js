@@ -2,13 +2,13 @@ define( /* Board */
 ['data', 'game', 'scoreboard', 'space', 'util'],
 function(Data, Game, Scoreboard, Space, Util) {
 
-  var $actions,
+  var $spaces,
       $board,
       $header,
 
       initializers = {
         jobs: function(player) {
-          var $jobs = $actions.filter('.jobs').find('.job'),
+          var $jobs = $spaces.filter('.jobs').find('.job'),
               $playerJob;
 
           if (!player.job) {
@@ -31,7 +31,7 @@ function(Data, Game, Scoreboard, Space, Util) {
         currentPlayerAction: function() {
           var playerAt = Game.currentPlayer().at;
 
-          return $actions.filter(function() {
+          return $spaces.filter(function() {
             return $(this).data('type') === playerAt;
           });
         },
@@ -42,7 +42,7 @@ function(Data, Game, Scoreboard, Space, Util) {
           this.clearCashChange();
         },
         selectedAction: function() {
-          return $actions.filter('.selected');
+          return $spaces.filter('.selected');
         },
         selectJob: function($job, options) {
           Util.choiceChanged($job, _.extend({
@@ -87,6 +87,24 @@ function(Data, Game, Scoreboard, Space, Util) {
       });
     },
 
+    becomeMillionaire: function(player, $button) {
+      var adjustments = [];
+      player.millionaire = true;
+
+      if (Game.numMillionaires() === 1) {
+        adjustments.push({ player: player, by: 240000 });
+      }
+      if (player.hasInsurance('life')) {
+        adjustments.push({ player: player, by: 8000 });
+      }
+      if (player.hasInsurance('stock')) {
+        adjustments.push({ player: player, by: 120000 });
+      }
+
+      this.setFirstMillionaire($button);
+      this.adjustCashMultiple(adjustments);
+    },
+
     everyonePays: function(options) {
       var opt = options || {},
           self = this,
@@ -104,14 +122,14 @@ function(Data, Game, Scoreboard, Space, Util) {
 
     execute: function($elem) {
       var self = this,
-          space = Space.from($elem.closest('.action').data('type'));
+          space = Space.from($elem.closest('.space').data('type'));
       space.execute($elem, Game.currentPlayer(), this);
     },
 
     init: function() {
       $board = $('#board');
       $header = $board.find('.player');
-      $actions = $board.find('.action');
+      $spaces = $board.find('.space');
       $cashChange = $board.find('.cash-change');
     },
 
@@ -120,7 +138,7 @@ function(Data, Game, Scoreboard, Space, Util) {
       space.initialize(Game.currentPlayer(), this);
     },
 
-    nextAction: function() {
+    nextSpace: function() {
       Util.choiceChanged(_private.selectedAction().next());
       this.initializeSpace();
     },
@@ -143,9 +161,22 @@ function(Data, Game, Scoreboard, Space, Util) {
       Game.currentPlayer().setJob($job.data('job'));
     },
 
+    setFirstMillionaire: function($elem) {
+      var $action = $elem.is('.space.millionaire') ? $elem : $elem.closest('.space'),
+          isMillionaire = Game.currentPlayer().millionaire;
+      $action.toggleClass('first', isMillionaire && Game.numMillionaires() === 1);
+      $action.toggleClass('later', isMillionaire && Game.numMillionaires() > 1);
+    },
+
+    setLuckyNumber: function($luckyNumber) {
+      var luckyNumber = $luckyNumber.closest('.space').find('.lucky-number').index($luckyNumber) + 1;
+      Game.currentPlayer().luckyNumber = luckyNumber;
+      Util.choiceChanged($luckyNumber);
+    },
+
     skipAction: function() {
-      Game.currentPlayer().nextAction();
-      this.nextAction();
+      Game.currentPlayer().nextSpace();
+      this.nextSpace();
     },
 
     tollBridgeCrossed: function(player) {

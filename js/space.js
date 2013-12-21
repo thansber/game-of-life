@@ -47,6 +47,10 @@ function($, _, Data) {
       player.getMarried();
     },
 
+    millionaire: function($button, player, board) {
+      board.becomeMillionaire(player, $button);
+    },
+
     simpleTransaction: function($button, player, board) {
       board.adjustCash({ player: player, by: +$button.data('amount') });
     },
@@ -62,7 +66,7 @@ function($, _, Data) {
 
   initializers = {
     jobs: function(player, board) {
-      var $jobs = $('#board .action.jobs .job'),
+      var $jobs = $('#board .space.jobs .job'),
           $playerJob;
 
       if (!player.job) {
@@ -76,8 +80,12 @@ function($, _, Data) {
       board.selectJob($playerJob, { clear: !player.job });
     },
 
+    millionaire: function(player, board) {
+      board.setFirstMillionaire($('#board .space.millionaire'));
+    },
+
     tollBridge: function(player, board) {
-      var $tollBridge = $('#board .action.toll-bridge');
+      var $tollBridge = $('#board .space.toll-bridge');
       $tollBridge.removeClass('owner crossed');
       $tollBridge.toggleClass('owner', player.tollBridgeOwned);
       $tollBridge.toggleClass('crossed', player.tollBridgeCrossed);
@@ -95,7 +103,7 @@ function($, _, Data) {
       var self = this,
           delay = $button.data('delay'),
           dfd = $.Deferred(),
-          nextAction;
+          nextSpace;
 
       if (_.isUndefined(delay)) {
         delay = self.executionDelay;
@@ -104,14 +112,14 @@ function($, _, Data) {
         delay = 1000;
       }
 
-      nextAction = function() {
+      nextSpace = function() {
         setTimeout(function() {
-          player.nextAction();
-          board.nextAction();
+          player.nextSpace();
+          board.nextSpace();
         }, +delay);
       };
 
-      dfd.done(this.executor, nextAction);
+      dfd.done(this.executor, nextSpace);
       return dfd.resolve($button, player, board);
     }
   });
@@ -131,6 +139,7 @@ function($, _, Data) {
   new Space('toll-bridge', { initializer: initializers.tollBridge, executor: executors.tollBridge });
   new Space('property-taxes', { executor: executors.simpleTransaction });
   new Space('day-of-reckoning', { executor: executors.dayOfReckoning });
+  new Space('millionaire', { initializer: initializers.millionaire, executor: executors.millionaire });
 
   return {
     from: function(id) {

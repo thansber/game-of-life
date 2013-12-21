@@ -13,8 +13,8 @@ function(Data, Player) {
         expect(this.player.cash).toEqual(10000);
       });
 
-      it('sets the start action', function() {
-        expect(this.player.at).toEqual(Data.actions[0]);
+      it('sets the start space', function() {
+        expect(this.player.at).toEqual(Data.spaces[0]);
       });
     });
 
@@ -96,11 +96,20 @@ function(Data, Player) {
       });
     });
 
-    describe('#nextAction', function() {
-      it('goes to the next action', function() {
-        expect(this.player.at).toEqual(Data.actions[0]);
-        this.player.nextAction();
-        expect(this.player.at).toEqual(Data.actions[1]);
+    describe('#nextSpace', function() {
+      it('goes to the next space', function() {
+        expect(this.player.at).toEqual(Data.spaces[0]);
+        this.player.nextSpace();
+        expect(this.player.at).toEqual(Data.spaces[1]);
+      });
+
+      describe('when at the last space', function() {
+        it('does not advance', function() {
+          var lastSpace = _.last(Data.spaces);
+          this.player.at = lastSpace;
+          this.player.nextSpace();
+          expect(this.player.at).toEqual(lastSpace);
+        });
       });
     });
 
