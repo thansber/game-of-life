@@ -28,7 +28,7 @@ function(Data, Game, Scoreboard, Space, Util) {
           $cashChange.find('.type').text('');
           $cashChange.find('.value').text('');
         },
-        currentPlayerAction: function() {
+        currentPlayerSpace: function() {
           var playerAt = Game.currentPlayer().at;
 
           return $spaces.filter(function() {
@@ -41,7 +41,7 @@ function(Data, Game, Scoreboard, Space, Util) {
           $header.find('.name').text(currentPlayer.name);
           this.clearCashChange();
         },
-        selectedAction: function() {
+        selectedSpace: function() {
           return $spaces.filter('.selected');
         },
         selectJob: function($job, options) {
@@ -105,6 +105,10 @@ function(Data, Game, Scoreboard, Space, Util) {
       this.adjustCashMultiple(adjustments);
     },
 
+    categoryChanged: function($category) {
+      //var space =  Space.from($category.data('type'));
+    },
+
     everyonePays: function(options) {
       var opt = options || {},
           self = this,
@@ -129,24 +133,24 @@ function(Data, Game, Scoreboard, Space, Util) {
     init: function() {
       $board = $('#board');
       $header = $board.find('.player');
-      $spaces = $board.find('.space');
+      $spaces = $board.find('.space').not('.category');
       $cashChange = $board.find('.cash-change');
     },
 
     initializeSpace: function() {
-      var space = Space.from(_private.selectedAction().data('type'));
+      var space = Space.from(_private.selectedSpace().data('type'));
       space.initialize(Game.currentPlayer(), this);
     },
 
-    nextSpace: function() {
-      Util.choiceChanged(_private.selectedAction().next());
-      this.initializeSpace();
-    },
-
     nextPlayer: function() {
-      Util.choiceChanged(_private.currentPlayerAction());
+      Util.choiceChanged(_private.currentPlayerSpace());
       this.initializeSpace();
       _private.initializeHeader();
+    },
+
+    nextSpace: function() {
+      Util.choiceChanged(_private.selectedSpace().next());
+      this.initializeSpace();
     },
 
     selectJob: function($job, options) {
@@ -183,7 +187,7 @@ function(Data, Game, Scoreboard, Space, Util) {
       var self = this,
           owner = Game.tollBridgeOwner(),
           amount = 24000,
-          $action = _private.currentPlayerAction();
+          $action = _private.currentPlayerSpace();
 
       $action.removeClass('owner crossed');
       if (!owner) {
