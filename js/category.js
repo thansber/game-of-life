@@ -120,6 +120,7 @@ function($, _) {
 
   new Category('current', { doNotChangeSpace: true, initializer: initializers.current });
   new Category('summary', { initializer: initializers.summary });
+  new Category('children', {});
 
   return {
     from: function(id) {

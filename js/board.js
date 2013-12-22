@@ -144,7 +144,9 @@ function(
 
     initializeSpace: function() {
       var space = Space.from(_private.selectedSpace().data('type'));
-      space.initialize(Game.currentPlayer(), this);
+      if (space) {
+        space.initialize(Game.currentPlayer(), this);
+      }
     },
 
     nextPlayer: function() {

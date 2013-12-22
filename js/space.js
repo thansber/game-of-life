@@ -25,6 +25,11 @@ function($, _, Data) {
       board.adjustCash({ player: player, by: -1 * insurance.price });
     },
 
+    children: function($button, player, board) {
+      player[$button.data('type')]++; // increments sons/daughters
+      board.everyonePays({ player: player, by: 1000 });
+    },
+
     dayOfReckoning: function($button, player, board) {
       var adjustments = [];
       _.times(player.sons + player.daughters, function() {
@@ -140,6 +145,8 @@ function($, _, Data) {
   new Space('property-taxes', { executor: executors.simpleTransaction });
   new Space('day-of-reckoning', { executor: executors.dayOfReckoning });
   new Space('millionaire', { initializer: initializers.millionaire, executor: executors.millionaire });
+
+  new Space('children', { executor: executors.children });
 
   return {
     from: function(id) {
