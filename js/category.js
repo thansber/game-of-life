@@ -6,6 +6,7 @@ function($, _) {
 
   var Category = function(id, options) {
     this.id = id;
+    this.changeSpace = !options.doNotChangeSpace;
     this.initializer = options.initializer;
 
     allCategories[id] = this;
@@ -44,11 +45,11 @@ function($, _) {
   },
 
   initializers = {
-    current: function() {
-
+    current: function(player, board) {
+      board.nextPlayer();
     },
 
-    summary: function(player) {
+    summary: function(player, board) {
       var $summary = $("#board .summary.category .text"),
           lines = [],
           markup = [], i = 0;
@@ -75,7 +76,7 @@ function($, _) {
         markup[i++] = '</li>';
       });
 
-      $summary.append($(markup.join('')));
+      $summary.empty().append($(markup.join('')));
     }
   },
 
@@ -110,13 +111,14 @@ function($, _) {
   };
 
   _.extend(Category.prototype, {
-    initialize: function(player) {
+    initialize: function(player, board) {
       var dfd = $.Deferred();
       dfd.done(this.initializer);
-      return dfd.resolve(player);
+      return dfd.resolve(player, board);
     },
   });
 
+  new Category('current', { doNotChangeSpace: true, initializer: initializers.current });
   new Category('summary', { initializer: initializers.summary });
 
   return {

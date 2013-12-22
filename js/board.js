@@ -108,8 +108,10 @@ function(
           $categorySpace = $categorySpaces.filter(function() {
             return $(this).data('type') === category.id;
           });
-      category.initialize(Game.currentPlayer());
-      Util.choiceChanged($categorySpace);
+      category.initialize(Game.currentPlayer(), this);
+      if (category.changeSpace) {
+        Util.choiceChanged($categorySpace);
+      }
     },
 
     everyonePays: function(options) {
