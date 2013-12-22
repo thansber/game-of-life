@@ -1,27 +1,25 @@
 define( /* Board */
-['data', 'game', 'scoreboard', 'space', 'util'],
-function(Data, Game, Scoreboard, Space, Util) {
+[
+  'category',
+  'data',
+  'game',
+  'scoreboard',
+  'space',
+  'util'
+],
+function(
+  Category,
+  Data,
+  Game,
+  Scoreboard,
+  Space,
+  Util
+) {
 
   var $spaces,
       $board,
       $header,
-
-      initializers = {
-        jobs: function(player) {
-          var $jobs = $spaces.filter('.jobs').find('.job'),
-              $playerJob;
-
-          if (!player.job) {
-            $playerJob = $jobs.first();
-          } else {
-            $playerJob = $jobs.filter(function() {
-              return $(this).data('job') === player.job.name;
-            });
-          }
-
-          _private.selectJob($playerJob, { clear: !player.job });
-        }
-      },
+      $categorySpaces,
 
       _private = {
         clearCashChange: function() {
@@ -105,8 +103,13 @@ function(Data, Game, Scoreboard, Space, Util) {
       this.adjustCashMultiple(adjustments);
     },
 
-    categoryChanged: function($category) {
-      //var space =  Space.from($category.data('type'));
+    categoryChanged: function($elem) {
+      var category = Category.from($elem.data('type')),
+          $categorySpace = $categorySpaces.filter(function() {
+            return $(this).data('type') === category.id;
+          });
+      category.initialize(Game.currentPlayer());
+      Util.choiceChanged($categorySpace);
     },
 
     everyonePays: function(options) {
@@ -125,8 +128,7 @@ function(Data, Game, Scoreboard, Space, Util) {
     },
 
     execute: function($elem) {
-      var self = this,
-          space = Space.from($elem.closest('.space').data('type'));
+      var space = Space.from($elem.closest('.space').data('type'));
       space.execute($elem, Game.currentPlayer(), this);
     },
 
@@ -134,6 +136,7 @@ function(Data, Game, Scoreboard, Space, Util) {
       $board = $('#board');
       $header = $board.find('.player');
       $spaces = $board.find('.space').not('.category');
+      $categorySpaces = $board.find('.space.category');
       $cashChange = $board.find('.cash-change');
     },
 

@@ -145,6 +145,17 @@
     opacity: 1;
 }
 
+#board .main .summary.category.space .text {
+    margin: 0;
+    padding: 0;
+}
+
+#board .main .summary.category.space .line {
+    color: #F0F0F0;
+    font-size: 125%;
+    margin-bottom: 0.5em;
+}
+
 #board .categories {
     float: right;
     font-size: 125%;

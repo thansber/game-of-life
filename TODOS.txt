@@ -6,8 +6,9 @@
 
 Version 3.0
 ===========
-- boars-spec; everyonePays xdescribe'd
+- board-spec; everyonePays xdescribe'd
 - when cash animation starts, clear cash change, needs to be in scoreboard but manipulate board????
+- marriage space needs to specify it is for marriage
 - Store all actions taken in local storage
     - Start over
     - Replay
