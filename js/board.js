@@ -168,6 +168,22 @@ function(
       this.initializeSpace();
     },
 
+    nextTollBridgeOwner: function() {
+      var newOwner,
+          playersWhoCrossed = _.filter(Game.players(), function(player) {
+            return !!player.tollBridgeCrossed;
+          });
+
+      newOwner = _.first(_.sortBy(playersWhoCrossed, function(player) {
+        return player.tollBridgeCrossed;
+      }));
+
+      if (newOwner) {
+        newOwner.tollBridgeOwned = true;
+        newOwner.tollBridgeCrossed = 0;
+      }
+    },
+
     selectJob: function($job, options) {
       Util.choiceChanged($job, _.extend({
         parentSelector: '.jobs',
@@ -238,7 +254,7 @@ function(
       }
 
       $action.addClass('crossed');
-      player.tollBridgeCrossed = true;
+      player.tollBridgeCrossed = Game.tollBridgeCrossed();
 
       this.adjustCashMultiple([
         { player: owner, by: amount },

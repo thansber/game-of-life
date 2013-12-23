@@ -75,6 +75,12 @@ function($, _, Data) {
 
     tollBridge: function($button, player, board) {
       board.tollBridgeCrossed(player);
+    },
+
+    tollBridgeFix: function($button, player, board) {
+      player.tollBridgeOwned = false;
+      board.nextTollBridgeOwner();
+      $button.closest('.space').toggleClass('owner not-owner');
     }
   },
 
@@ -159,6 +165,7 @@ function($, _, Data) {
   new Space('revenge', { executor: executors.revenge });
   new Space('stock-market', { executor: executors.simpleTransaction });
   new Space('lucky-number', { executor: executors.luckyNumber });
+  new Space('toll-bridge-fix', { executor: executors.tollBridgeFix });
 
   return {
     from: function(id) {

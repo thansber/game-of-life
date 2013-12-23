@@ -237,6 +237,24 @@ function(
       });
     });
 
+    describe('#nextTollBridgeOwner', function() {
+      beforeEach(function() {
+        this.gameFixture = new GameFixture();
+        this.gameFixture.setPlayers(['Name1', 'Name2', 'Name3']);
+        Game.playerBy({ index: 1 }).tollBridgeOwned = true;
+      });
+      describe('when others have already crossed', function() {
+        it('sets the owner to the first crosser', function() {
+          this.newOwner = Game.playerBy({ index: 2 });
+          this.newOwner.tollBridgeCrossed = 1;
+          Game.playerBy({ index: 0 }).tollBridgeCrossed = 2;
+          Board.nextTollBridgeOwner();
+          expect(this.newOwner.tollBridgeOwned).toBe(true);
+          expect(this.newOwner.tollBridgeCrossed).toBeFalsy();
+        });
+      });
+    });
+
     describe('#setFirstMillionaire', function() {
       beforeEach(function() {
         this.spaces = this.board.affix('.space.millionaire');

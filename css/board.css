@@ -216,6 +216,19 @@
     display: block;
 }
 
+#board .main .toll.bridge.category .owner,
+#board .main .toll.bridge.category .not-owner {
+    display: none;
+}
+
+#board .main .toll.bridge.category.owner .owner {
+    display: block;
+}
+
+#board .main .toll.bridge.category.not-owner .not-owner {
+    display: block;
+}
+
 #board .categories {
     float: right;
     font-size: 125%;
@@ -230,14 +243,14 @@
     border-width: 0 0 2px 2px;
     color: rgb(240, 240, 240);
     cursor: pointer;
-    height: 2.35em;
-    padding-top: 18px;
+    height: 41.4px;
+    padding-top: 14px;
 }
 
 #board .categories .category:hover {
     background-color: rgb(51, 51, 51);
 }
 
-#board .categories .lucky.number.category {
+#board .categories .toll-bridge.category {
     border-bottom-width: 0;
 }

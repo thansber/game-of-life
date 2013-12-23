@@ -1,4 +1,3 @@
-- lucky square
 - allow toll bridge owner to change?
 - allow for children values to be directly manipulated (mistake adding kid)
 
@@ -6,6 +5,7 @@
 
 Version 3.0
 ===========
+- selector for all spaces
 - when cash animation starts, clear cash change, needs to be in scoreboard but manipulate board????
 - Store all actions taken in local storage
     - Start over

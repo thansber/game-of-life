@@ -91,6 +91,12 @@ function($, _) {
       });
 
       $summary.empty().append($(markup.join('')));
+    },
+
+    tollBridgeFix: function(player, board) {
+      var $tollBridgeFix = $('#board .toll.bridge.category');
+      $tollBridgeFix.toggleClass('owner', player.tollBridgeOwned);
+      $tollBridgeFix.toggleClass('not-owner', !player.tollBridgeOwned);
     }
   },
 
@@ -138,6 +144,7 @@ function($, _) {
   new Category('revenge', { initializer: initializers.revenge });
   new Category('stock-market', { initializer: initializers.stockMarket });
   new Category('lucky-number', { initializer: initializers.luckyNumber });
+  new Category('toll-bridge-fix', { initializer: initializers.tollBridgeFix });
 
   return {
     from: function(id) {

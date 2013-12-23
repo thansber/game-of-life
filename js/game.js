@@ -14,6 +14,7 @@ function($, _, Player, Scoreboard) {
 
   var Game = function() {
     this.players = [];
+    this.crossedTollBridgeOrder = 0;
   };
 
   $.extend(Game.prototype, {
@@ -143,6 +144,11 @@ function($, _, Player, Scoreboard) {
 
     start: function() {
       $('body').addClass('game-started');
+      game.crossedTollBridgeOrder = 0;
+    },
+
+    tollBridgeCrossed: function() {
+      return ++game.crossedTollBridgeOrder;
     },
 
     tollBridgeOwner: function() {
