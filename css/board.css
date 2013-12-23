@@ -156,6 +156,28 @@
     margin-bottom: 0.5em;
 }
 
+#board .main .revenge.category .send.back,
+#board .main .revenge.category .sue {
+    display: none;
+}
+
+#board .main .revenge.category .whom {
+    font-size: 175%;
+    margin-bottom: 0.5em;
+    padding: 0.4em 1em 0.5em 0.5em;
+}
+
+#board .main .revenge.category.send.back .send.back {
+    color: rgb(240, 240, 240);
+    display: block;
+    font-size: 150%;
+    margin-right: 2em;
+}
+
+#board .main .revenge.category.sue .sue {
+    display: block;
+}
+
 #board .categories {
     float: right;
     font-size: 125%;

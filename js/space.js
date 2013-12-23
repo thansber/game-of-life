@@ -56,6 +56,10 @@ function($, _, Data) {
       board.becomeMillionaire(player, $button);
     },
 
+    revenge: function($button, player, board) {
+      board.getRevenge($button, player);
+    },
+
     simpleTransaction: function($button, player, board) {
       board.adjustCash({ player: player, by: +$button.data('amount') });
     },
@@ -147,6 +151,7 @@ function($, _, Data) {
   new Space('millionaire', { initializer: initializers.millionaire, executor: executors.millionaire });
 
   new Space('children', { executor: executors.children });
+  new Space('revenge', { executor: executors.revenge });
 
   return {
     from: function(id) {

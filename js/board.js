@@ -134,6 +134,14 @@ function(
       space.execute($elem, Game.currentPlayer(), this);
     },
 
+    getRevenge: function($button, player) {
+      var revengeOn = Game.playerBy({ name: $button.siblings('.whom').val() }),
+          adjustments = [];
+      adjustments.push({ player: revengeOn, by: -200000 });
+      adjustments.push({ player: player, by: 200000 });
+      this.adjustCashMultiple(adjustments);
+    },
+
     init: function() {
       $board = $('#board');
       $header = $board.find('.player');
@@ -183,6 +191,18 @@ function(
       var luckyNumber = $luckyNumber.closest('.space').find('.lucky-number').index($luckyNumber) + 1;
       Game.currentPlayer().luckyNumber = luckyNumber;
       Util.choiceChanged($luckyNumber);
+    },
+
+    setupRevenge: function(player) {
+      var revengables = Game.playersForRevenge(player),
+          $revenge = $categorySpaces.filter('.revenge'),
+          $whom = $revenge.find('.whom');
+      $revenge.toggleClass('sue', revengables.length > 0);
+      $revenge.toggleClass('send back', revengables.length === 0);
+
+      revengables.forEach(function(revengePlayer) {
+        $whom.append($('<option value="' + revengePlayer.name + '">' + revengePlayer.name + '</option>'));
+      });
     },
 
     skipSpace: function() {

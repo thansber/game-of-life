@@ -125,82 +125,72 @@ function(
       });
     });
 
-    describe('#tollBridgeCrossed', function() {
-      describe('when nobody owns the toll bridge', function() {
-        it('sets the toll bridge ownder to the current player', function() {
-          Board.tollBridgeCrossed(Game.currentPlayer());
-          expect(Game.currentPlayer().tollBridgeOwned).toBe(true);
-        });
-      });
-
-      describe('when someone else owns the toll bridge', function() {
-        beforeEach(function() {
-          spyOn(Board, 'adjustCashMultiple');
-          this.gameFixture = new GameFixture();
-          this.gameFixture.setPlayers(['Name1', 'Name2']);
-          this.owner = Game.playerBy({ index: 1});
-          this.owner.tollBridgeOwned = true;
-          this.currentPlayer = Game.playerBy({ index: 0 });
-          Board.tollBridgeCrossed(this.currentPlayer);
-          this.adjustCashArgs = Board.adjustCashMultiple.argsForCall[0][0];
-        });
-
-        it('gives the cash to the owner', function() {
-          expect(this.adjustCashArgs[0]).toEqual({
-            player: this.owner,
-            by: 24000
-          });
-        });
-
-        it('takes cash from the crosser', function() {
-          expect(this.adjustCashArgs[1]).toEqual({
-            player: this.currentPlayer,
-            by: -24000
-          });
-        });
-      });
-    });
-
-    xdescribe('#everyonePays', function() {
+    describe('#everyonePays', function() {
       beforeEach(function() {
         this.gameFixture = new GameFixture();
         this.gameFixture.setPlayers(['Name1', 'Name2', 'Name3', 'Name4']);
 
         this.player = Game.playerBy({index: 1});
-        spyOn(Board, 'adjustCash');
+        spyOn(Board, 'adjustCashMultiple');
         spyOn(Scoreboard, 'cashAnimationDelay').andReturn(0);
       });
 
       describe('takes away for all other players', function() {
         beforeEach(function() {
           Board.everyonePays({ player: this.player, by: 3000 });
-          this.adjustCashCalls = Board.adjustCash.argsForCall;
+          this.adjustCashCalls = Board.adjustCashMultiple.argsForCall;
         });
         it('takes away from player 1', function() {
-          expect(this.adjustCashCalls[0][0]).toEqual({
+          expect(this.adjustCashCalls[0][0][0]).toEqual({
             player: Game.playerBy({index: 0}),
             by: -3000
           });
         });
         it('takes away from player 3', function() {
-          expect(this.adjustCashCalls[1][0]).toEqual({
+          expect(this.adjustCashCalls[0][0][1]).toEqual({
             player: Game.playerBy({index: 2}),
             by: -3000
           });
         });
         it('takes away from player 4', function() {
-          expect(Board.adjustCash.argsForCall[2][0]).toEqual({
+          expect(this.adjustCashCalls[0][0][2]).toEqual({
             player: Game.playerBy({index: 3}),
             by: -3000
           });
         });
+        it('gives the player the amount for each player', function() {
+          expect(this.adjustCashCalls[0][0][3]).toEqual({
+            player: this.player,
+            by: 9000
+          });
+        });
+      });
+    });
+
+    describe('#getRevenge', function() {
+      beforeEach(function() {
+        this.button = this.board.affix('button');
+        this.whom = this.board.affix('select.whom');
+        this.whom.affix('option[value="Name1"]');
+        this.whom.val('Name1');
+        this.gameFixture = new GameFixture();
+        this.gameFixture.setPlayers(['Name1', 'Name2']);
+        spyOn(Board, 'adjustCashMultiple');
+        this.playerGettingSued = Game.playerBy({ index: 0 });
+        this.playerSuing = Game.playerBy({ index: 1 });
+        Board.getRevenge(this.button, this.playerSuing);
       });
 
-      it('gives the player the amount for each player', function() {
-        Board.everyonePays({ player: this.player, by: 3000 });
-        expect(Board.adjustCash).toHaveBeenCalledWith({
-          player: this.player,
-          by: 9000
+      it('takes the proper amount from the selected player', function() {
+        expect(Board.adjustCashMultiple.argsForCall[0][0][0]).toEqual({
+          player: this.playerGettingSued,
+          by: -200000
+        });
+      });
+      it('gives the proper amount to the suing player', function() {
+        expect(Board.adjustCashMultiple.argsForCall[0][0][1]).toEqual({
+          player: this.playerSuing,
+          by: 200000
         });
       });
     });
@@ -307,6 +297,42 @@ function(
       });
       it('moves to the next action', function() {
         expect(Board.nextSpace).toHaveBeenCalled();
+      });
+    });
+
+    describe('#tollBridgeCrossed', function() {
+      describe('when nobody owns the toll bridge', function() {
+        it('sets the toll bridge ownder to the current player', function() {
+          Board.tollBridgeCrossed(Game.currentPlayer());
+          expect(Game.currentPlayer().tollBridgeOwned).toBe(true);
+        });
+      });
+
+      describe('when someone else owns the toll bridge', function() {
+        beforeEach(function() {
+          spyOn(Board, 'adjustCashMultiple');
+          this.gameFixture = new GameFixture();
+          this.gameFixture.setPlayers(['Name1', 'Name2']);
+          this.owner = Game.playerBy({ index: 1});
+          this.owner.tollBridgeOwned = true;
+          this.currentPlayer = Game.playerBy({ index: 0 });
+          Board.tollBridgeCrossed(this.currentPlayer);
+          this.adjustCashArgs = Board.adjustCashMultiple.argsForCall[0][0];
+        });
+
+        it('gives the cash to the owner', function() {
+          expect(this.adjustCashArgs[0]).toEqual({
+            player: this.owner,
+            by: 24000
+          });
+        });
+
+        it('takes cash from the crosser', function() {
+          expect(this.adjustCashArgs[1]).toEqual({
+            player: this.currentPlayer,
+            by: -24000
+          });
+        });
       });
     });
 

@@ -49,6 +49,10 @@ function($, _) {
       board.nextPlayer();
     },
 
+    revenge: function(player, board) {
+      board.setupRevenge(player);
+    },
+
     summary: function(player, board) {
       var $summary = $("#board .summary.category .text"),
           lines = [],
@@ -121,6 +125,7 @@ function($, _) {
   new Category('current', { doNotChangeSpace: true, initializer: initializers.current });
   new Category('summary', { initializer: initializers.summary });
   new Category('children', {});
+  new Category('revenge', { initializer: initializers.revenge });
 
   return {
     from: function(id) {

@@ -162,6 +162,19 @@ function(
         });
       });
 
+      describe('#playersForRevenge', function() {
+        beforeEach(function() {
+          Game.playerBy({ index : 1}).cash = 300000;
+          Game.playerBy({ index : 2}).cash = 400000;
+          Game.playerBy({ index : 3}).cash = 200000;
+        });
+
+        it('returns only those eligible for revenge', function() {
+          var revengables = Game.playersForRevenge(Game.playerBy({ index: 2 }));
+          this.gameFixture.checkNames(revengables, ['Name2', 'Name4']);
+        });
+      });
+
       describe('#removePlayer', function() {
         describe('when removing the first player', function() {
           beforeEach(function() {

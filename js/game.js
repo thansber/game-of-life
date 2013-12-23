@@ -113,6 +113,13 @@ function($, _, Player, Scoreboard) {
       });
     },
 
+    playersForRevenge: function(player) {
+      var others = this.playersExcept(player);
+      return _.reject(others, function(player) {
+        return player.cash < 200000;
+      });
+    },
+
     removePlayer: function($target) {
       // $target is the delete button
       var $player = Scoreboard.findPlayer($target),
