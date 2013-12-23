@@ -92,6 +92,12 @@
     opacity: 1;
 }
 
+#board .main .space.marriage .message {
+    color: rgb(240, 240, 240);
+    font-size: 150%;
+    margin-bottom: 1em;
+}
+
 #board .main .space.toll-bridge .message {
     color: rgb(240, 240, 240);
     display: none;
