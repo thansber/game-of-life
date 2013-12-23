@@ -49,6 +49,10 @@ function($, _) {
       board.nextPlayer();
     },
 
+    luckyNumber: function(player, board) {
+      board.setupLuckyNumber(player);
+    },
+
     revenge: function(player, board) {
       board.setupRevenge(player);
     },
@@ -133,6 +137,7 @@ function($, _) {
   new Category('children', {});
   new Category('revenge', { initializer: initializers.revenge });
   new Category('stock-market', { initializer: initializers.stockMarket });
+  new Category('lucky-number', { initializer: initializers.luckyNumber });
 
   return {
     from: function(id) {

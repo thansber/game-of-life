@@ -50,6 +50,11 @@ function($) {
       var rgb = hexToRgb(hex);
       return rgb[0] * 255 === 255 && rgb[1] * 255 === 255 && rgb[2] * 255 === 255;
     },
+    populatePlayerDropdown: function($select, players) {
+      players.forEach(function(player) {
+        $select.append($('<option value="' + player.name + '">' + player.name + '</option>'));
+      });
+    },
     textColorFromBackground: function(hex) {
       var rgb = hexToRgb(hex);
       var level = 0.213 * rgb[0] + 0.715 * rgb[1] + 0.072 * rgb[2];

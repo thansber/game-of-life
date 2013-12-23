@@ -151,6 +151,12 @@
     opacity: 1;
 }
 
+#board .main .category .whom {
+    font-size: 175%;
+    margin-bottom: 0.5em;
+    padding: 0.4em 1em 0.5em 0.5em;
+}
+
 #board .main .summary.category.space .text {
     margin: 0 0 0 1em;
     padding: 0;
@@ -165,12 +171,6 @@
 #board .main .revenge.category .send.back,
 #board .main .revenge.category .sue {
     display: none;
-}
-
-#board .main .revenge.category .whom {
-    font-size: 175%;
-    margin-bottom: 0.5em;
-    padding: 0.4em 1em 0.5em 0.5em;
 }
 
 #board .main .revenge.category.send.back .send.back {
@@ -194,6 +194,25 @@
 }
 
 #board .main .stock.market.category.has-stock .has-stock {
+    display: block;
+}
+
+#board .main .lucky.number.category .has-lucky-number,
+#board .main .lucky.number.category .someone-has-lucky-number,
+#board .main .lucky.number.category .no-lucky-number {
+    display: none;
+}
+
+#board .main .lucky.number.category.someone-has-lucky-number .someone-has-lucky-number {
+    display: block;
+}
+
+
+#board .main .lucky.number.category.no-lucky-number .no-lucky-number {
+    display: block;
+}
+
+#board .main .lucky.number.category.has-lucky-number .has-lucky-number {
     display: block;
 }
 

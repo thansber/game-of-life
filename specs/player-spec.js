@@ -73,6 +73,12 @@ function(Data, Player) {
           expect(this.player.equals(this.otherPlayer)).toBe(false);
         });
       });
+
+      describe('when a bogus player is provided', function() {
+        it('returns false', function() {
+          expect(this.player.equals(null)).toBe(false);
+        });
+      });
     });
 
     describe('#getMarried', function() {

@@ -193,21 +193,35 @@ function(
       Util.choiceChanged($luckyNumber);
     },
 
+    setupLuckyNumber: function(player) {
+      var $luckyNumber = $categorySpaces.filter('.lucky.number'),
+          luckyNumberPlayer = Game.playerWithLuckyNumber();
+
+      $luckyNumber.toggleClass('no-lucky-number', !luckyNumberPlayer);
+      $luckyNumber.toggleClass('someone-has-lucky-number', !!luckyNumberPlayer && !player.equals(luckyNumberPlayer));
+      $luckyNumber.toggleClass('has-lucky-number', !!luckyNumberPlayer && player.equals(luckyNumberPlayer));
+    },
+
     setupRevenge: function(player) {
       var revengables = Game.playersForRevenge(player),
-          $revenge = $categorySpaces.filter('.revenge'),
-          $whom = $revenge.find('.whom');
+          $revenge = $categorySpaces.filter('.revenge');
+
       $revenge.toggleClass('sue', revengables.length > 0);
       $revenge.toggleClass('send back', revengables.length === 0);
 
-      revengables.forEach(function(revengePlayer) {
-        $whom.append($('<option value="' + revengePlayer.name + '">' + revengePlayer.name + '</option>'));
-      });
+      Util.populatePlayerDropdown($revenge.find('.whom'), revengables);
     },
 
     skipSpace: function() {
       Game.currentPlayer().nextSpace();
       this.nextSpace();
+    },
+
+    spunLuckyNumber: function(player) {
+      this.adjustCashMultiple([
+        { player: player, by: -24000 },
+        { player: Game.playerWithLuckyNumber(), by: 24000 }
+      ]);
     },
 
     tollBridgeCrossed: function(player) {

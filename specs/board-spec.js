@@ -286,6 +286,43 @@ function(
       });
     });
 
+    describe('#setupLuckyNumber', function() {
+      beforeEach(function() {
+        this.luckyNumber = this.board.affix('.category.space.lucky.number');
+        Board.init();
+        this.gameFixture = new GameFixture();
+        this.gameFixture.setPlayers(['Name1', 'Name2', 'Name3']);
+        this.currentPlayer = Game.playerBy({ index: 2 });
+      });
+
+      describe('when nobody has a lucky number', function() {
+        it('toggles the proper classes', function() {
+          Board.setupLuckyNumber(this.currentPlayer);
+          expect(this.luckyNumber).toHaveClass('no-lucky-number');
+          expect(this.luckyNumber).not.toHaveClass('has-lucky-number');
+          expect(this.luckyNumber).not.toHaveClass('someone-has-lucky-number');
+        });
+      });
+      describe('when someone else has a lucky number', function() {
+        it('toggles the proper classes', function() {
+          Game.playerBy({ index: 0 }).luckyNumber = 2;
+          Board.setupLuckyNumber(this.currentPlayer);
+          expect(this.luckyNumber).not.toHaveClass('no-lucky-number');
+          expect(this.luckyNumber).not.toHaveClass('has-lucky-number');
+          expect(this.luckyNumber).toHaveClass('someone-has-lucky-number');
+        });
+      });
+      describe('when the current player has a lucky number', function() {
+        it('toggles the proper classes', function() {
+          Game.playerBy({ index: 2 }).luckyNumber = 2;
+          Board.setupLuckyNumber(this.currentPlayer);
+          expect(this.luckyNumber).not.toHaveClass('no-lucky-number');
+          expect(this.luckyNumber).toHaveClass('has-lucky-number');
+          expect(this.luckyNumber).not.toHaveClass('someone-has-lucky-number');
+        });
+      });
+    });
+
     describe('#skipSpace', function() {
       beforeEach(function() {
         spyOn(this.currentPlayer, 'nextSpace');

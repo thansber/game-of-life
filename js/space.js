@@ -8,6 +8,7 @@ function($, _, Data) {
     this.id = id;
     this.initializer = options.initializer;
     this.executor = options.executor;
+    this.finalSpace = options.finalSpace;
 
     allSpaces[id] = this;
   },
@@ -42,6 +43,10 @@ function($, _, Data) {
     jobs: function($button, player, board) {
       board.selectJob($button);
       player.setJob($button.data('job'));
+    },
+
+    luckyNumber: function($button, player, board) {
+      board.spunLuckyNumber(player);
     },
 
     marriage: function($button, player, board) {
@@ -128,7 +133,7 @@ function($, _, Data) {
         }, +delay);
       };
 
-      dfd.done(this.executor, nextSpace);
+      dfd.done(this.executor, this.finalSpace ? undefined : nextSpace);
       return dfd.resolve($button, player, board);
     }
   });
@@ -148,11 +153,12 @@ function($, _, Data) {
   new Space('toll-bridge', { initializer: initializers.tollBridge, executor: executors.tollBridge });
   new Space('property-taxes', { executor: executors.simpleTransaction });
   new Space('day-of-reckoning', { executor: executors.dayOfReckoning });
-  new Space('millionaire', { initializer: initializers.millionaire, executor: executors.millionaire });
+  new Space('millionaire', { initializer: initializers.millionaire, executor: executors.millionaire, finalSpace: true });
 
   new Space('children', { executor: executors.children });
   new Space('revenge', { executor: executors.revenge });
   new Space('stock-market', { executor: executors.simpleTransaction });
+  new Space('lucky-number', { executor: executors.luckyNumber });
 
   return {
     from: function(id) {

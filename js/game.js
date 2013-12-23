@@ -120,6 +120,12 @@ function($, _, Player, Scoreboard) {
       });
     },
 
+    playerWithLuckyNumber: function() {
+      return _.find(this.players(), function(player) {
+        return !!player.luckyNumber;
+      });
+    },
+
     removePlayer: function($target) {
       // $target is the delete button
       var $player = Scoreboard.findPlayer($target),

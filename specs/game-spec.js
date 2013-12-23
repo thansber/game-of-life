@@ -175,6 +175,21 @@ function(
         });
       });
 
+      describe('#playerWithLuckyNumber', function() {
+        describe('when nobody has a lucky number', function() {
+          it('returns nothing', function() {
+            expect(Game.playerWithLuckyNumber()).not.toBeDefined();
+          });
+        });
+        describe('when someone has a lucky number', function() {
+          it('returns that player', function() {
+            this.playerWithLuckyNumber = Game.playerBy({ index : 1});
+            this.playerWithLuckyNumber.luckyNumber = 9;
+            expect(Game.playerWithLuckyNumber()).toEqual(this.playerWithLuckyNumber);
+          });
+        });
+      });
+
       describe('#removePlayer', function() {
         describe('when removing the first player', function() {
           beforeEach(function() {

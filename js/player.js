@@ -31,7 +31,7 @@ function($, _, Data) {
     },
 
     equals: function(other) {
-      return this.name === other.name;
+      return !!other && this.name === other.name;
     },
 
     getMarried: function() {
