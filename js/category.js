@@ -53,6 +53,12 @@ function($, _) {
       board.setupRevenge(player);
     },
 
+    stockMarket: function(player, board) {
+      var $stockMarket = $('#board .stock.market.category');
+      $stockMarket.toggleClass('no-stock', !player.hasInsurance('stock'));
+      $stockMarket.toggleClass('has-stock', player.hasInsurance('stock'));
+    },
+
     summary: function(player, board) {
       var $summary = $("#board .summary.category .text"),
           lines = [],
@@ -126,6 +132,7 @@ function($, _) {
   new Category('summary', { initializer: initializers.summary });
   new Category('children', {});
   new Category('revenge', { initializer: initializers.revenge });
+  new Category('stock-market', { initializer: initializers.stockMarket });
 
   return {
     from: function(id) {

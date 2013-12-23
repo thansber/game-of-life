@@ -57,6 +57,12 @@
     left: 0;
 }
 
+#board .main .space .message {
+    color: rgb(240, 240, 240);
+    font-size: 150%;
+    margin-bottom: 1em;
+}
+
 #board .main .space .button {
     display: block;
     margin: 0 0 1em 0;
@@ -90,12 +96,6 @@
 
 #board .main .space .job.button.selected {
     opacity: 1;
-}
-
-#board .main .space.marriage .message {
-    color: rgb(240, 240, 240);
-    font-size: 150%;
-    margin-bottom: 1em;
 }
 
 #board .main .space.toll-bridge .message {
@@ -181,6 +181,19 @@
 }
 
 #board .main .revenge.category.sue .sue {
+    display: block;
+}
+
+#board .main .stock.market.category .has-stock,
+#board .main .stock.market.category .no-stock {
+    display: none;
+}
+
+#board .main .stock.market.category.no-stock .no-stock {
+    display: block;
+}
+
+#board .main .stock.market.category.has-stock .has-stock {
     display: block;
 }
 

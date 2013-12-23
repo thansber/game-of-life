@@ -152,6 +152,7 @@ function($, _, Data) {
 
   new Space('children', { executor: executors.children });
   new Space('revenge', { executor: executors.revenge });
+  new Space('stock-market', { executor: executors.simpleTransaction });
 
   return {
     from: function(id) {
