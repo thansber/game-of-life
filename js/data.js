@@ -19,22 +19,22 @@ function($) {
       {name:"b", desc:"Business", salary:12000, summary:"has a Business Degree"}
     ],
     spaces: [
-      'auto-insurance',
-      'tuition',
-      'jobs',
-      'life-insurance',
-      'marriage',
-      'house',
-      'fire-insurance',
-      'taxes1',
-      'stock-insurance',
-      'taxes2',
-      'taxes3',
-      'orphanage',
-      'toll-bridge',
-      'property-taxes',
-      'day-of-reckoning',
-      'millionaire'
+      { id: 'auto-insurance', desc: 'Auto Insurance' },
+      { id: 'tuition', desc: 'Tuition' },
+      { id: 'jobs', desc: 'Jobs' },
+      { id: 'life-insurance', desc: 'Life Insurance' },
+      { id: 'marriage', desc: 'Marriage' },
+      { id: 'house', desc: 'Buy a House' },
+      { id: 'fire-insurance', desc: 'Fire Insurance' },
+      { id: 'taxes1', desc: 'Taxes 1' },
+      { id: 'stock-insurance', desc: 'Stock Insurance' },
+      { id: 'taxes2', desc: 'Taxes 2' },
+      { id: 'taxes3', desc: 'Taxes 3' },
+      { id: 'orphanage', desc: 'Help an Orphanage' },
+      { id: 'toll-bridge', desc: 'Toll Bridge' },
+      { id: 'property-taxes', desc: 'Property Taxes' },
+      { id: 'day-of-reckoning', desc: 'Day of Reckoning' },
+      { id: 'millionaire', desc: 'Millionaire' }
     ]
   };
 });

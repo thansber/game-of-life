@@ -26,13 +26,6 @@ function(
           $cashChange.find('.type').text('');
           $cashChange.find('.value').text('');
         },
-        currentPlayerSpace: function() {
-          var playerAt = Game.currentPlayer().at;
-
-          return $spaces.filter(function() {
-            return $(this).data('type') === playerAt;
-          });
-        },
         initializeHeader: function() {
           var currentPlayer = Game.currentPlayer(),
               $cashChange = $header.find('.cash-change');
@@ -114,6 +107,10 @@ function(
       }
     },
 
+    currentPlayerSpace: function() {
+      return this.spaceByType(Game.currentPlayer().at);
+    },
+
     everyonePays: function(options) {
       var opt = options || {},
           self = this,
@@ -142,6 +139,11 @@ function(
       this.adjustCashMultiple(adjustments);
     },
 
+    goToSpace: function(type) {
+      Util.choiceChanged(this.spaceByType(type));
+      this.initializeSpace();
+    },
+
     init: function() {
       $board = $('#board');
       $header = $board.find('.player');
@@ -158,7 +160,7 @@ function(
     },
 
     nextPlayer: function() {
-      Util.choiceChanged(_private.currentPlayerSpace());
+      Util.choiceChanged(this.currentPlayerSpace());
       this.initializeSpace();
       _private.initializeHeader();
     },
@@ -197,10 +199,10 @@ function(
     },
 
     setFirstMillionaire: function($elem) {
-      var $action = $elem.is('.space.millionaire') ? $elem : $elem.closest('.space'),
+      var $space = $elem.is('.space.millionaire') ? $elem : $elem.closest('.space'),
           isMillionaire = Game.currentPlayer().millionaire;
-      $action.toggleClass('first', isMillionaire && Game.numMillionaires() === 1);
-      $action.toggleClass('later', isMillionaire && Game.numMillionaires() > 1);
+      $space.toggleClass('first', isMillionaire && Game.numMillionaires() === 1);
+      $space.toggleClass('later', isMillionaire && Game.numMillionaires() > 1);
     },
 
     setLuckyNumber: function($luckyNumber) {
@@ -233,6 +235,12 @@ function(
       this.nextSpace();
     },
 
+    spaceByType: function(type) {
+      return $spaces.filter(function() {
+        return $(this).data('type') === type;
+      });
+    },
+
     spunLuckyNumber: function(player) {
       this.adjustCashMultiple([
         { player: player, by: -24000 },
@@ -244,16 +252,16 @@ function(
       var self = this,
           owner = Game.tollBridgeOwner(),
           amount = 24000,
-          $action = _private.currentPlayerSpace();
+          $space = this.currentPlayerSpace();
 
-      $action.removeClass('owner crossed');
+      $space.removeClass('owner crossed');
       if (!owner) {
         player.tollBridgeOwned = true;
-        $action.addClass('owner');
+        $space.addClass('owner');
         return;
       }
 
-      $action.addClass('crossed');
+      $space.addClass('crossed');
       player.tollBridgeCrossed = Game.tollBridgeCrossed();
 
       this.adjustCashMultiple([

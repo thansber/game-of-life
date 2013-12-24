@@ -15,7 +15,7 @@ function($, _, Data) {
     this.tollBridgeCrossed = false;
     this.millionaire = false;
     this.luckyNumber = 0;
-    this.at = Data.spaces[0];
+    this.at = Data.spaces[0].id;
   };
 
   $.extend(Player.prototype, {
@@ -44,9 +44,9 @@ function($, _, Data) {
     },
 
     nextSpace: function() {
-      var index = _.indexOf(Data.spaces, this.at);
+      var index = _.indexOf(_.pluck(Data.spaces, 'id'), this.at);
       if (index < Data.spaces.length - 1) {
-        this.at = Data.spaces[++index];
+        this.at = Data.spaces[++index].id;
       }
     },
 

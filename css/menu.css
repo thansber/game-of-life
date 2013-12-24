@@ -1,0 +1,57 @@
+#space-menu {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: -100em;
+    transition-property: top;
+    transition-duration: 1s;
+    transition-timing-function: ease;
+    width: 100%;
+}
+
+#space-menu.displayed {
+    top: 0;
+}
+
+#space-menu .background {
+    background-color: rgb(34, 34, 34);
+    height: 100%;
+    opacity: 0.9;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+#space-menu .close {
+    background-image: url('../images/cross-circle.png');
+    background-size: cover;
+    height: 48px;
+    position: absolute;
+    right: 0.4em;
+    top: 2.5em;
+    width: 48px;
+    z-index: 3;
+}
+
+#space-menu .menu {
+    background-color: rgb(85, 85, 85);
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 1em;
+    position: relative;
+    top: 4em;
+    width: 93%;
+    z-index: 2;
+}
+
+#space-menu .menu .item {
+    display: inline-block;
+    margin: 0.5em 1em;
+    width: 18em;
+}
+
+#space-menu .menu .item .button {
+    font-size: 175%;
+    padding: 1em 0;
+    width: 100%;
+}

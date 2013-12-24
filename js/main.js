@@ -18,7 +18,8 @@ require([
   'game',
   'handlers',
   'scoreboard',
-  'setup'
+  'setup',
+  'space-menu'
 ], function(
   $,
   Actions,
@@ -26,7 +27,8 @@ require([
   Game,
   Handlers,
   Scoreboard,
-  Setup
+  Setup,
+  SpaceMenu
 ) {
 
   $(document).ready(function() {
@@ -36,6 +38,7 @@ require([
     Setup.init();
     Actions.init();
     Board.init();
+    SpaceMenu.init();
 
     Setup.autoSetup(4);
   });

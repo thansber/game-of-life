@@ -14,7 +14,7 @@ function(Data, Player) {
       });
 
       it('sets the start space', function() {
-        expect(this.player.at).toEqual(Data.spaces[0]);
+        expect(this.player.at).toEqual(Data.spaces[0].id);
       });
     });
 
@@ -104,17 +104,17 @@ function(Data, Player) {
 
     describe('#nextSpace', function() {
       it('goes to the next space', function() {
-        expect(this.player.at).toEqual(Data.spaces[0]);
+        expect(this.player.at).toEqual(Data.spaces[0].id);
         this.player.nextSpace();
-        expect(this.player.at).toEqual(Data.spaces[1]);
+        expect(this.player.at).toEqual(Data.spaces[1].id);
       });
 
       describe('when at the last space', function() {
         it('does not advance', function() {
           var lastSpace = _.last(Data.spaces);
-          this.player.at = lastSpace;
+          this.player.at = lastSpace.id;
           this.player.nextSpace();
-          expect(this.player.at).toEqual(lastSpace);
+          expect(this.player.at).toEqual(lastSpace.id);
         });
       });
     });

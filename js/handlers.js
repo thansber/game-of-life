@@ -1,6 +1,22 @@
 define( /* Handlers */
-['jquery', 'actions', 'board', 'game', 'scoreboard', 'util'],
-function($, Actions, Board, Game, Scoreboard, Util) {
+[
+  'jquery',
+  'actions',
+  'board',
+  'game',
+  'scoreboard',
+  'space-menu',
+  'util'
+],
+function(
+  $,
+  Actions,
+  Board,
+  Game,
+  Scoreboard,
+  SpaceMenu,
+  Util
+) {
 
   return {
     init: function() {
@@ -29,7 +45,12 @@ function($, Actions, Board, Game, Scoreboard, Util) {
         .on('click', '.main .skip', function() { Board.skipSpace(); })
         .on('click', '.main .job', function() { Board.setJob($(this)); })
         .on('click', '.main .lucky-number', function() { Board.setLuckyNumber($(this)); })
+        .on('click', '.main .space-menu', function() { SpaceMenu.open(); })
         .on('click', '.categories .category', function() { Board.categoryChanged($(this)); });
+
+      $('#space-menu')
+        .on('click', '.close', function() { SpaceMenu.close(); })
+        .on('click', '.button', function() { SpaceMenu.go($(this)); });
 
     }
   };
