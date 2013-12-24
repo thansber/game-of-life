@@ -3,12 +3,13 @@
 <head>
   <meta charset=utf-8>
   <title>The Game of Life Companion</title>
-  <link rel="stylesheet" href="css/old/main.css"/>
-  <link rel="stylesheet" href="css/old/buttons.css"/>
-  <link rel="stylesheet" href="css/old/setup.css"/>
-  <link rel="stylesheet" href="css/old/player.css"/>
-  <link rel="stylesheet" href="css/old/player-cash.css"/>
-  <link rel="stylesheet" href="css/old/player-drawers.css"/>
+  <link rel="stylesheet" href="css/main.css"/>
+  <link rel="stylesheet" href="css/buttons.css"/>
+  <link rel="stylesheet" href="css/setup.css"/>
+  <link rel="stylesheet" href="css/scoreboard.css"/>
+  <link rel="stylesheet" href="css/actions.css"/>
+  <link rel="stylesheet" href="css/board.css"/>
+  <link rel="stylesheet" href="css/menu.css"/>
   <!--[if lt IE 9]>
   <script src="${staticUri}ui/js/lib/html5.js"></script>
   <script src="${staticUri}ui/js/lib/shims.js"></script>
@@ -16,10 +17,10 @@
 </head>
 
 <body>
-<div id="version">v2.0</div>
+<div id="version">v3.1</div>
+<div id="re-setup">I need to make player changes</div>
 
-<section id="newPlayer">
-  <div class="toggler hide"></div>
+<section id="setup">
   <input type="text" placeholder="Enter player name" />
   <div class="swatches">
     <p class="swatch" data-color="C90000"></p> <!-- red -->
@@ -30,14 +31,187 @@
     <p class="swatch" data-color="BCD2EE"></p> <!-- cyan -->
     <p class="swatch" data-color="FFFFFF"></p> <!-- white -->
   </div>
-  <button class="grey add">Add player to game</button>
+  <button class="grey add">Add player</button>
+  <button class="green start">Start game</button>
 </section>
 
-<section id="game"><!-- players are added via Javascript --></section>
+<section id="scoreboard">
+<!-- players are added via Javascript -->
+</section>
+
+<section id="board">
+  <h1 class="player">
+    <p class="name"></p>
+    <p class="cash-change"><span class="type"></span><span class="value"></span></p>
+  </h1>
+
+  <div class="main">
+
+    <div class="space auto insurance" data-type="auto-insurance">
+      <button class="orange medium button execute" data-insurance="auto">Buy auto insurance</button>
+      <button class="grey medium button skip">Skip auto insurance</button>
+    </div>
+
+    <div class="space tuition" data-type="tuition">
+      <button class="red large button execute" data-amount="-2000">Pay tuition</button>
+    </div>
+
+    <div class="space jobs" data-type="jobs">
+      <button class="grey button job selectable execute" data-job="d">Doctor</button>
+      <button class="grey button job selectable execute" data-job="j">Journalist</button>
+      <button class="grey button job selectable execute" data-job="l">Lawyer</button>
+      <button class="grey button job selectable execute" data-job="t">Teacher</button>
+      <button class="grey button job selectable execute" data-job="p">Physicist</button>
+      <button class="grey button job selectable execute" data-job="u">University</button>
+      <button class="grey button job selectable execute" data-job="b">Business</button>
+    </div>
+
+    <div class="space life insurance" data-type="life-insurance">
+      <button class="blue medium button execute" data-insurance="life">Buy life insurance</button>
+      <button class="grey medium button skip">Skip life insurance</button>
+    </div>
+
+    <div class="space marriage" data-type="marriage">
+      <h2 class="message">I got married, for presents</h2>
+      <button class="green medium button execute" data-amount="2000">I spun a 1, 2, or 3</button>
+      <button class="green medium button execute" data-amount="1000">I spun a 4, 5, or 6</button>
+      <button class="green medium button execute" data-amount="0" data-delay="0">I spun a 7, 8, 9, or 10</button>
+    </div>
+
+    <div class="space house" data-type="house">
+      <button class="red large button execute" data-amount="-40000">Buy a house</button>
+    </div>
+
+    <div class="space fire insurance" data-type="fire-insurance">
+      <button class="red medium button execute" data-insurance="fire">Buy fire insurance</button>
+      <button class="grey medium button skip">Skip fire insurance</button>
+    </div>
+
+    <div class="space taxes" data-type="taxes1">
+      <button class="red large button execute">Pay taxes</button>
+    </div>
+
+    <div class="space stock insurance" data-type="stock-insurance">
+      <button class="green medium button execute" data-insurance="stock">Buy stock insurance</button>
+      <button class="grey medium button skip">Skip stock insurance</button>
+    </div>
+
+    <div class="space taxes" data-type="taxes2">
+      <button class="red large button execute">Pay taxes</button>
+    </div>
+
+    <div class="space taxes" data-type="taxes3">
+      <button class="red large button execute">Pay taxes</button>
+    </div>
+
+    <div class="space orphanage" data-type="orphanage">
+      <button class="red large button execute" data-amount="-120000">Support the orphanage</button>
+    </div>
+
+    <div class="space toll-bridge" data-type="toll-bridge">
+      <button class="grey large button execute">Crossed the toll bridge</button>
+      <p class="owner message">I own the toll bridge</p>
+      <p class="crossed message">I crossed the toll bridge</p>
+    </div>
+
+    <div class="space property-taxes" data-type="property-taxes">
+      <button class="red large button execute" data-amount="-50000">Pay property taxes</button>
+    </div>
+
+    <div class="space day-of-reckoning" data-type="day-of-reckoning">
+      <button class="green large button execute">Day of reckoning</button>
+    </div>
+
+    <div class="space millionaire" data-type="millionaire">
+      <button class="green large button execute">Become a millionaire</button>
+      <div class="choose-lucky-number">
+        <h2>I'm a millionaire!  My lucky number is</h2>
+        <button class="grey button selectable lucky-number">1</button>
+        <button class="grey button selectable lucky-number">2</button>
+        <button class="grey button selectable lucky-number">3</button>
+        <button class="grey button selectable lucky-number">4</button>
+        <button class="grey button selectable lucky-number">5</button>
+        <button class="grey button selectable lucky-number">6</button>
+        <button class="grey button selectable lucky-number">7</button>
+        <button class="grey button selectable lucky-number">8</button>
+        <button class="grey button selectable lucky-number">9</button>
+        <button class="grey button selectable lucky-number">10</button>
+      </div>
+      <div class="is-millionaire">
+        <h2>I'm a millionaire!</h2>
+      </div>
+    </div>
+
+
+    <!-- CATEGORY SPACES -->
+    <div class="space category summary" data-type="summary">
+      <ul class="text"></ul>
+    </div>
+
+    <div class="space category children" data-type="children">
+      <button class="lightblue medium button execute" data-type="sons">A son is born!</button>
+      <button class="pink medium button execute" data-type="daughters">A daughter is born!</button>
+    </div>
+
+    <div class="space category revenge" data-type="revenge">
+      <h2 class="send back">Nobody is eligible to sue, send someone back 10 spaces instead.</h2>
+      <select class="sue whom"></select>
+      <button class="gold medium button execute sue">Sue for damages</button>
+    </div>
+
+    <div class="space category stock market" data-type="stock-market">
+      <h2 class="message no-stock">I do not own stock insurance</h2>
+      <h2 class="message has-stock">I played the stock market and</h2>
+      <button class="green medium button execute has-stock" data-amount="120000">I spun a 1, 2, or 3</button>
+      <button class="green medium button execute has-stock" data-amount="0">I spun a 4, 5, or 6</button>
+      <button class="green medium button execute has-stock" data-amount="-60000" data-delay="0">I spun a 7, 8, 9, or 10</button>
+    </div>
+
+    <div class="space category lucky number" data-type="lucky-number">
+      <h2 class="message no-lucky-number">Nobody has a lucky number yet</h2>
+      <h2 class="message has-lucky-number">I have the lucky number</h2>
+      <button class="green large button execute someone-has-lucky-number" data-amount="24000">I spun the lucky number</button>
+    </div>
+
+    <div class="space category toll bridge" data-type="toll-bridge-fix">
+      <button class="grey medium button execute owner">I no longer own the toll bridge</button>
+      <h2 class="message not-owner">I do not own the toll bridge</button>
+    </div>
+
+    <p class="hamburger icon space-menu" title="Jump between spaces for this player"></p>
+  </div>
+
+  <div class="categories">
+    <p class="current category" data-type="current" title="Go to the current space">Current</p>
+    <p class="summary category" data-type="summary" title="View a summary for this player">Summary</p>
+    <p class="children category" data-type="children" title="Add children for this player">Children</p>
+    <p class="revenge category" data-type="revenge" title="Get Revenge!">Revenge</p>
+    <p class="stock market category" data-type="stock-market" title="Play the stock market">Stock Market</p>
+    <p class="lucky number category" data-type="lucky-number" title="I landed on a lucky number">Lucky Number</p>
+    <p class="toll bridge category" data-type="toll-bridge-fix" title="Change the toll bridge owner">Toll Bridge</p>
+  </div>
+</section>
+
+<section id="actions">
+  <button class="grey next-player button">Next Player</button>
+  <div class="adjust-cash">
+    <button class="green add adjuster">+</button>
+    <input type="text" maxlength="3" />
+    <button class="red minus adjuster">-</button>
+    <label>(x1000)</label>
+  </div>
+  <button class="red payday button">Pay Day!</button>
+  <div class="payday-interest">with interest</div>
+</section>
+
+<section id="space-menu">
+  <div class="background"></div>
+  <h3 class="close icon"></h3>
+  <ul class="menu"></ul>
+</section>
 
 <script src="js/lib/prefixfree.min.js"></script>
-<script>var require = { baseUrl : "js/old" };</script>
-<script data-main="main" src="js/lib/require-jquery-min.js"></script>
+<script data-main="js/main" src="js/lib/require.js"></script>
 </body>
 
 </html>
