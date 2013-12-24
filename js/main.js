@@ -39,8 +39,6 @@ require([
     Actions.init();
     Board.init();
     SpaceMenu.init();
-
-    Setup.autoSetup(4);
   });
 
 });

@@ -1,8 +1,13 @@
 #board {
     border: 2px solid rgb(134, 134, 134);
+    display: none;
     float: left;
     margin: 2% 1%;
     width: 60%;
+}
+
+.game-started #board {
+    display: inline-block;
 }
 
 #board .player {
