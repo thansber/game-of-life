@@ -36,7 +36,7 @@
 
 #board .main {
     float: left;
-    height: 20em;
+    height: 22em;
     overflow: hidden;
     padding: 2.5%;
     position: relative;
@@ -55,6 +55,16 @@
 
 #board .main .space.selected {
     left: 0;
+}
+
+#board .main .space-menu {
+    background-image: url('../images/hamburger.png');
+    background-size: cover;
+    bottom: 0.5em;
+    height: 32px;
+    position: absolute;
+    right: 1em;
+    width: 32px;
 }
 
 #board .main .space .message {

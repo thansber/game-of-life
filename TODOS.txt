@@ -1,4 +1,3 @@
-- allow toll bridge owner to change?
 - allow for children values to be directly manipulated (mistake adding kid)
 
 
