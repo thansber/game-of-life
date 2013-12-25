@@ -51,6 +51,7 @@ function($) {
       return rgb[0] * 255 === 255 && rgb[1] * 255 === 255 && rgb[2] * 255 === 255;
     },
     populatePlayerDropdown: function($select, players) {
+      $select.empty();
       players.forEach(function(player) {
         $select.append($('<option value="' + player.name + '">' + player.name + '</option>'));
       });
