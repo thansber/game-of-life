@@ -1,6 +1,6 @@
 define(/* Game */
-['jquery', 'underscore', 'player', 'scoreboard'],
-function($, _, Player, Scoreboard) {
+['jquery', 'underscore', 'keyboard', 'player', 'scoreboard'],
+function($, _, Keyboard, Player, Scoreboard) {
 
   var game = null,
       $setup = null,
@@ -140,11 +140,13 @@ function($, _, Player, Scoreboard) {
     resetup: function() {
       $('body').removeClass('game-started');
       Scoreboard.resetup();
+      Keyboard.stopListening();
     },
 
     start: function() {
       $('body').addClass('game-started');
       game.crossedTollBridgeOrder = 0;
+      Keyboard.startListening();
     },
 
     tollBridgeCrossed: function() {

@@ -1,6 +1,6 @@
 - allow for children values to be directly manipulated (mistake adding kid)
 - current space after first taxes doesn't work
-- keyboard shortcuts for Next Player and Pay Day
+- payday + interest
 
 
 

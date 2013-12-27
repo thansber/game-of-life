@@ -21,6 +21,10 @@ function(
   return {
     init: function() {
 
+      $(document)
+        .on('next:player:key', function() { Actions.nextPlayer(); })
+        .on('payday:key', function() { Actions.payPlayer(); });
+
       $('#setup')
         .on('click', '.swatch', function(e) { Util.choiceChanged($(e.target)); })
         .on('click', '.add', function() { Game.addPlayer(); })
