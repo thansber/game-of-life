@@ -26,12 +26,21 @@ function($, Board, Game, Scoreboard, Util) {
     },
 
     payPlayer: function() {
-      var currentPlayer = Game.currentPlayer();
-      // TODO: handle interest
-      Board.adjustCash({
-        player: currentPlayer,
-        by: currentPlayer.salary()
-      });
+      var player = Game.currentPlayer(),
+          withInterest = $actions.find('.payday-interest').hasClass('selected'),
+          adjustments = [{
+            player: player,
+            by: player.salary()
+          }];
+
+      if (withInterest && player.cash + player.salary() < 0) {
+        adjustments.push({
+          player: player,
+          by: Math.ceil(player.cash / 20000) * 1000
+        });
+      }
+
+      Board.adjustCashMultiple(adjustments);
     }
 
   };

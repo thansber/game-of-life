@@ -68,6 +68,44 @@ function(
       });
     });
 
+    describe('#payPlayer', function() {
+      beforeEach(function() {
+        this.currentPlayer.setJob('t');
+        spyOn(Board, 'adjustCashMultiple');
+      });
+
+      it('adds the player salary', function() {
+        Actions.payPlayer();
+        expect(Board.adjustCashMultiple).toHaveBeenCalledWith([{
+          player: this.currentPlayer,
+          by: 20000
+        }]);
+      });
+
+      describe('with interest', function() {
+        beforeEach(function() {
+          this.interest = this.actionsFixture.affix('.payday-interest.selected');
+          this.currentPlayer.cash = -65000;
+          Actions.payPlayer();
+          this.args = Board.adjustCashMultiple.argsForCall[0][0];
+        });
+
+        it('adds the player salary', function() {
+          expect(this.args[0]).toEqual({
+            player: this.currentPlayer,
+            by: 20000
+          });
+        });
+
+        it('removes remaining interest owed', function() {
+          expect(this.args[1]).toEqual({
+            player: this.currentPlayer,
+            by: -3000
+          });
+        });
+      });
+    });
+
   });
 
 });
