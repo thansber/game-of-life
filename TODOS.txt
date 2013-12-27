@@ -1,5 +1,4 @@
 - allow for children values to be directly manipulated (mistake adding kid)
-- current space after first taxes doesn't work
 - add space for after day of reckoning +240K for life insurance
 
 

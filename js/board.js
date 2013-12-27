@@ -140,6 +140,7 @@ function(
     },
 
     goToSpace: function(type) {
+      Game.currentPlayer().at = type;
       Util.choiceChanged(this.spaceByType(type));
       this.initializeSpace();
     },
